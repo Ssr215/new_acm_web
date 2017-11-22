@@ -1,0 +1,66 @@
+#package{
+	/*width: 95%;*/
+	position: relative;
+	/*left: 2.5%;*/
+	width: 1200px;
+	margin: 0 auto;
+}
+#head{
+	height: 53px;
+	text-align: center;
+}
+#menu_backgound{
+	background: url(../photo/menu_1.jpg) repeat scroll;
+	background-size: 40px 40px;
+	font-weight: bold;
+	height: 40px;
+	text-align: left;
+	width: 100%;
+	z-index: 2;
+}
+#position_photo{
+	position: static;
+	vertical-align: middle;
+}
+.red{
+	color: red;
+}
+.new_color_imp{
+	color: #ff0097b8!important;
+}
+.purple{
+	color: purple;
+}
+._blue_1{
+	color: #76eafd;
+}
+.btn{
+	display: inline-block;
+	padding: 4px 10px 4px
+}
+.menu_label_1{
+	float: left;
+	padding-top: .25rem;
+	padding-bottom: .25rem;
+	margin-right: 1rem;
+	font-size: 1.25rem;
+	line-height: inherit;
+}
+.menu_a{
+	text-decoration: none;
+	color: #fff;
+}
+.float_imp_right{
+	float: right!important;
+}
+.width_45{
+	width: 45px;
+}
+a:hover{
+	color: blue;
+}
+img{
+	height: auto;
+	border: 0;
+	vertical-align: middle;
+}
