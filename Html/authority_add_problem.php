@@ -157,6 +157,10 @@
 							<td>Memory limit:(Mbit)</td>
 							<td><input type="text" name="memory_mit_j"></td>
 						</tr>
+						<tr>
+							<td>Authority</td>
+							<td><input type="text" name="authority" value="0"></td>
+						</tr>
 					</tbody>
 				</table>
 				<br>

@@ -11,9 +11,12 @@
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
 	<?php
-		if( $refresh_flag ){
+		if( $can_display ){
 			?>
-				<meta http-equiv="refresh" content="0">
+				<script type="text/javascript">
+					alert("No Access!");
+				</script>
+				<meta http-equiv="refresh" content="0;url=problem.php">
 			<?php
 		}
 	?>

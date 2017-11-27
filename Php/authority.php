@@ -28,15 +28,20 @@
 		$pro_id = $_POST['pro_id'];
 		$pro_title = $_POST['pro_title'];
 		$time_limit = $_POST['time_lim'];
+		if( $time_limit < 100 )	$time_limit *= 1000;
 		$memory_limit = $_POST['memory_mit'];
+		if( $memory_limit < 100 )	$memory_limit * 1000;
 		$time_limit_java = $_POST['time_lim_j'];
+		if( $time_limit_java < 100 )	$time_limit_java *= 1000;
 		$memory_limit_java = $_POST['memory_mit_j'];
+		if( $memory_limit_java < 100 )	$memory_limit_java * 1000;
 		$pro_description = $_POST['description'];
 		$pro_input = $_POST['_input'];
 		$pro_output = $_POST['_output'];
 		$pro_sample_input = $_POST['sampleinput'];
 		$pro_sample_output = $_POST['sampleoutput'];
 		$pro_hint = $_POST['hint'];
+		$pro_authority = $_POST['authority'];
 		date_default_timezone_set("Asia/Shanghai");
 		$time_now = date("Y-m-d H:i:s");
 		$pro_user_id = get_user_id($conn,$GLOBALS['loading_username']);
@@ -47,6 +52,7 @@
 		$pro_sample_output = str_replace("'", "\'", $pro_sample_output);
 		$pro_hint = str_replace("'", "\'", $pro_hint);
 		$pro_title = str_replace("'", "\'", $pro_title);
+		$pro_authority = min($pro_authority,get_uesr_authority($conn,$GLOBALS['loading_username']));
 
 		$sql = "INSERT INTO problem_information_1 (pro_id,title,time_limit,memory_limit,time_limit_java,memory_limit_java,input,output,AC,submit) VALUES ('$pro_id','$pro_title','$time_limit','$memory_limit','$time_limit_java','$memory_limit_java','$pro_input','$pro_output','0','0')";
 		if( !mysqli_query($conn,$sql) ){
@@ -58,7 +64,7 @@
 				echo "Error: " . $sql . "<br>" . $conn->error;
 				$problem_insert_flag = 3;
 			}else{
-				$sql = "INSERT INTO problem_information_3 (pro_id,hint,pro_user_id,begin_time,last_update_time) VALUES ('$pro_id','$pro_hint','$pro_user_id','$time_now','$time_now')";
+				$sql = "INSERT INTO problem_information_3 (pro_id,hint,pro_user_id,begin_time,last_update_time,authority) VALUES ('$pro_id','$pro_hint','$pro_user_id','$time_now','$time_now','$pro_authority')";
 				if( !mysqli_query($conn,$sql) ){
 					echo "Error: " . $sql . "<br>" . $conn->error;
 					$problem_insert_flag = 4;

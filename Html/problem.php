@@ -142,6 +142,9 @@
 						echo "Error: " . $sql . "<br>" . $conn->error;
 					}else{
 						while ($row = mysqli_fetch_array($result)) {
+							if( get_problem_authority($conn,$row['pro_id']) > get_uesr_authority($conn,$GLOBALS['loading_username']) ){
+								continue;
+							}
 							$here_row++;
 							?>
 								<tr class="<?php if($here_row%2==0){echo('odd_table');}else{echo('even_table');} ?>">
