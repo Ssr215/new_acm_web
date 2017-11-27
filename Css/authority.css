@@ -1,0 +1,38 @@
+#main_page{
+	width: 1200px;
+	margin: 50px auto;
+	position: relative;
+	background-color: rgba(255,255,255,0.5);
+}
+#main_menu_background{
+	background: url(../photo/menu_2.jpeg) repeat scroll;
+	background-size: 100% 40px;
+	z-index: 2;
+	height: 40px;
+	width: 100%;
+	font-weight: bold;
+}
+#main_add_problem_page{
+	width: 1050px;
+	margin: 50px auto;
+	position:  relative;
+	background-color: rgba(255,255,255,0.5);
+}
+a:hover{
+	color: red!important;
+}
+.new_color_img_authority{
+	color: #ffc107!important;
+}
+.textarea_size{
+	width: 95%;
+	height: 300px;
+	white-space: nowrap;
+}
+._put_h{
+	height: 120px!important;
+}
+.submit_size{
+	width: 120px;
+	height: 30px;
+}

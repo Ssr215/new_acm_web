@@ -1,5 +1,6 @@
 <?php
 	include "../Php/Public_1.php";
+	include "../Php/problemdisplay.php";
 ?>
 
 <!DOCTYPE html>

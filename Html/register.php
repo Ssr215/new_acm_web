@@ -1,6 +1,6 @@
 <?php
 	include "../Php/Public_1.php";
-	include "../Php/loading.php";
+	include '../Php/Register.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,23 +11,23 @@
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../Css/loading.css">
 	<?php
-		if( 1 == $loading_success_flag ){
+		if( $register_success_flag == 1 ){
 			?>
 				<script type="text/javascript">
-					alert("loading successed!");
+					alert("register is successed! Please loaing it!");
 				</script>
-				<meta http-equiv="refresh" content="0;url=index.php">
+				<meta http-equiv="refresh" content="0;url=loading.php">
 			<?php
-		}else if( 2 == $loading_success_flag ){
+		}else if( $register_success_flag == 2 ){
 			?>
 				<script type="text/javascript">
-					alert("Wrong username or password!");
+					alert("register is failure! user_name has use in other user!");
 				</script>
 			<?php
-		}else if( 3 == $loading_success_flag ){
+		}else if( $register_success_flag == 3 ){
 			?>
 				<script type="text/javascript">
-					alert("loading is failure! This is the problem in sever! Please call the admit!")；
+					alert("register is failure! This is the problem in sever! Please call the admit!")；
 				</script>
 			<?php
 		}
@@ -74,32 +74,36 @@
 				<!-- 发表文章、竞赛题解、话题的地方 -->
 			</a>
 
-			<a href="register.php" class="menu_label_1 menu_a float_imp_right">
+			<a href="register.php" class="menu_label_1 menu_a float_imp_right new_color_imp">
 				Register
 			</a>
 
-			<a href="loading.php" class="menu_label_1 menu_a float_imp_right new_color_imp">
+			<a href="loading.php" class="menu_label_1 menu_a float_imp_right">
 				Login
 			</a>
 		</div>
 
 		<div id="loading_pages_in_outdoor">
-			<form action="loading.php" method="post">
+			<form action="register.php" method="post">
 				<center>
-					<table width="450px" height="120px">
+					<table width="450px" height="160px">
 						<tbody>
 							<tr>
-								<td>User ID:</td>
-								<td><input type="text" name="user_name1" <?php if( 2 == $loading_success_flag ){ ?> value="<?php echo($user_name_l); ?>" <?php } ?>></td>
+								<td>Username:</td>
+								<td><input type="text" name="user_name2"></td>
+							</tr>
+							<tr>
+								<td>Nikename</td>
+								<td><input type="text" name="nike_name2"></td>
 							</tr>
 							<tr>
 								<td>Password:</td>
-								<td><input type="password" name="pass_word1"></td>
+								<td><input type="password" name="pass_word2"></td>
 							</tr>
 							<tr>
 								<td colspan="3">
 									<input type="submit" name="submit">
-									<a href="lostpassword.php">Lost password</a>
+									<!-- <a href="lostpassword.php">Lostpassword</a> -->
 								</td>
 							</tr>
 						</tbody>
