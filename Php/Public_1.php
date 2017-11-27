@@ -43,6 +43,7 @@
 	if( !isset($_COOKIE['user_loading_flag1']) || !isset($_COOKIE['user_loading_flag2']) ){
 		setcookie("user_loading_flag1",have_rand(1,100000000));
 		setcookie("user_loading_flag2",have_rand(1,100000000));
+		$refresh_flag = true;
 	}
 
 	// 创建本机在服务器的映射

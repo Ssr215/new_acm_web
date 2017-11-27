@@ -9,6 +9,7 @@
 	<title>new online judge in cqupt private</title>
 	<link rel="stylesheet" type="text/css" href="../Css/Home.css">
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
+	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
 	<?php
 		if( $refresh_flag ){
 			?>
@@ -90,6 +91,85 @@
 						</a>
 					<?php
 				}
+			?>
+		</div>
+	</div>
+
+	<div id="problem_main_backgound">
+		<div id="problem_title">
+			<?php
+				echo $pro_id ." : " . $title;
+			?>
+		</div>
+		<div id="problem_limit">
+			<?php
+				echo "Time Limit:" . $time_limit . " MS  Memory Limit: " . $memory_limit . " MB<br>";
+				echo "JAVA Time Limit:" . $time_limit_java . " MS  JAVA Memory Limit: " . $memory_limit_java . " MB";
+			?>
+		</div>
+		<div id="problem_submit">
+			[<a href="problemsumbmit.php?pid=<?php echo($pro_id) ?>">Submit</a>]
+			[<a href="problemstatus.php?pid=<?php echo($pro_id) ?>">Status</a>]
+			[<a href="problemForum.php?pid=<?php echo($pro_id) ?>">Forum</a>]
+		</div>
+
+		<div id="pro_display_description">
+			Description
+		</div>
+		<div id="pro_display_detile">
+			<?php
+				$description = str_replace("\n", "<br>", $description);
+				echo $description;
+			?>
+		</div>
+
+		<div id="pro_display_description">
+			Input
+		</div>
+		<div id="pro_display_detile">
+			<?php
+				$input = str_replace("\n", "<br>", $input);
+				echo $input;
+			?>
+		</div>
+
+		<div id="pro_display_description">
+			Output
+		</div>
+		<div id="pro_display_detile">
+			<?php
+				$output = str_replace("\n", "<br>", $output);
+				echo $output;
+			?>
+		</div>
+
+		<div id="pro_display_description">
+			Sample Input
+		</div>
+		<div id="pro_display_detile">
+			<?php
+				$sample_input = str_replace("\n", "<br>", $sample_input);
+				echo $sample_input;
+			?>
+		</div>
+
+		<div id="pro_display_description">
+			Sample Output
+		</div>
+		<div id="pro_display_detile">
+			<?php
+				$sample_output = str_replace("\n", "<br>", $sample_output);
+				echo $sample_output;
+			?>
+		</div>
+
+		<div id="pro_display_description">
+			Hint
+		</div>
+		<div id="pro_display_detile">
+			<?php
+				$hint = str_replace("\n", "<br>", $hint);
+				echo $hint;
 			?>
 		</div>
 	</div>

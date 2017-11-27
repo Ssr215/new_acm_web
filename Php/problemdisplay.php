@@ -6,6 +6,7 @@
 	$sql = "SELECT * FROM problem_information_1 WHERE pro_id = '$pro_id'";
 	$result = mysqli_query($conn,$sql);
 	$title = "connection fail!";
+	$description = "nothing";
 	$time_limit = 0;
 	$memory_limit = 0;
 	$time_limit_java = 0;
@@ -33,6 +34,7 @@
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}else{
 			while ($row = mysqli_fetch_array($result)) {
+				$description = $row['description'];
 				$sample_input = $row['sample_input'];
 				$sample_output = $row['sample_output'];
 			}

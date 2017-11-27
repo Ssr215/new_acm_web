@@ -3,6 +3,33 @@
 	width: 1200px;
 	margin: 50px auto;
 }
+#problem_title{
+	font-size: 1.95rem;
+	color: blue;
+	font-weight: bold;
+}
+#problem_limit{
+	font-size: 1.05rem;
+	color: #5a0000;
+}
+#problem_submit{
+	margin: 15px auto;
+	font-size: 0.95rem;
+	color: blue;
+}
+#pro_display_description{
+	font-size: 1.75rem;
+	color: blue;
+	font-weight: bold;
+	text-align: left;
+}
+#pro_display_detile{
+	width: 1050px;
+	margin: 3px auto;
+	font-size: 1.05rem;
+	text-align: left;
+	background-color: rgba(0,255,43,0.5);
+}
 .page_a{
 	text-decoration: none;
 	color: #25215d;
