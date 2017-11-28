@@ -1,5 +1,8 @@
 <?php
 	$pro_id = 1000;
+	if (isset($_POST['updata_pro_id'])) {
+		$pro_id = $_POST['updata_pro_id'];
+	}
 	if (isset($_GET['pid'])) {
 		$pro_id = $_GET['pid'];
 	}

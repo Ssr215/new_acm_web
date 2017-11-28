@@ -100,30 +100,38 @@
 
 	<div id="main_page">
 		<div id="main_menu_background">
-			<a href="authority_add_problem.php" class="menu_label_1 menu_a">
+			<a href="authority_add_problem.php" class="menu_label_5 menu_a">
 				Add problem
 			</a>
 
-			<a href="authority_update_problem.php" class="menu_label_1 menu_a">
+			<a href="authority_update_problem.php" class="menu_label_5 menu_a">
 				Update problem
 			</a>
 
-			<a href="authority_delete_problem.php" class="menu_label_1 menu_a">
-				Delete problem
+			<a href="authority_add_test.php" class="menu_label_5 menu_a">
+				Add test
 			</a>
 
-			<a href="authority_create_contest.php" class="menu_label_1 menu_a">
+			<a href="authority_update_test.php" class="menu_label_5 menu_a">
+				Update test
+			</a>
+
+			<a href="authority_create_contest.php" class="menu_label_5 menu_a">
 				Create contest
 			</a>
 
-			<a href="authority_delete_contest.php" class="menu_label_1 menu_a">
-				Delete content
+			<a href="authority_update_contest.php" class="menu_label_5 menu_a">
+				Update contest
+			</a>
+
+			<a href="authority_delete_anything.php" class="menu_label_5 menu_a">
+				Delete
 			</a>
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) == 9 ){
 					?>
-						<a href="authority_increase_permissions.php" class="menu_label_1 menu_a">
+						<a href="authority_increase_permissions.php" class="menu_label_5 menu_a">
 							Increase permissions
 						</a>
 					<?php

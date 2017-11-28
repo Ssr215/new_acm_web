@@ -100,7 +100,7 @@
 
 	<div id="main_page">
 		<div id="main_menu_background">
-			<a href="authority_add_problem.php" class="menu_label_5 menu_a new_color_img_authority">
+			<a href="authority_add_problem.php" class="menu_label_5 menu_a">
 				Add problem
 			</a>
 
@@ -108,7 +108,7 @@
 				Update problem
 			</a>
 
-			<a href="authority_add_test.php" class="menu_label_5 menu_a">
+			<a href="authority_add_test.php" class="menu_label_5 menu_a new_color_img_authority">
 				Add test
 			</a>
 
@@ -141,61 +141,19 @@
 	</div>
 
 	<div id="main_add_problem_page">
-		<form action="authority_add_problem.php" method="post">
-			<center>
-				<table width="900px">
-					<tbody>
-						<tr>
-							<td>problem id</td>
-							<td><input type="text" name="pro_id" value="<?php echo get_next_new_pro_id($conn); ?>" readonly="readonly"></td>
-							<td>title</td>
-							<td><input type="text" name="pro_title"></td>
-						</tr>
-						<tr>
-							<td colspan="4" align="center">C/C++</td>
-						</tr>
-						<tr>
-							<td>Time limit:(ms)</td>
-							<td><input type="text" name="time_lim"></td>
-							<td>Memory limit:(Mbit)</td>
-							<td><input type="text" name="memory_mit"></td>
-						</tr>
-						<tr>
-							<td colspan="4" align="center">JAVA</td>
-						</tr>
-						<tr>
-							<td>Time limit:(ms)</td>
-							<td><input type="text" name="time_lim_j"></td>
-							<td>Memory limit:(Mbit)</td>
-							<td><input type="text" name="memory_mit_j"></td>
-						</tr>
-						<tr>
-							<td>Authority</td>
-							<td><input type="text" name="authority" value="0"></td>
-						</tr>
-					</tbody>
-				</table>
-				<br>
-				Description(len<=9000)<br>
-				<textarea class="textarea_size" name="description"></textarea>
-				<br>
-				Input(len<=1500)<br>
-				<textarea class="textarea_size _put_h" name="_input"></textarea>
-				<br>
-				Output(len<=1500)<br>
-				<textarea class="textarea_size _put_h" name="_output"></textarea>
-				<br>
-				Sample Input(len<=1500)<br>
-				<textarea class="textarea_size _put_h" name="sampleinput"></textarea>
-				<br>
-				Sample Output(len<=1500)<br>
-				<textarea class="textarea_size _put_h" name="sampleoutput"></textarea>
-				<br>
-				Hint(len<=6000)<br>
-				<textarea class="textarea_size" name="hint"></textarea>
-				<br><br>
-				<input type="submit" name="submit" class="submit_size">
-			</center>
+		<form action="authority_add_test.php" method="post">
+			problem id: 
+			<input type="text" name="add_test_pro_id">
+			<br>
+			INPUT
+			<br>
+			<textarea class="textarea_size _put_h" name="add_test_input"></textarea>
+			<br>
+			OUTPUT
+			<br>
+			<textarea class="textarea_size _put_h" name="add_test_output"></textarea>
+			<br>
+			<input type="submit" name="submit" class="submit_size">
 		</form>
 	</div>
 </body>
