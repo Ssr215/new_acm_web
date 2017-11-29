@@ -111,7 +111,7 @@
 			?>
 		</div>
 		<div id="problem_submit">
-			[<a href="problemsumbmit.php?pid=<?php echo($pro_id) ?>">Submit</a>]
+			[<a href="problemsubmit.php?pid=<?php echo($pro_id) ?>">Submit</a>]
 			[<a href="problemstatus.php?pid=<?php echo($pro_id) ?>">Status</a>]
 			[<a href="problemForum.php?pid=<?php echo($pro_id) ?>">Forum</a>]
 		</div>

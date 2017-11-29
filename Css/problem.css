@@ -55,3 +55,12 @@
 .table_font{
 	color: #0600fd;
 }
+.textarea_size{
+	width: 95%;
+	height: 600px;
+	white-space: nowrap;
+}
+.submit_size{
+	width: 120px;
+	height: 30px;
+}
