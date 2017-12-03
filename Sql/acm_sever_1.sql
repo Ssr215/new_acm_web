@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 2017-12-02 01:51:26
+-- Generation Time: 2017-12-02 06:38:12
 -- 服务器版本： 5.7.19
 -- PHP Version: 5.6.31
 
@@ -194,6 +194,7 @@ CREATE TABLE IF NOT EXISTS `pro_submit` (
   `_date` datetime NOT NULL,
   `huck` int(11) NOT NULL,
   `code` varchar(20000) NOT NULL,
+  `compile` varchar(900) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -201,8 +202,8 @@ CREATE TABLE IF NOT EXISTS `pro_submit` (
 -- 转存表中的数据 `pro_submit`
 --
 
-INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `user_id`, `_date`, `huck`, `code`) VALUES
-(1, 1000, 2, 0, -9945157, '2017-11-29 23:35:50', 0, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n\r\nint main(){\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}\r\n');
+INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `user_id`, `_date`, `huck`, `code`, `compile`) VALUES
+(1, 1000, 2, 0, -9945157, '2017-11-29 23:35:50', 0, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n\r\nint main(){\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}\r\n', '');
 
 -- --------------------------------------------------------
 

@@ -1,0 +1,23 @@
+pro_submit --- result
+
+0 -- in queue
+1 -- Accepted
+2 -- Presentatior Error
+3 -- Output Limit
+4 -- Runtime Error
+5 -- Memory Limit Exceeded
+6 -- Time Limit Exceeded
+7 -- Wrong Answer
+8 -- runing
+9 -- Complie error
+
+YXXX --- Y on test XXX
+(Y is 2-8)
+
+9 is sever have some error , please call admit
+admit maybe can't solve it, don't call think! 
+
+pro_language --- select
+1 --- gcc
+2 --- g++
+5 --- java
