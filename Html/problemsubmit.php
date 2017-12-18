@@ -15,7 +15,7 @@
 		$submit_code = $_POST['submit_code'];
 		$submit_code = str_replace("'", "\'", $submit_code);
 		$submit_code = str_replace("\\", "\\\\", $submit_code);
-		echo $submit_code;
+		// echo $submit_code;
 		date_default_timezone_set("Asia/Shanghai");
 		$time_now = date("Y-m-d H:i:s");
 		$submit_user_id = get_user_id($conn,$GLOBALS['loading_username']);
@@ -67,11 +67,11 @@
 				<meta http-equiv="refresh" content="0">
 			<?php
 		}
-		// if ( $submit_success_flag == 1 ) {
+		if ( $submit_success_flag == 1 ) {
 			?>
-				<!-- <meta http-equiv="refresh" content="0;url=Status.php"> -->
+				<meta http-equiv="refresh" content="0;url=Status.php">
 			<?php
-		// }
+		}
 	?>
 </head>
 <body>
