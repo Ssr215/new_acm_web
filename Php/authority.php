@@ -64,7 +64,7 @@
 				echo "Error: " . $sql . "<br>" . $conn->error;
 				$problem_insert_flag = 3;
 			}else{
-				$sql = "INSERT INTO problem_information_3 (pro_id,hint,pro_user_id,begin_time,last_update_time,authority) VALUES ('$pro_id','$pro_hint','$pro_user_id','$time_now','$time_now','$pro_authority')";
+				$sql = "INSERT INTO problem_information_3 (pro_id,hint,pro_user_id,begin_time,last_update_time,authority,test_number) VALUES ('$pro_id','$pro_hint','$pro_user_id','$time_now','$time_now','$pro_authority','0')";
 				if( !mysqli_query($conn,$sql) ){
 					echo "Error: " . $sql . "<br>" . $conn->error;
 					$problem_insert_flag = 4;

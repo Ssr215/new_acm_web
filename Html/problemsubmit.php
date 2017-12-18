@@ -19,7 +19,7 @@
 		$submit_user_id = get_user_id($conn,$GLOBALS['loading_username']);
 		$sid = get_and_update_of_web_number_information($conn,5);
 		$language = get_language_number($language);
-		$sql = "INSERT INTO pro_submit (id,pro_id,language,result,user_id,_date,huck,code) VALUES ('$sid','$pid','$language','0','$submit_user_id','$time_now','0','$submit_code')";
+		$sql = "INSERT INTO pro_submit (id,pro_id,language,result,u_time,u_memory,user_id,_date,huck,code,compile) VALUES ('$sid','$pid','$language','0','0','0','$submit_user_id','$time_now','0','$submit_code',',')";
 		if ( !mysqli_query($conn,$sql) ) {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 			$submit_success_flag = 2;

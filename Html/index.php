@@ -11,7 +11,7 @@
 	<?php
 		if( $refresh_flag ){
 			?>
-				<meta http-equiv="refresh" content="0">
+				<meta http-equiv="refresh" content="0;url=index.php">
 			<?php
 		}
 	?>

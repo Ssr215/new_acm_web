@@ -8,8 +8,8 @@ pro_submit --- result
 5 -- Memory Limit Exceeded
 6 -- Time Limit Exceeded
 7 -- Wrong Answer
-8 -- runing
-9 -- Complie error
+8 -- Complie error
+9 -- runing
 
 YXXX --- Y on test XXX
 (Y is 2-8)
@@ -20,4 +20,5 @@ admit maybe can't solve it, don't call think!
 pro_language --- select
 1 --- gcc
 2 --- g++
-5 --- java
+3 --- g++11
+4 --- java
