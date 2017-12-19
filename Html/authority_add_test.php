@@ -141,7 +141,7 @@
 	</div>
 
 	<div id="main_add_problem_page">
-		<form action="authority_add_test.php" method="post">
+		<form action="authority_add_test.php" method="post" enctype="multipart/form-data">
 			problem id: 
 			<input type="text" name="add_test_pro_id">
 			<br>
@@ -149,10 +149,14 @@
 			<br>
 			<textarea class="textarea_size _put_h" name="add_test_input"></textarea>
 			<br>
+			<input type="file" name="add_input_file" id="file">
+			<br>
 			OUTPUT
 			<br>
 			<textarea class="textarea_size _put_h" name="add_test_output"></textarea>
 			<br>
+			<input type="file" name="add_output_file">
+			<br>		
 			<input type="submit" name="submit" class="submit_size">
 		</form>
 	</div>

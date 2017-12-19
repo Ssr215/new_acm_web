@@ -171,8 +171,28 @@
 	// 处理新建的样例
 	if( isset($_POST['add_test_pro_id']) ){
 		$pro_id = $_POST['add_test_pro_id'];
+		// echo $pro_id."<br>";
 		$add_test_input = $_POST['add_test_input'];
+		if (""==$add_test_input) {
+			if ($_FILES["add_input_file"]["error"] > 0) {
+				echo $_FILES["add_input_file"]["error"];
+			}else{
+				$add_test_input = $_FILES["add_input_file"]["tmp_name"];
+				$add_test_input = addslashes(fread(fopen($add_test_input, "r"),filesize($add_test_input)));
+				echo $add_test_input."<br>";
+			}
+			
+		}
 		$add_test_output = $_POST['add_test_output'];
+		if (""==$add_test_output) {
+			if ($_FILES["add_output_file"]["error"] > 0) {
+				echo $_FILES["add_output_file"]["error"];
+			}else{
+				$add_test_output = $_FILES["add_output_file"]["tmp_name"];
+				$add_test_output = addslashes(fread(fopen($add_test_output, "r"), filesize($add_test_output)));
+				echo $add_test_output."<br>";
+			}
+		}
 		$id = get_and_update_of_web_number_information($conn,4);
 		date_default_timezone_set("Asia/Shanghai");
 		$time_now = date("Y-m-d H:i:s");

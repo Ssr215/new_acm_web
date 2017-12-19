@@ -129,9 +129,9 @@
 			<tbody>
 				<tr class="first_table">
 					<!-- <td width="4%"></td> -->
-					<td width="12%">status id</td>
-					<td width="16%">When</td>
-					<td width="10%">Who</td>
+					<td width="10%">status id</td>
+					<td width="20%">When</td>
+					<td width="12%">Who</td>
 					<td width="12%">Problem id</td>
 					<td width="8%">language</td>
 					<td>Verdict</td>

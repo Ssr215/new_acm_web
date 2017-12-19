@@ -27,6 +27,7 @@
 			$submit_success_flag = 2;
 		}else{
 			$submit_success_flag = 1;
+			update_submit_number($pid,$conn);
 		}
 	}
 
@@ -52,6 +53,25 @@
 		}
 		return $u_id;
 	}
+
+	// 对于提交成功的刷新对应题目的提交数
+	function update_submit_number($pid,$conn){
+		$sql = "SELECT submit FROM problem_information_1 WHERE pro_id = '$pid'";
+		$result = mysqli_query($conn,$sql);
+		$nums = -1;
+		while ($row = mysqli_fetch_array($result)) {
+			$nums = $row['submit'];
+		}
+		if( $nums == -1 )	return 0;
+		$nums++;
+		$sql = "UPDATE problem_information_1 SET submit = '$nums' WHERE pro_id = '$pid'";
+		if (!mysqli_query($conn,$sql)) {
+			echo "Error: " . $sql . "<br>" . $conn->error;
+			return 0;
+		}
+		return 1;
+	}
+
 ?>
 
 <!DOCTYPE html>
@@ -62,6 +82,14 @@
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
 	<?php
+		if ($GLOBALS['loading_user_flag'] == false) {
+			?>
+				<script type="text/javascript">
+					alert("please log in first");
+				</script>
+				<meta http-equiv="refresh" content="0;url=loading.php">
+			<?php
+		}
 		if( $refresh_flag ){
 			?>
 				<meta http-equiv="refresh" content="0">

@@ -46,7 +46,7 @@
 		$p2 = "";
 		if ($id >= 3000) {
 			$t_id = $id % 1000;
-			$p2 = " on test" . $t_id;
+			$p2 = " on test " . $t_id;
 			$id = (int)($id / 1000);
 		}
 		$p1 = "";
