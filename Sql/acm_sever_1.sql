@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 2017-12-02 06:38:12
+-- Generation Time: 2017-12-22 08:27:15
 -- 服务器版本： 5.7.19
 -- PHP Version: 5.6.31
 
@@ -45,7 +45,9 @@ CREATE TABLE IF NOT EXISTS `loading_flag` (
 
 INSERT INTO `loading_flag` (`loading_id`, `flag1`, `flag2`, `id`, `last_updata_times`) VALUES
 (0, -1, -1, -1, '2017-11-21 00:00:00'),
-(7, 67445170, 89905115, -9945157, '2017-11-29 23:35:50');
+(5, 38938379, 85558972, -1, '2017-12-22 00:04:22'),
+(3, 83059902, 52641234, -1, '2017-12-21 18:48:30'),
+(1, 29652714, 81014755, -9945157, '2017-12-19 20:43:06');
 
 -- --------------------------------------------------------
 
@@ -73,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `problem_information_1` (
 --
 
 INSERT INTO `problem_information_1` (`pro_id`, `title`, `time_limit`, `memory_limit`, `time_limit_java`, `memory_limit_java`, `input`, `output`, `AC`, `submit`) VALUES
-(1000, 'A+B Problem', 500, 5, 1000, 10, 'Single example.\r\nTwo integer a,b (0<=a,b<=10^9)', 'Output a+b', 0, 0),
+(1000, 'A+B Problem', 500, 5, 1000, 10, 'Single example.\r\nTwo integer a,b (0<=a,b<=10^9)', 'Output a+b', 0, 10),
 (1001, 'Maximum Gcd', 1000, 128, 2000, 128, 'There is only one test case .\r\nThe first line contains a integer n ( 2 â‰¤ n â‰¤ 10^3 )  , which is the number of integers .\r\nThe second line contains n integers a1,a2...an ( 1 â‰¤ ai â‰¤ 10^9  )  separated by a space .', 'Print 3 integers i , j , k  in a line separated by a space .\r\nIf there are multiple answers , minimize i , then minimize j .', 0, 0),
 (1002, 'Count ACM', 1000, 128, 2000, 128, 'For each case, there is only one line giving a string of no more than 10^5\r\n\r\nThere are many cases.It is end with EOF\r\n\r\ncharacters containing only A, C, or M.', 'For each test case, print in one line the number of ACM\'s contained in the string. Since the result may be a huge number, you only have to output the result moded by 1000000007.', 0, 0),
 (1003, 'Longest Elegant Subsequence', 3000, 128, 6000, 128, 'There are multiple test cases.\r\n\r\nThe first line of the input contains an integer T(T<=10) which indicates the number of test cases.\r\n\r\nFor each test case, the first line contains an integer n(0 < n < 106) indicating the length of the sequence that sister Guo have got.\r\n\r\nThe second line contains n integers a1,a2,...,an(0 <= ai <= 109) separated by spaces.', 'For each test case, output the length of the longest elegant subsequence.', 0, 0),
@@ -83,7 +85,8 @@ INSERT INTO `problem_information_1` (`pro_id`, `title`, `time_limit`, `memory_li
 (1007, 'äºŒç»´GCDå‰ç¼€ç§¯', 2000, 128, 3000, 128, 'å¤šç»„æ•°æ®\r\n\r\nç¬¬ä¸€è¡Œæœ‰ä¸€ä¸ªæ•´æ•°T(T<=20)ï¼Œä»£è¡¨æ•°æ®ç»„æ•°\r\n\r\nå¯¹æ¯ç»„æ•°æ®ï¼Œæœ‰ä¸¤ä¸ªç”±ç©ºæ ¼åˆ†éš”çš„æ•´æ•°nï¼Œm(1<=n, m <= 10^7)', 'å¯¹æ¯ç»„æ•°æ®ï¼Œè¾“å‡ºç­”æ¡ˆé™¤ä»¥998244353çš„ä½™æ•°', 0, 0),
 (1008, 'COS12', 1000, 128, 2000, 128, 'å¤šç»„æ•°æ®\r\n\r\nç¬¬ä¸€è¡Œæœ‰ä¸€ä¸ªæ•´æ•°T(T<=20)ï¼Œä»£è¡¨æ•°æ®ç»„æ•°ã€‚\r\n\r\nå¯¹æ¯ç»„æ•°æ®ï¼Œåªæœ‰ä¸¤ä¸ªæ•´æ•°nå’Œm(0 < n, m <= 500)ï¼Œè¡¨ç¤ºCOS12æ¡Œé¢çš„å¤§å°ã€‚', 'å¯¹æ¯ç»„æ•°æ®ï¼Œè¾“å‡ºæ¡Œé¢ä¸Šæœ€å¤šèƒ½æ”¾ç½®çš„å›¾æ ‡æ•°é‡ã€‚', 0, 0),
 (1009, 'mzè¯­è€ƒè¯•', 1000, 128, 2000, 128, 'å¤šç»„æ•°æ®\r\n\r\nç¬¬ä¸€è¡Œæœ‰ä¸€ä¸ªæ•´æ•°T(T<=30)ï¼Œä»£è¡¨æ•°æ®ç»„æ•°ã€‚\r\n\r\nå¯¹æ¯ç»„æ•°æ®ï¼Œç¬¬ä¸€è¡Œæœ‰ä¸¤ä¸ªæ•´æ•°Rã€C(1 <= R, C <= 50)ï¼Œè¡¨ç¤ºè€ƒåœºè§„æ¨¡ã€‚\r\n\r\næŽ¥ä¸‹æ¥Rè¡Œï¼Œæ¯è¡Œæœ‰ä¸€ä¸ªé•¿åº¦ä¸ºCçš„å­—ç¬¦ä¸²ï¼Œæè¿°è€ƒåœºå†…æ¯ä¸ªä½ç½®ã€‚\'.\'è¡¨ç¤ºè¯¥ä½ç½®å¯ç”¨ï¼Œ\'x\'åˆ™è¡¨ç¤ºå·²æŸåã€‚', 'å¯¹æ¯ç»„æ•°æ®ï¼Œè¾“å‡ºè¯¥è€ƒåœºå†…æœ€å¤šèƒ½å®‰æŽ’çš„è€ƒç”Ÿæ•°ã€‚', 0, 0),
-(1010, 'è½¦ä¸Šè¿˜å‰©å‡ äºº', 500, 64, 1000, 64, 'å¤šç»„æ ·ä¾‹\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªTï¼ˆT <= 20ï¼‰\r\nå¯¹äºŽæ¯ç»„æ ·ä¾‹ï¼š\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸¤ä¸ªæ•´æ•°n,mï¼Œåˆ†åˆ«è¡¨ç¤ºèµ·ç‚¹ç«™æœ‰å¤šå°‘äººå’Œæœ‰å¤šå°‘ä¸ªç«™ï¼ˆ1<=n<=10^9 , 0 <= m <= 10^6ï¼‰\r\næŽ¥ä¸‹æ¥mè¡Œæ¯è¡Œä¸¤ä¸ªæ•°ai , biè¡¨ç¤ºæ¯ä¸€ç«™ä¸Šä¸‹è½¦äººæ•° ( 1<=ai,bi<=10^9 )', 'è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºç­”æ¡ˆï¼Œå¦‚æžœä¸å¯èƒ½ï¼Œåˆ™è¾“å‡ºâ€˜-1â€™', 0, 0);
+(1010, 'è½¦ä¸Šè¿˜å‰©å‡ äºº', 500, 64, 1000, 64, 'å¤šç»„æ ·ä¾‹\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªTï¼ˆT <= 20ï¼‰\r\nå¯¹äºŽæ¯ç»„æ ·ä¾‹ï¼š\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸¤ä¸ªæ•´æ•°n,mï¼Œåˆ†åˆ«è¡¨ç¤ºèµ·ç‚¹ç«™æœ‰å¤šå°‘äººå’Œæœ‰å¤šå°‘ä¸ªç«™ï¼ˆ1<=n<=10^9 , 0 <= m <= 10^6ï¼‰\r\næŽ¥ä¸‹æ¥mè¡Œæ¯è¡Œä¸¤ä¸ªæ•°ai , biè¡¨ç¤ºæ¯ä¸€ç«™ä¸Šä¸‹è½¦äººæ•° ( 1<=ai,bi<=10^9 )', 'è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºç­”æ¡ˆï¼Œå¦‚æžœä¸å¯èƒ½ï¼Œåˆ™è¾“å‡ºâ€˜-1â€™', 0, 0),
+(1011, 'å¯å¯å¯çš„æ–æ³¢æ‹‰å¥‘æ•°åˆ—', 1000, 128, 2000, 128, 'ç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªæ­£æ•´æ•°Tè¡¨ç¤ºTç»„æ ·ä¾‹ï¼ˆT<=100ï¼‰\r\næŽ¥ä¸‹æ¥æ¯ä¸ªæ ·ä¾‹è¾“å…¥ä¸€ä¸ªæ­£æ•´æ•°Nï¼ˆN<=10^5ï¼‰', 'æ¯ç»„æ ·ä¾‹è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºå¯å¯æ‰€æ±‚çš„åº”ç”¨æ–æ³¢æ‹‰å¥‘ç¬¬Né¡¹', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -115,7 +118,8 @@ INSERT INTO `problem_information_2` (`pro_id`, `description`, `sample_input`, `s
 (1007, 'è®°gcd(a,b)ä¸ºæ­£æ•´æ•°aã€bçš„æœ€å¤§å…¬å› æ•°ã€‚\r\nè®¡ç®—gcd(1,1)*gcd(1,2)*...*gcd(1,m)*gcd(2,1)*gcd(2,2)*...*gcd(2,m)*...*gcd(n,1)*gcd(n,2)*...*gcd(n,m)', '2\r\n2 2\r\n4 4', '2\r\n96'),
 (1008, 'ä¸ä¹…å‰ï¼ŒccæŠŠä»–çš„æ“ä½œç³»ç»Ÿå‡çº§åˆ°äº†COS12ã€‚åœ¨COS12çš„æ¡Œé¢ç³»ç»Ÿä¸­ï¼Œæœ‰å¦‚ä¸‹ç‰¹æ€§ï¼š\r\n\r\n    æ¡Œé¢å¯ä»¥çœ‹æˆæ˜¯n*må¤§å°çš„ç½‘æ ¼\r\n\r\n    å›¾æ ‡ä¸º2x2å¤§å°çš„æ­£æ–¹å½¢\r\n\r\n    å›¾æ ‡æ”¾ç½®çš„ä½ç½®å¿…é¡»æ»¡è¶³å›¾æ ‡çš„è¾¹ç•Œæ°å¥½ä¸Žç½‘æ ¼é‡å \r\n\r\n    å›¾æ ‡ä¸Žå›¾æ ‡ä¹‹é—´å¯ä»¥ç›¸äº’è¦†ç›–ï¼ŒåŽæ”¾çš„å›¾æ ‡ä¼šè¦†ç›–å…ˆæ”¾çš„å›¾æ ‡\r\n\r\n    å›¾æ ‡å¿…é¡»è¦éœ²å‡ºè‡³å°‘ä¸€åŠçš„é¢ç§¯ï¼ˆ2æ ¼ï¼‰æ‰ç®—æœ‰æ•ˆ\r\n\r\nçŽ°åœ¨CCæƒ³çŸ¥é“æ¡Œé¢ä¸Šæœ€å¤šèƒ½æ”¾å¤šå°‘ä¸ªæœ‰æ•ˆå›¾æ ‡ã€‚', '2\r\n2 3\r\n3 3', '2\r\n3'),
 (1009, 'jswfå¤ºå† åŽ\r\ncc: tql\r\ngj: tggl\r\nmzï¼štlrxml\r\nfrz: bksjs\r\nwjjj: whnzmqa\r\n......\r\njs: ??? \r\njs: nmflb\r\n\r\nâ€”â€”â€”â€”èŠ‚é€‰è‡ªæŸæ¬¡mzè¯­ç­‰çº§æµ‹è¯•\r\n\r\nmzè¯­ç­‰çº§æµ‹è¯•å³å°†åˆ°æ¥ã€‚ç„¶è€Œmzè¯­ååˆ†éš¾ï¼Œç”¨è¯çµæ´»å¤šå˜ï¼Œå¯¼è‡´ä½œå¼Šäººæ•°ä¼—å¤šã€‚è€Œé˜²æ­¢è€ƒç”Ÿä½œå¼Šçš„ä¸€ä¸ªæœ‰æ•ˆçš„é€”å¾„æ˜¯è®©è€ƒç”Ÿä¹‹é—´ä¿æŒä¸€å®šçš„è·ç¦»ã€‚\r\n\r\næŸè€ƒåœºæœ‰Rï¼ˆè¡Œï¼‰*Cï¼ˆåˆ—ï¼‰ä¸ªåº§ä½ï¼Œååœ¨(r, c)çš„è€ƒç”Ÿå¯èƒ½ä¼šçœ‹åˆ°(r,c-1)ã€(r,c+1)ã€(r-1,c-1)ã€(r-1,c+1)ï¼ˆå³å·¦ã€å³ã€å·¦å‰ã€å³å‰ï¼‰4ä¸ªä½ç½®çš„è€ƒç”Ÿçš„ç­”æ¡ˆã€‚\r\n\r\nä¸ºäº†é˜²æ­¢è¿™ç§æƒ…å†µå‘ç”Ÿï¼Œå°±è¦ä¿è¯ä¸€ä¸ªè€ƒç”Ÿå‘¨å›´çš„è¿™4ä¸ªä½ç½®ä¸­æ— å…¶ä»–è€ƒç”Ÿã€‚\r\n\r\nè€Œç”±äºŽè¿™ä¸ªè€ƒåœºå¹´ä¹…å¤±ä¿®ï¼Œæœ‰ä¸€äº›åº§ä½å·²ç»æŸåï¼Œæ˜¯æ— æ³•ä½¿ç”¨çš„ã€‚\r\n\r\nçŽ°åœ¨ï¼Œflsæƒ³çŸ¥é“ï¼Œåœ¨ä¿è¯æ— äººèƒ½çœ‹åˆ°åˆ«äººç­”æ¡ˆçš„å‰æä¸‹ï¼Œè¿™ä¸ªè€ƒåœºæœ€å¤šèƒ½å®‰æŽ’å¤šå°‘åè€ƒç”Ÿï¼Ÿ', '1\r\n2 3\r\n...\r\n.x.', '4'),
-(1010, 'å¿ƒç®—å¤§å¸ˆèƒ½å¿«é€Ÿè®¡ç®—ç»™å®šä¿¡æ¯çš„å…¬äº¤è½¦è¿˜æœ‰å‡ äººçš„é—®é¢˜\r\nä½†æ˜¯å¹¶ä¸æ˜¯æ¯ä¸ªäººéƒ½æœ‰å¾ˆå¼ºå¤§çš„å¿ƒç®—èƒ½åŠ›ï¼ŒäºŽæ˜¯æœ¬å…¬å¸å†³å®šåˆ¶ä½œä¸€ä¸ªç¨‹åºæ¥å›žç­”è¿™ä¸ªé—®é¢˜\r\näºŽæ˜¯å…¬å¸å°±æŠŠè¿™ä¸ªä»»åŠ¡äº¤ç»™äº†ä½ ', '2\r\n1 1\r\n5 1\r\n1 1\r\n5 2', '5\r\n-1');
+(1010, 'å¿ƒç®—å¤§å¸ˆèƒ½å¿«é€Ÿè®¡ç®—ç»™å®šä¿¡æ¯çš„å…¬äº¤è½¦è¿˜æœ‰å‡ äººçš„é—®é¢˜\r\nä½†æ˜¯å¹¶ä¸æ˜¯æ¯ä¸ªäººéƒ½æœ‰å¾ˆå¼ºå¤§çš„å¿ƒç®—èƒ½åŠ›ï¼ŒäºŽæ˜¯æœ¬å…¬å¸å†³å®šåˆ¶ä½œä¸€ä¸ªç¨‹åºæ¥å›žç­”è¿™ä¸ªé—®é¢˜\r\näºŽæ˜¯å…¬å¸å°±æŠŠè¿™ä¸ªä»»åŠ¡äº¤ç»™äº†ä½ ', '2\r\n1 1\r\n5 1\r\n1 1\r\n5 2', '5\r\n-1'),
+(1011, 'å·²çŸ¥æ–æ³¢æ‹‰å¥‘æ•°åˆ—æ˜¯1,1,2,3,5,8,13,21,.....\r\nçŽ°åœ¨å¯å¯æƒ³çŸ¥é“æ–æ³¢æ‹‰å¥‘æ•°åˆ—çš„ç¬¬Né¡¹æ˜¯å¤šå°‘\r\nä½†æ˜¯å› ä¸ºNå¾ˆå¤§ï¼Œæ‰€ä»¥è®¡ç®—å‡ºæ¥çš„æ•°å­—å¾ˆå¤§ï¼Œå¯å¯è§£å†³ä¸äº†ï¼Œæ‰€ä»¥å¸Œæœ›ä½ èƒ½å¸®å¿™ï¼Ÿ\r\nè¯·é—®ä½ èƒ½å¸®åŠ©å¯å¯å—ï¼Ÿ', '5\r\n1\r\n2\r\n3\r\n20\r\n200', '1\r\n1\r\n2\r\n6765\r\n280571172992510140037611932413038677189525');
 
 -- --------------------------------------------------------
 
@@ -140,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `problem_information_3` (
 --
 
 INSERT INTO `problem_information_3` (`pro_id`, `hint`, `pro_user_id`, `begin_time`, `last_update_time`, `authority`, `test_number`) VALUES
-(1000, '', -9945157, '2017-11-26 19:36:58', '2017-11-26 19:36:58', 0, 3),
+(1000, '', -9945157, '2017-11-26 19:36:58', '2017-11-26 19:36:58', 0, 6),
 (1001, '', -9945157, '2017-11-26 19:40:30', '2017-11-26 19:40:30', 0, 0),
 (1002, '', -9945157, '2017-11-26 23:25:20', '2017-11-26 23:25:20', 0, 0),
 (1003, '', -9945157, '2017-11-27 22:14:26', '2017-11-27 22:14:26', 0, 0),
@@ -150,7 +154,8 @@ INSERT INTO `problem_information_3` (`pro_id`, `hint`, `pro_user_id`, `begin_tim
 (1007, '', -9945157, '2017-11-27 23:34:28', '2017-11-27 23:34:28', 9, 0),
 (1008, '', -9945157, '2017-11-27 23:39:48', '2017-11-27 23:39:48', 9, 0),
 (1009, '', -9945157, '2017-11-27 23:41:35', '2017-11-27 23:41:35', 7, 0),
-(1010, '', -9945157, '2017-11-28 15:59:09', '2017-11-28 21:26:37', 9, 0);
+(1010, '', -9945157, '2017-11-28 15:59:09', '2017-11-28 21:26:37', 9, 0),
+(1011, '', -9945157, '2017-12-07 00:00:00', '2017-12-07 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -176,7 +181,10 @@ CREATE TABLE IF NOT EXISTS `problem_test` (
 
 INSERT INTO `problem_test` (`id`, `pro_id`, `test_number`, `input`, `output`, `_date`, `user_id`) VALUES
 (2, 1000, 2, 0x3132333435363738203837363534333231, 0x3939393939393939, '2017-11-29 20:19:43', -9945157),
-(1, 1000, 1, 0x322033, 0x35, '2017-11-27 23:16:04', -9945157);
+(1, 1000, 1, 0x322033, 0x35, '2017-11-27 23:16:04', -9945157),
+(3, 1000, 3, 0x313030303030303030302031303030303030303030, 0x32303030303030303030, '2017-12-16 13:43:06', -9945157),
+(4, 1000, 4, 0x313939372031393936, 0x33393933, '2017-12-16 13:43:50', -9945157),
+(5, 1000, 5, 0x3935343631343735203935343135313539, 0x3139303837363633340d0a, '2017-12-19 14:42:57', 1);
 
 -- --------------------------------------------------------
 
@@ -190,6 +198,8 @@ CREATE TABLE IF NOT EXISTS `pro_submit` (
   `pro_id` int(11) NOT NULL,
   `language` int(11) NOT NULL,
   `result` int(11) NOT NULL,
+  `u_time` int(11) NOT NULL,
+  `u_memory` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `_date` datetime NOT NULL,
   `huck` int(11) NOT NULL,
@@ -202,8 +212,17 @@ CREATE TABLE IF NOT EXISTS `pro_submit` (
 -- 转存表中的数据 `pro_submit`
 --
 
-INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `user_id`, `_date`, `huck`, `code`, `compile`) VALUES
-(1, 1000, 2, 0, -9945157, '2017-11-29 23:35:50', 0, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n\r\nint main(){\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}\r\n', '');
+INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `u_time`, `u_memory`, `user_id`, `_date`, `huck`, `code`, `compile`) VALUES
+(1, 1000, 2, 9001, 0, 0, -9945157, '2017-11-29 23:35:50', 0, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n\r\nint main(){\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}\r\n', ''),
+(2, 1000, 1, 9001, 0, 0, -9945157, '2017-12-18 00:50:49', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
+(3, 1000, 1, 8, 0, 0, 1, '2017-12-19 00:31:18', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\n\",a+b);\r\n    return 0;\r\n}', 'main.c: In function \'main\':\r\r\nmain.c:11:12: warning: missing terminating \" character\r\r\nmain.c:11:5: error: missing terminating \" character\r\r\nmain.c:12:1: warning: missing terminating \" character\r\r\nmain.c:12:1: error: missing terminating \" character\r\r\nmain.c:14:5: error: expected expression before \'return\'\r\r\nmain.c:16:1: error: expected \';\' before \'}\' token'),
+(4, 1000, 1, 8, 0, 0, 1, '2017-12-19 00:31:58', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\n\",a+b);\r\n    return 0;\r\n}', 'main.c: In function \'main\':\r\r\nmain.c:11:12: warning: missing terminating \" character\r\r\nmain.c:11:5: error: missing terminating \" character\r\r\nmain.c:12:1: warning: missing terminating \" character\r\r\nmain.c:12:1: error: missing terminating \" character\r\r\nmain.c:14:5: error: expected expression before \'return\'\r\r\nmain.c:16:1: error: expected \';\' before \'}\' token'),
+(5, 1000, 1, 8, 0, 0, 1, '2017-12-19 00:32:34', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\n\",a+b);\r\n    return 0;\r\n}', 'main.c: In function \'main\':\r\r\nmain.c:11:12: warning: missing terminating \" character\r\r\nmain.c:11:5: error: missing terminating \" character\r\r\nmain.c:12:1: warning: missing terminating \" character\r\r\nmain.c:12:1: error: missing terminating \" character\r\r\nmain.c:14:5: error: expected expression before \'return\'\r\r\nmain.c:16:1: error: expected \';\' before \'}\' token'),
+(6, 1000, 1, 9001, 0, 0, 1, '2017-12-19 00:34:33', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\\\n\",a+b);\r\n    return 0;\r\n}', ','),
+(7, 1000, 1, 9001, 0, 0, 1, '2017-12-19 00:34:51', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}', ','),
+(8, 1000, 1, 9001, 0, 0, 1, '2017-12-19 13:34:01', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
+(9, 1000, 1, 9001, 0, 0, 1, '2017-12-19 13:34:46', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
+(10, 1000, 1, 9001, 0, 0, 1, '2017-12-19 13:35:38', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ',');
 
 -- --------------------------------------------------------
 
@@ -252,10 +271,10 @@ CREATE TABLE IF NOT EXISTS `web_number_information` (
 
 INSERT INTO `web_number_information` (`id`, `description`, `next_numbers`) VALUES
 (1, 'user_numbers', 3),
-(2, 'loading_falg_nums', 8),
-(3, 'new_problem_id', 1011),
-(4, 'test_id', 3),
-(5, 'submit_number', 2);
+(2, 'loading_falg_nums', 6),
+(3, 'new_problem_id', 1012),
+(4, 'test_id', 6),
+(5, 'submit_number', 11);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
