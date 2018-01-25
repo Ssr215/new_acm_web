@@ -6,7 +6,7 @@
 	if ( isset($_POST['user_name1']) ) {
 		$user_name_l = $_POST['user_name1'];
 		$pass_word_l = $_POST['pass_word1'];
-
+		$loading_success_flag = 2;
 		$sql = "SELECT * FROM user_information WHERE user_name = '$user_name_l'";
 		$result = mysqli_query($conn,$sql);
 		//echo "Error: " . $sql . "<br>" . $conn->error;

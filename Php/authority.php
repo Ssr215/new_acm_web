@@ -76,6 +76,11 @@
 						$problem_insert_flag = 5;
 					}else{
 						$problem_insert_flag = 1;
+						$file_path = "D:/test_data/".($pro_id-1);
+						if (!file_exists($file_path)) {
+							mkdir($file_path);
+							echo "create folder success";
+						}
 					}
 				}
 			}
@@ -173,34 +178,54 @@
 		$pro_id = $_POST['add_test_pro_id'];
 		// echo $pro_id."<br>";
 		$add_test_input = $_POST['add_test_input'];
+		$file_path_1 = "D:\\test_data\\".$pro_id."\\";
+		$tesd_id = get_problem_test_id($conn,$pro_id);
 		if (""==$add_test_input) {
 			if ($_FILES["add_input_file"]["error"] > 0) {
 				echo $_FILES["add_input_file"]["error"];
 			}else{
-				$add_test_input = $_FILES["add_input_file"]["tmp_name"];
-				$add_test_input = addslashes(fread(fopen($add_test_input, "r"),filesize($add_test_input)));
-				echo $add_test_input."<br>";
+				//$add_test_input = $_FILES["add_input_file"]["tmp_name"];
+				//$add_test_input = addslashes(fread(fopen($add_test_input, "r"),filesize($add_test_input)));
+				//echo $add_test_input."<br>";
+				if (move_uploaded_file($_FILES["add_input_file"]["tmp_name"],$file_path_1.$tesd_id.".in")) {
+					echo "add input file success!<br>";
+				}else{
+					echo "can't add input file success!<br>";
+				}
 			}
 			
+		}else{
+			$myfile = fopen($file_path_1.$tesd_id.".in", "w") or die("Unable to open file!");
+			fwrite($myfile, $add_test_input);
+			fclose($myfile);
 		}
 		$add_test_output = $_POST['add_test_output'];
 		if (""==$add_test_output) {
 			if ($_FILES["add_output_file"]["error"] > 0) {
 				echo $_FILES["add_output_file"]["error"];
 			}else{
-				$add_test_output = $_FILES["add_output_file"]["tmp_name"];
-				$add_test_output = addslashes(fread(fopen($add_test_output, "r"), filesize($add_test_output)));
-				echo $add_test_output."<br>";
+				//$add_test_output = $_FILES["add_output_file"]["tmp_name"];
+				//$add_test_output = addslashes(fread(fopen($add_test_output, "r"), filesize($add_test_output)));
+				//echo $add_test_output."<br>";
+				if (move_uploaded_file($_FILES["add_output_file"]["tmp_name"],$file_path_1.$tesd_id.".out")) {
+					echo "add output file success!<br>";
+				}else{
+					echo "can't add output file success!<br>";
+				}
 			}
+		}else{
+			$myfile = fopen($file_path_1.$tesd_id.".out", "w") or die("Unable to open file!");
+			fwrite($myfile, $add_test_output);
+			fclose($myfile);
 		}
-		$id = get_and_update_of_web_number_information($conn,4);
-		date_default_timezone_set("Asia/Shanghai");
-		$time_now = date("Y-m-d H:i:s");
-		$test_number = get_problem_test_id ($conn,$pro_id);
-		$use_id = get_user_id($conn,$GLOBALS['loading_username']);
-		$sql = "INSERT INTO problem_test (id,pro_id,test_number,input,output,_date,user_id) VALUES ('$id','$pro_id','$test_number','$add_test_input','$add_test_output','$time_now','$use_id')";
-		if( !mysqli_query($conn,$sql) ){
-			echo "Error: " . $sql . "<br>" . $conn->error;
-		}
+		// $id = get_and_update_of_web_number_information($conn,4);
+		// date_default_timezone_set("Asia/Shanghai");
+		// $time_now = date("Y-m-d H:i:s");
+		// $test_number = get_problem_test_id ($conn,$pro_id);
+		// $use_id = get_user_id($conn,$GLOBALS['loading_username']);
+		// $sql = "INSERT INTO problem_test (id,pro_id,test_number,input,output,_date,user_id) VALUES ('$id','$pro_id','$test_number','$add_test_input','$add_test_output','$time_now','$use_id')";
+		// if( !mysqli_query($conn,$sql) ){
+		// 	echo "Error: " . $sql . "<br>" . $conn->error;
+		// }
 	}
 ?>

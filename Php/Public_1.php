@@ -40,14 +40,19 @@
 	$refresh_flag = false;
 
 	// 创建本机在服务器的映射标志
+	//解决首次访问cookie出现undefined的问题
 	if( !isset($_COOKIE['user_loading_flag1']) || !isset($_COOKIE['user_loading_flag2']) ){
-		setcookie("user_loading_flag1",have_rand(1,100000000));
-		setcookie("user_loading_flag2",have_rand(1,100000000));
-		$refresh_flag = true;
+		$va1 = have_rand(1,100000000);
+		$va2 = have_rand(1,100000000);
+		setcookie("user_loading_flag1",$va1);
+		setcookie("user_loading_flag2",$va2);
+		creat_flag_in_computer($conn,$va1,$va2);
+		//$refresh_flag = true;
+	}else{
+		creat_flag_in_computer($conn,$_COOKIE['user_loading_flag1'],$_COOKIE['user_loading_flag2']);
 	}
 
 	// 创建本机在服务器的映射
-	creat_flag_in_computer($conn,$_COOKIE['user_loading_flag1'],$_COOKIE['user_loading_flag2']);
 	function creat_flag_in_computer($conn,$user_loading_flag1,$user_loading_flag2){
 		$sql = "SELECT * FROM loading_flag";
 		$result = mysqli_query($conn,$sql);

@@ -3,18 +3,21 @@
 	$update_test_id = -1;
 	$update_test_pro_id = -1;
 	if( isset($_POST['update_test_pro_id']) ){
-		$update_test_pro_id = $_POST['update_test_pro_id'];
 		$update_test_id = $_POST['update_test_id'];
-		if (isset($_POST['update_test_input'])) {
-			$up_input = $_POST['update_test_input'];
-			$up_output = $_POST['update_test_output'];
-			date_default_timezone_set("Asia/Shanghai");
-			$time_now = date("Y-m-d H:i:s");
-			$sql = "UPDATE problem_test SET input='$up_input',output='$up_output',_date='$time_now' WHERE pro_id='$update_test_pro_id' AND test_number='$update_test_id'";
-			if( !mysqli_query($conn,$sql) ){
-				echo "Error: " . $sql . "<br>" . $conn->error;
-			}
+		$update_test_pro_id = $_POST['update_test_pro_id'];
+	}
+	
+	function get_test_num_of_pro_id($conn,$pro_id){
+		if( $pro_id < 1000 ){
+			return 0;
 		}
+		$numbers = 0;
+		$sql = "SELECT test_number FROM problem_information_3 WHERE pro_id='$pro_id'";
+		$result = mysqli_query($conn,$sql);
+		while ($row = mysqli_fetch_array($result)) {
+			$numbers = $row['test_number'];
+		}
+		return $numbers;
 	}
 ?>
 
@@ -160,37 +163,56 @@
 		<form action="authority_update_test.php" method="post">
 			problem id: <input type="text" name="update_test_pro_id" value=" <?php echo $update_test_pro_id ?> ">
 			test id: <input type="text" name="update_test_id" value="<?php echo $update_test_id ?>" >
-			<?php
-				if( $update_test_id != -1 ){
-					$pre_input = "nothing";
-					$pre_output = "nothing";
-					$sql = "SELECT * FROM problem_test WHERE pro_id='$update_test_pro_id' AND test_number='$update_test_id'";
-					$result = mysqli_query($conn,$sql);
-					if( !$result ){
-						echo "Error: " . $sql . "<br>" . $conn->error;
-					}else{
-						while ($row = mysqli_fetch_array($result)) {
-							$pre_input = $row['input'];
-							$pre_output = $row['output'];
-							// echo $pre_input."\n".$pre_output;
-						}
-						?>
-							<br>
-							INPUT
-							<br>
-							<textarea class="textarea_size _put_h" name="update_test_input"><?php echo $pre_input; ?></textarea>
-							<br>
-							OUTPUT
-							<br>
-							<textarea class="textarea_size _put_h" name="update_test_output"><?php echo $pre_output; ?></textarea>
-						<?php
-					}
-
-				}
-			?>
 			<br>
 			<input type="submit" name="submit" class="submit_size">
 		</form>
+			<?php
+				if( $update_test_pro_id != -1 ){
+					$numbers = get_test_num_of_pro_id($conn,$update_test_pro_id);
+					$now_id = 0;
+					$file_path = "D:\\test_data\\".$update_test_pro_id."\\";
+					while ($now_id < $numbers) {
+						$file_name_1 = $now_id.".in";
+						$file_name_2 = $now_id.".out";
+						?>
+							<br>
+							<a href="uploading.php?fpath=<?php echo($file_path) ?>&fname=<?php echo($file_name_1); ?>&pro_id=<?php echo($update_test_pro_id) ?>" target="_blank"><?php echo $file_name_1; ?></a>
+							<br>
+							<a href="uploading.php?fpath=<?php echo($file_path) ?>&fname=<?php echo($file_name_2) ?>&pro_id=<?php echo($update_test_pro_id) ?>" target="_blank"><?php echo $file_name_2; ?></a>
+						<?php
+						$now_id++;
+					}
+
+					if( $update_test_id > -1 && $update_test_id < $numbers ){
+						?>
+							<br>
+							<br>
+							<br>
+							<form action="authority_updata_test.php" method="post" enctype="multipart/form-data">
+								problem id: 
+								<input type="text" name="updates_test_pro_id" value="<?php echo($update_test_pro_id) ?>" readonly="readonly">
+								<br>
+								test numbers:
+								<input type="text" name="updates_test_id" value="<?php echo($update_test_id) ?>" readonly="readonly">
+								<br>
+								INPUT
+								<br>
+								<textarea class="textarea_size _put_h" name="update_test_input"></textarea>
+								<br>
+								<input type="file" name="update_input_file" id="file">
+								<br>
+								OUTPUT
+								<br>
+								<textarea class="textarea_size _put_h" name="update_test_output"></textarea>
+								<br>
+								<input type="file" name="update_output_file">
+								<br>		
+								<input type="submit" name="submit" class="submit_size">
+							</form>
+						<?php
+					}
+				}	
+			?>
 	</div>
 </body>
 </html>
