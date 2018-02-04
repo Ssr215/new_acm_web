@@ -64,3 +64,12 @@
 	width: 120px;
 	height: 30px;
 }
+.result_ACcolor{
+	color:green;
+}
+.result_RUNcolor{
+	color: blue;
+}
+.result_ERcolor{
+	color: red;
+}

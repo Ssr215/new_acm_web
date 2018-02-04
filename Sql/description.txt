@@ -2,14 +2,14 @@ pro_submit --- result
 
 0 -- in queue
 1 -- Accepted
-2 -- Presentatior Error
+2 -- Presentation Error
 3 -- Output Limit
 4 -- Runtime Error
 5 -- Memory Limit Exceeded
 6 -- Time Limit Exceeded
 7 -- Wrong Answer
-8 -- Complie error
-9 -- runing
+8 -- Compile error
+9 -- running
 
 YXXX --- Y on test XXX
 (Y is 2-8)

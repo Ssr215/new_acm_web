@@ -1,6 +1,16 @@
 <?php
 	include "../Php/Public_1.php";
 	include '../Php/Status.php';
+
+	function get_color_of_result($number){
+		if ($number == 1) {
+			echo "result_ACcolor";
+		}else if ($number == 0 OR $number >= 9000) {
+			echo "result_RUNcolor";
+		}else{
+			echo "result_ERcolor";
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -166,9 +176,18 @@
 								<td><?php echo $row['id']; ?></td>
 								<td><?php echo $row['_date']; ?></td>
 								<td><?php echo get_id_name($conn,$row['user_id']); ?></td>
-								<td><?php echo $row['pro_id']; ?></td>
+								<td><a href="problemdisplay?pid=<?php echo($row['pro_id']) ?>"><?php echo $row['pro_id']; ?></a></td>
 								<td><a href="Status_display.php?pid=<?php echo($row['id']) ?>"><?php echo get_language($row['language']); ?></a></td>
-								<td><?php echo get_verdict($row['result']); ?></td>
+								<td class="<?php get_color_of_result($row['result']) ?>">
+									<?php 
+										echo get_verdict($row['result']);
+										if ( get_uesr_authority($conn, $GLOBALS['loading_username']) >= 7 ) {
+											?>
+												<a href="rejudge.php?sid=<?php echo($row['id']) ?>&result=<?php echo($row['result']) ?>&pro_id=<?php echo($row['pro_id']) ?>">rejudge</a>
+											<?php
+										}
+									?>
+								</td>
 								<td><?php echo $row['u_time'] . "ms"; ?></td>
 								<td><?php echo $row['u_memory'] . "Kb"; ?></td>
 							</tr>

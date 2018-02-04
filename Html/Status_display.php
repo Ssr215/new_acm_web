@@ -15,6 +15,7 @@
 	$u_memory = 0;
 	$pro_id = 1000;
 	$u_id = -1;
+	$compile = "nothing";
 	while ($row = mysqli_fetch_array($result)) {
 		$language = $row['language'];
 		$code = $row['code'];
@@ -23,12 +24,14 @@
 		$u_memory = $row['u_memory'];
 		$pro_id = $row['pro_id'];
 		$u_id = $row['user_id'];
+		$compile = $row['compile'];
 	}
 	$language = get_languages($language);
 	$r = get_verdict($r);
 	$u_id = get_id_name($conn,$u_id);
 	$code = str_replace("<", "&lt;", $code);
 	$code = str_replace(">", "&gt;", $code);
+	$compile = str_replace("\n", "<br>", $compile);
 ?>
 
 <!DOCTYPE html>
@@ -134,6 +137,15 @@
 				<!-- <p class="prism"></p> -->
 			</code>
 		</pre>
+		<?php
+			if ($r == "Complie error") {
+				?>
+				<hr>
+				<p class="CE_css"><?php echo $compile;?></p>
+				
+				<?php
+			}
+		?>
 	</div>
 </body>
 </html>

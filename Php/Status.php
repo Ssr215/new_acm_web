@@ -44,14 +44,15 @@
 		}
 		$t_id = 0;
 		$p2 = "";
-		if ($id >= 3000) {
+		if ($id >= 2000) {
 			$t_id = $id % 1000;
 			$p2 = " on test " . $t_id;
 			$id = (int)($id / 1000);
 		}
 		$p1 = "";
-
-		if ($id == 3) {
+		if ($id == 2) {
+			$p1 = "Presentatior Error";
+		}elseif ($id == 3) {
 			$p1 = "Output Limit";
 		}elseif ($id == 4) {
 			$p1 = "Runtime Error";
