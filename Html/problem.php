@@ -150,7 +150,7 @@
 								<tr class="<?php if($here_row%2==0){echo('odd_table');}else{echo('even_table');} ?>">
 									<td> </td>
 									<td> <?php echo $row['pro_id']; ?> </td>
-									<td> <a href="problemdisplay?pid=<?php echo($row['pro_id']); ?>" class="table_font menu_a"><?php echo $row['title']; ?></a></td>
+									<td> <a href="problemdisplay.php?pid=<?php echo($row['pro_id']); ?>" class="table_font menu_a"><?php echo $row['title']; ?></a></td>
 									<td> <?php echo $row['AC']; ?></td>
 									<td> <?php echo $row['submit']; ?></td>
 								</tr>

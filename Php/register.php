@@ -26,6 +26,12 @@
 			if(!mysqli_query($conn,$sql)){
 				$register_success_flag = 3;
 				echo "Error: " . $sql . "<br>" . $conn->error;
+			}else{
+				$sql = "INSERT INTO user_information_1 (id,submit_number,ac,wa,pe,tl,ml,re,ce,pass_number,pass_problem) VALUES ('$register_id','0','0','0','0','0','0','0','0','0','')";
+				if( !mysqli_query($conn,$sql) ){
+					$register_success_flag = 4;
+					echo "Error: " . $sql . "<br>" . $conn->error;
+				}
 			}
 		}
 

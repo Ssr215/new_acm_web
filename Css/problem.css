@@ -40,17 +40,17 @@
 }
 .first_table{
 	background-color: #03acf9;
-	font-size: 1.25rem;
+	font-size: 1rem;
 	font-weight: bold;
 	color: white;
 }
 .odd_table{
 	background-color: #47c5ff;
-	font-size: 1.25rem;
+	font-size: 1rem;
 }
 .even_table{
 	background-color: #9de0ff;
-	font-size: 1.25rem;
+	font-size: 1rem;
 }
 .table_font{
 	color: #0600fd;

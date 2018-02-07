@@ -139,16 +139,17 @@
 			<tbody>
 				<tr class="first_table">
 					<!-- <td width="4%"></td> -->
-					<td width="10%">status id</td>
-					<td width="20%">When</td>
-					<td width="12%">Who</td>
-					<td width="12%">Problem id</td>
-					<td width="8%">language</td>
+					<td width="8%">status id</td>
+					<td width="16%">When</td>
+					<td width="10%">Who</td>
+					<td width="10%">Problem id</td>
+					<td width="7%">language</td>
 					<td>Verdict</td>
 					<!-- <td>title</td> -->
 					<!-- <td width="8%">exp</td> -->
-					<td width="8%">Time</td>
-					<td width="10%">Memory</td>
+					<td width="7%">operation</td>
+					<td width="7%">Time</td>
+					<td width="8%">Memory</td>
 				</tr>
 				<?php
 					$page_now = 1;
@@ -176,7 +177,7 @@
 								<td><?php echo $row['id']; ?></td>
 								<td><?php echo $row['_date']; ?></td>
 								<td><?php echo get_id_name($conn,$row['user_id']); ?></td>
-								<td><a href="problemdisplay?pid=<?php echo($row['pro_id']) ?>"><?php echo $row['pro_id']; ?></a></td>
+								<td><a href="problemdisplay.php?pid=<?php echo($row['pro_id']) ?>"><?php echo $row['pro_id']; ?></a></td>
 								<td><a href="Status_display.php?pid=<?php echo($row['id']) ?>"><?php echo get_language($row['language']); ?></a></td>
 								<td class="<?php get_color_of_result($row['result']) ?>">
 									<?php 
@@ -184,6 +185,15 @@
 										if ( get_uesr_authority($conn, $GLOBALS['loading_username']) >= 7 ) {
 											?>
 												<a href="rejudge.php?sid=<?php echo($row['id']) ?>&result=<?php echo($row['result']) ?>&pro_id=<?php echo($row['pro_id']) ?>">rejudge</a>
+											<?php
+										}
+									?>
+								</td>
+								<td>
+									<?php
+										if ( $row['result'] == 1 && query_huck_allow($conn,$row['pro_id']) ) {
+											?>
+												<a href="huck.php?sid=<?php echo($row['id']) ?>">huck it</a>
 											<?php
 										}
 									?>

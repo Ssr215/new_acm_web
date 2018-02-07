@@ -83,4 +83,12 @@
 		}
 		return 1;
 	}
+	function query_huck_allow($conn,$pid){
+		$sql = "SELECT allow_huck FROM problem_information_4 WHERE pro_id = '$pid'";
+		$result = mysqli_query($conn,$sql);
+		while ($row = mysqli_fetch_array($result)) {
+			return $row['allow_huck'] == 1;
+		}
+		return false;
+	}
 ?>

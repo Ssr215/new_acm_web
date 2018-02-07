@@ -20,7 +20,7 @@
 		return $next_number_return;
 	}
 
-	// 是否存在新建题目的标志，1表示创建成功，2-5表示创建失败,其中有对应编号，0表示无新建题目
+	// 是否存在新建题目的标志，1表示创建成功，2-6表示创建失败,其中有对应编号，0表示无新建题目
 	$problem_insert_flag = 0;
 
 	// 处理新建题目
@@ -80,6 +80,12 @@
 						if (!file_exists($file_path)) {
 							mkdir($file_path);
 							echo "create folder success";
+							$pro_id = $pro_id-1;
+							$sql = "INSERT INTO problem_information_4 (pro_id,allow_huck,data_monitoring,true_code,huck_number) VALUES ('$pro_id','0','','','0')";
+							if (!mysqli_query($conn,$sql)) {
+								echo "Error: " . $sql . "<br>" . $conn->error;
+								$problem_insert_flag = 6;
+							}
 						}
 					}
 				}
