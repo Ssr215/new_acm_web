@@ -13,33 +13,37 @@
 		$pid = $_POST['submit_pro_id'];
 		$language = $_POST['submit_language'];
 		$submit_code = $_POST['submit_code'];
-		//$submit_code = mysqli_escape_string($submit_code);
-		//$submit_code = str_replace("'", "\\\\\\'", $submit_code);
-		//$submit_code = str_replace("\\", "\\\\\\\\", $submit_code);
-		// echo $submit_code;
-		date_default_timezone_set("Asia/Shanghai");
-		$time_now = date("Y-m-d H:i:s");
-		$submit_user_id = get_user_id($conn,$GLOBALS['loading_username']);
-		$sid = get_and_update_of_web_number_information($conn,5);
-		$language = get_language_number($language);
-		$sql = "INSERT INTO pro_submit (id,pro_id,language,result,u_time,u_memory,user_id,_date,huck,code,compile) VALUES ('$sid','$pid','$language','0','0','0','$submit_user_id','$time_now','0',?,'')";
-		$sth = $conn->prepare($sql);
-		$sth->bind_param('s',$submit_code);
-		if ($sth->execute()) {
-			echo $sth->insert_id;
-			$submit_success_flag = 1;
-		 	update_submit_number($pid,$conn);
+		if ( strlen($submit_code) >= 60 ) {
+			//$submit_code = mysqli_escape_string($submit_code);
+			//$submit_code = str_replace("'", "\\\\\\'", $submit_code);
+			//$submit_code = str_replace("\\", "\\\\\\\\", $submit_code);
+			// echo $submit_code;
+			date_default_timezone_set("Asia/Shanghai");
+			$time_now = date("Y-m-d H:i:s");
+			$submit_user_id = get_user_id($conn,$GLOBALS['loading_username']);
+			$sid = get_and_update_of_web_number_information($conn,5);
+			$language = get_language_number($language);
+			$sql = "INSERT INTO pro_submit (id,pro_id,language,result,u_time,u_memory,user_id,_date,huck,code,compile) VALUES ('$sid','$pid','$language','0','0','0','$submit_user_id','$time_now','0',?,'')";
+			$sth = $conn->prepare($sql);
+			$sth->bind_param('s',$submit_code);
+			if ($sth->execute()) {
+				echo $sth->insert_id;
+				$submit_success_flag = 1;
+			 	update_submit_number($pid,$conn);
+			}else{
+				echo $sth->error;
+				$submit_success_flag = 2;
+			}
+			// if ( !oraQuery($sql, array("_codes" => $submit_code)) ) {
+			// 	echo "Error: " . $sql . "<br>" . $conn->error;
+			// 	$submit_success_flag = 2;
+			// }else{
+			// 	$submit_success_flag = 1;
+			// 	update_submit_number($pid,$conn);
+			// }
 		}else{
-			echo $sth->error;
-			$submit_success_flag = 2;
+			$submit_success_flag = 3;
 		}
-		// if ( !oraQuery($sql, array("_codes" => $submit_code)) ) {
-		// 	echo "Error: " . $sql . "<br>" . $conn->error;
-		// 	$submit_success_flag = 2;
-		// }else{
-		// 	$submit_success_flag = 1;
-		// 	update_submit_number($pid,$conn);
-		// }
 	}
 
 	// 获取语言返回值
@@ -109,6 +113,12 @@
 		if ( $submit_success_flag == 1 ) {
 			?>
 				<meta http-equiv="refresh" content="0;url=Status.php">
+			<?php
+		}else if ( $submit_success_flag == 3 ){
+			?>
+				<script type="text/javascript">
+					alert("submit code len must more than 60!");
+				</script>
 			<?php
 		}
 	?>

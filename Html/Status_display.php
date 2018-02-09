@@ -32,6 +32,29 @@
 	$code = str_replace("<", "&lt;", $code);
 	$code = str_replace(">", "&gt;", $code);
 	$compile = str_replace("\n", "<br>", $compile);
+
+	function get_name_id($conn,$u_name){
+		$sql = "SELECT id FROM user_information WHERE user_name='$u_name'";
+		$a = -1;
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			$a = $row['id'];
+		}
+		return $a;
+	}
+
+	function get_ac_of_id($conn,$u_id,$pid){
+		$sql = "SELECT pass_problem FROM user_information_1 WHERE id='$u_id'";
+		$result = mysqli_query($conn,$sql);
+		$ans = "";
+		while ( $row = mysqli_fetch_array($result) ) {
+			$ans = $row['pass_problem'];
+		}
+		if ( strstr($ans, $pid) ) {
+			return false;
+		}
+		return true;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +70,16 @@
 			?>
 				<meta http-equiv="refresh" content="0;url=index.php">
 			<?php
+			exit();
+		}
+		if ( $GLOBALS['loading_user_flag'] == false || ( $u_id != $GLOBALS['loading_username']  && get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 && get_ac_of_id($conn,get_name_id($conn,$GLOBALS['loading_username']),$pro_id) ) ) {
+			?>
+				<script type="text/javascript">
+					alert("No Access! You must Accepted this problem first!");
+				</script>
+				<meta http-equiv="refresh" content="0;url=Status.php">
+			<?php
+			exit();
 		}
 	?>
 </head>

@@ -30,12 +30,12 @@
 			</h2>
 		</div>
 		<div id="menu_backgound">
-			<a href="index.php" class="menu_label_1 menu_a new_color_imp">
+			<a href="index.php" class="menu_label_1 menu_a">
 				<img id = "position_photo" src="../photo/display1.png">
 				Home
 			</a>
 
-			<a href="problem.php" class="menu_label_1 menu_a">
+			<a href="problem.php" class="menu_label_1 menu_a new_color_imp">
 				Problem
 			</a>
 

@@ -35,6 +35,7 @@
 				</script>
 				<meta http-equiv="refresh" content="0;index.php">
 			<?php
+			exit();
 		}
 		include "../Php/authority.php";
 	?>
