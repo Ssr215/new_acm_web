@@ -22,7 +22,7 @@
 			$register_id = get_next_register_id($conn);
 			$now_time = date("Y-m-d H:i:s");
 			// $now_time = strtotime($now_time);
-			$sql = "INSERT INTO user_information (id,user_name,nike_name,password,authority,register_time,last_loading_time) VALUES ('$register_id','$user_name_r','$nike_name_r','$pass_word_r','1','$now_time','$now_time')";
+			$sql = "INSERT INTO user_information (id,user_name,nike_name,password,authority,register_time,last_loading_time,cid_allow) VALUES ('$register_id','$user_name_r','$nike_name_r','$pass_word_r','1','$now_time','$now_time','0')";
 			if(!mysqli_query($conn,$sql)){
 				$register_success_flag = 3;
 				echo "Error: " . $sql . "<br>" . $conn->error;

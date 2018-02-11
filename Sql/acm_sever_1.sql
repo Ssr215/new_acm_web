@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 2018-02-07 15:10:04
+-- Generation Time: 2018-02-12 01:19:22
 -- 服务器版本： 5.7.19
 -- PHP Version: 5.6.31
 
@@ -21,6 +21,67 @@ SET time_zone = "+00:00";
 --
 -- Database: `acm_sever_1`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `contest_information_1`
+--
+
+DROP TABLE IF EXISTS `contest_information_1`;
+CREATE TABLE IF NOT EXISTS `contest_information_1` (
+  `contest_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `begin_time` datetime NOT NULL,
+  `duration` int(11) NOT NULL,
+  `limit_par` int(11) NOT NULL,
+  `name` varchar(1000) COLLATE utf8_bin NOT NULL,
+  `creator_id` int(11) NOT NULL,
+  `problem_number` int(11) NOT NULL,
+  PRIMARY KEY (`contest_id`),
+  KEY `contest_id` (`contest_id`),
+  KEY `level` (`level`),
+  KEY `type` (`type`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- 转存表中的数据 `contest_information_1`
+--
+
+INSERT INTO `contest_information_1` (`contest_id`, `level`, `type`, `begin_time`, `duration`, `limit_par`, `name`, `creator_id`, `problem_number`) VALUES
+(1, 0, 1, '2018-02-12 14:00:00', 120, 1, 'First easy test', -9945157, 6);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `contest_information_2`
+--
+
+DROP TABLE IF EXISTS `contest_information_2`;
+CREATE TABLE IF NOT EXISTS `contest_information_2` (
+  `id` int(11) NOT NULL,
+  `contest_id` int(11) NOT NULL,
+  `problem_id` int(11) NOT NULL,
+  `order_number` int(11) NOT NULL,
+  `change_problem_name` varchar(1000) COLLATE utf8_bin NOT NULL,
+  `score` int(11) NOT NULL,
+  `pass_number` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `contest_id` (`contest_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- 转存表中的数据 `contest_information_2`
+--
+
+INSERT INTO `contest_information_2` (`id`, `contest_id`, `problem_id`, `order_number`, `change_problem_name`, `score`, `pass_number`) VALUES
+(1, 1, 1011, 1, 'MOD', 500, 0),
+(2, 1, 1010, 2, '', 1000, 0),
+(3, 1, 1014, 3, '', 1500, 0),
+(4, 1, 1015, 4, '', 2000, 0),
+(5, 1, 1013, 5, '', 2500, 0),
+(6, 1, 1002, 6, '', 3500, 0);
 
 -- --------------------------------------------------------
 
@@ -60,12 +121,18 @@ CREATE TABLE IF NOT EXISTS `loading_flag` (
 --
 
 INSERT INTO `loading_flag` (`loading_id`, `flag1`, `flag2`, `id`, `last_updata_times`) VALUES
-(56, 30591296, 16443003, -9945157, '2018-02-07 23:08:21'),
-(55, 26144492, 63361702, -9945157, '2018-02-07 08:14:06'),
-(54, 9201825, 36775819, 1, '2018-02-07 00:49:38'),
-(53, 58582484, 21610906, -9945157, '2018-02-07 00:38:48'),
-(51, 19471814, 59734782, -1, '2018-02-06 14:00:02'),
-(52, 11916873, 28087443, -9945157, '2018-02-06 14:35:00');
+(74, 72080787, 76104590, -1, '2018-02-12 01:18:47'),
+(73, 47012165, 14785161, -1, '2018-02-11 23:06:51'),
+(60, 90019376, 99609968, 1, '2018-02-09 23:58:12'),
+(68, 69225484, 29990581, -1, '2018-02-10 17:20:11'),
+(72, 29262918, 29740538, -9945157, '2018-02-11 23:06:02'),
+(71, 72361988, 18473042, -1, '2018-02-10 23:45:24'),
+(70, 13838351, 99036032, -1, '2018-02-10 20:28:55'),
+(69, 10404139, 85436415, -1, '2018-02-10 20:20:04'),
+(67, 20529205, 76589293, -1, '2018-02-10 17:18:38'),
+(66, 14214805, 3244781, -9945157, '2018-02-10 20:37:06'),
+(65, 84074590, 35072837, -1, '2018-02-10 14:50:17'),
+(61, 53250693, 70518712, 4, '2018-02-09 23:33:22');
 
 -- --------------------------------------------------------
 
@@ -93,11 +160,11 @@ CREATE TABLE IF NOT EXISTS `problem_information_1` (
 --
 
 INSERT INTO `problem_information_1` (`pro_id`, `title`, `time_limit`, `memory_limit`, `time_limit_java`, `memory_limit_java`, `input`, `output`, `AC`, `submit`) VALUES
-(1000, 'A+B Problem', 500, 5, 1000, 10, 'Single example.\r\nTwo integer a,b (0<=a,b<=10^9)', 'Output a+b', 7, 10),
+(1000, 'A+B Problem', 500, 5, 1000, 10, 'Single example.\r\nTwo integer a,b (0<=a,b<=10^9)', 'Output a+b', 8, 12),
 (1001, 'Maximum Gcd', 1000, 128, 2000, 128, 'There is only one test case .\r\nThe first line contains a integer n ( 2 â‰¤ n â‰¤ 10^3 )  , which is the number of integers .\r\nThe second line contains n integers a1,a2...an ( 1 â‰¤ ai â‰¤ 10^9  )  separated by a space .', 'Print 3 integers i , j , k  in a line separated by a space .\r\nIf there are multiple answers , minimize i , then minimize j .', 2, 6),
 (1002, 'Count ACM', 1000, 128, 2000, 128, 'For each case, there is only one line giving a string of no more than 10^5\r\n\r\nThere are many cases.It is end with EOF\r\n\r\ncharacters containing only A, C, or M.', 'For each test case, print in one line the number of ACM\'s contained in the string. Since the result may be a huge number, you only have to output the result moded by 1000000007.', 1, 5),
 (1003, 'Longest Elegant Subsequence', 3000, 128, 6000, 128, 'There are multiple test cases.\r\n\r\nThe first line of the input contains an integer T(T<=10) which indicates the number of test cases.\r\n\r\nFor each test case, the first line contains an integer n(0 < n < 10^6) indicating the length of the sequence that sister Guo have got.\r\n\r\nThe second line contains n integers a1,a2,...,an(0 <= ai <= 10^9) separated by spaces.', 'For each test case, output the length of the longest elegant subsequence.', 1, 1),
-(1004, 'a x b (â… )', 2000, 64, 4000, 64, 'æœ¬é¢˜æœ‰å¤šç»„æ•°æ®\r\næ¯ç»„æ•°æ®æœ‰ä¸€è¡Œ2ä¸ªæ•´æ•°a, b(0<=a,b<=105), ç”±ç©ºæ ¼éš”å¼€\r\nè¯·å¤„ç†åˆ°æ–‡ä»¶æœ«å°¾', 'æ¯ç»„æµ‹è¯•æ ·ä¾‹è¾“å‡ºä¸€è¡Œä¸€ä¸ªæ•´æ•°ï¼Œè¡¨ç¤ºa x bçš„ç»“æžœ', 5, 8),
+(1004, 'a x b (â… )', 2000, 64, 4000, 64, 'æœ¬é¢˜æœ‰å¤šç»„æ•°æ®\r\næ¯ç»„æ•°æ®æœ‰ä¸€è¡Œ2ä¸ªæ•´æ•°a, b(0<=a,b<=10^5), ç”±ç©ºæ ¼éš”å¼€\r\nè¯·å¤„ç†åˆ°æ–‡ä»¶æœ«å°¾', 'æ¯ç»„æµ‹è¯•æ ·ä¾‹è¾“å‡ºä¸€è¡Œä¸€ä¸ªæ•´æ•°ï¼Œè¡¨ç¤ºa x bçš„ç»“æžœ', 5, 8),
 (1005, 'a x b (â…¡)', 1000, 128, 2000, 128, 'æœ¬é¢˜æœ‰å¤šç»„æ•°æ®\r\næ¯ç»„æ•°æ®æœ‰ä¸€è¡Œ2ä¸ªæ•´æ•°a, b(0<=a,b<=10^1000), ç”±ç©ºæ ¼éš”å¼€\r\nè¯·å¤„ç†åˆ°æ–‡ä»¶æœ«å°¾', 'æ¯ç»„æµ‹è¯•æ ·ä¾‹è¾“å‡ºä¸€è¡Œä¸€ä¸ªæ•´æ•°ï¼Œè¡¨ç¤ºa x bçš„ç»“æžœ', 1, 2),
 (1006, 'a x b (â…¢)', 3000, 128, 6000, 128, 'æœ¬é¢˜æœ‰å¤šç»„æ•°æ®\r\næ¯ç»„æ•°æ®æœ‰ä¸€è¡Œ2ä¸ªæ•´æ•°a, b(0<=a,b<=10^100000), ç”±ç©ºæ ¼éš”å¼€\r\nè¯·å¤„ç†åˆ°æ–‡ä»¶æœ«å°¾', 'å¯¹æ¯ç»„æ•°æ®ï¼Œè¾“å‡ºä¸€è¡Œä¸€ä¸ªæ•´æ•°ï¼Œè¡¨ç¤ºa x bçš„ç»“æžœ', 1, 2),
 (1007, 'äºŒç»´GCDå‰ç¼€ç§¯', 2000, 128, 3000, 128, 'å¤šç»„æ•°æ®\r\n\r\nç¬¬ä¸€è¡Œæœ‰ä¸€ä¸ªæ•´æ•°T(T<=20)ï¼Œä»£è¡¨æ•°æ®ç»„æ•°\r\n\r\nå¯¹æ¯ç»„æ•°æ®ï¼Œæœ‰ä¸¤ä¸ªç”±ç©ºæ ¼åˆ†éš”çš„æ•´æ•°nï¼Œm(1<=n, m <= 10^7)', 'å¯¹æ¯ç»„æ•°æ®ï¼Œè¾“å‡ºç­”æ¡ˆé™¤ä»¥998244353çš„ä½™æ•°', 0, 0),
@@ -174,7 +241,7 @@ INSERT INTO `problem_information_3` (`pro_id`, `hint`, `pro_user_id`, `begin_tim
 (1001, '', -9945157, '2017-11-26 19:40:30', '2017-11-26 19:40:30', 0, 6),
 (1002, '', -9945157, '2017-11-26 23:25:20', '2017-11-26 23:25:20', 0, 10),
 (1003, '', -9945157, '2017-11-27 22:14:26', '2018-02-04 16:16:20', 0, 5),
-(1004, 'åˆå…¥ç¨‹åºè®¾è®¡ç«žèµ›çš„æ‚¨å¯èƒ½éœ€è¦æ³¨æ„ï¼š\r\n\r\n\r\n1. Wrang Answerï¼Ÿ\r\n\r\nå¯èƒ½çˆ†intè¾£ï¼Ÿ\r\n\r\nC/C++ä»¥åŠjavaä¸­çš„intç±»åž‹ï¼ˆ32ä½æœ‰ç¬¦å·æ•´æ•°ï¼‰èƒ½è¡¨ç¤ºçš„èŒƒå›´ä¸º-2^31 ~ 2^31 - 1, 2^31çº¦ä¸º2.147x10^9\r\n\r\nunsigned intï¼ˆ32ä½æ— ç¬¦å·æ•´æ•°ï¼‰è¡¨ç¤ºçš„èŒƒå›´ä¸º0 ~ 2^32 - 1\r\n\r\næ‚¨å¯èƒ½éœ€è¦ä½¿ç”¨æ›´å¤§èŒƒå›´çš„ç±»åž‹ï¼Œ64ä½æœ‰ç¬¦å·æ•´æ•°ï¼Œèƒ½è¡¨ç¤ºåˆ°2^63 - 1, çº¦ä¸º9.233x10^18\r\n\r\nC/C++ä¸ºlong longæˆ–__int64, å¯¹åº”çš„æ ¼å¼æŽ§åˆ¶ç¬¦ä¸º%lldæˆ–%I64d(å…·ä½“ç”¨å“ªä¸ªçœ‹æµ‹è¯•å¹³å°ï¼Œæœ¬ojè¯·ä½¿ç”¨%lld)\r\n\r\njavaä¸­ä¸ºlong \r\n\r\n\r\n2. Time Limit Exceededï¼Ÿ\r\n\r\nå¯èƒ½æ‚¨å¹¶ä¸çŸ¥é“å¦‚ä½•å¤„ç†æ–‡ä»¶æœ«å°¾ï¼Ÿ\r\n\r\nCå¯ä»¥åˆ©ç”¨scanf,getsç­‰æ ‡å‡†è¾“å…¥å‡½æ•°çš„è¿”å›žå€¼å’ŒEOFå®, å¦‚while(scanf(\"%d%d\", &a, &b) != EOF) { }\r\n\r\nC++åˆ©ç”¨istreamç±»>>è¿ç®—ç¬¦çš„è¿”å›žå€¼ï¼Œå¦‚while(cin >> a >> b) { }\r\n\r\njavaå¯ä»¥åˆ©ç”¨Scannerç±»çš„hasNextæ–¹æ³•\r\n\r\n\r\n3. Presentation Errorï¼Ÿ\r\n\r\nè¯·ä¸¥æ ¼æŒ‰ç…§è¾“å‡ºæ ¼å¼è¿›è¡Œè¾“å‡ºï¼Œä¸è¦æœ‰å¤šä½™çš„æç¤ºæ€§è¯­å¥ï¼ˆå¦‚\"è¯·è¾“å…¥ä¸€ä¸ªæ•´æ•°\"ã€\"a x b =\"ç­‰ï¼‰ï¼Œè¡Œæœ«ä¸è¦æœ‰å¤šä½™çš„ç©ºæ ¼', -9945157, '2017-11-27 22:19:45', '2018-02-04 23:53:08', 0, 2),
+(1004, 'åˆå…¥ç¨‹åºè®¾è®¡ç«žèµ›çš„æ‚¨å¯èƒ½éœ€è¦æ³¨æ„ï¼š\r\n\r\n\r\n1. Wrang Answerï¼Ÿ\r\n\r\nå¯èƒ½çˆ†intè¾£ï¼Ÿ\r\n\r\nC/C++ä»¥åŠjavaä¸­çš„intç±»åž‹ï¼ˆ32ä½æœ‰ç¬¦å·æ•´æ•°ï¼‰èƒ½è¡¨ç¤ºçš„èŒƒå›´ä¸º-2^31 ~ 2^31 - 1, 2^31çº¦ä¸º2.147x10^9\r\n\r\nunsigned intï¼ˆ32ä½æ— ç¬¦å·æ•´æ•°ï¼‰è¡¨ç¤ºçš„èŒƒå›´ä¸º0 ~ 2^32 - 1\r\n\r\næ‚¨å¯èƒ½éœ€è¦ä½¿ç”¨æ›´å¤§èŒƒå›´çš„ç±»åž‹ï¼Œ64ä½æœ‰ç¬¦å·æ•´æ•°ï¼Œèƒ½è¡¨ç¤ºåˆ°2^63 - 1, çº¦ä¸º9.233x10^18\r\n\r\nC/C++ä¸ºlong longæˆ–__int64, å¯¹åº”çš„æ ¼å¼æŽ§åˆ¶ç¬¦ä¸º%lldæˆ–%I64d(å…·ä½“ç”¨å“ªä¸ªçœ‹æµ‹è¯•å¹³å°ï¼Œæœ¬ojè¯·ä½¿ç”¨%lld)\r\n\r\njavaä¸­ä¸ºlong \r\n\r\n\r\n2. Time Limit Exceededï¼Ÿ\r\n\r\nå¯èƒ½æ‚¨å¹¶ä¸çŸ¥é“å¦‚ä½•å¤„ç†æ–‡ä»¶æœ«å°¾ï¼Ÿ\r\n\r\nCå¯ä»¥åˆ©ç”¨scanf,getsç­‰æ ‡å‡†è¾“å…¥å‡½æ•°çš„è¿”å›žå€¼å’ŒEOFå®, å¦‚while(scanf(\"%d%d\", &a, &b) != EOF) { }\r\n\r\nC++åˆ©ç”¨istreamç±»>>è¿ç®—ç¬¦çš„è¿”å›žå€¼ï¼Œå¦‚while(cin >> a >> b) { }\r\n\r\njavaå¯ä»¥åˆ©ç”¨Scannerç±»çš„hasNextæ–¹æ³•\r\n\r\n\r\n3. Presentation Errorï¼Ÿ\r\n\r\nè¯·ä¸¥æ ¼æŒ‰ç…§è¾“å‡ºæ ¼å¼è¿›è¡Œè¾“å‡ºï¼Œä¸è¦æœ‰å¤šä½™çš„æç¤ºæ€§è¯­å¥ï¼ˆå¦‚\"è¯·è¾“å…¥ä¸€ä¸ªæ•´æ•°\"ã€\"a x b =\"ç­‰ï¼‰ï¼Œè¡Œæœ«ä¸è¦æœ‰å¤šä½™çš„ç©ºæ ¼', -9945157, '2017-11-27 22:19:45', '2018-02-09 23:55:04', 0, 2),
 (1005, '', -9945157, '2017-11-27 22:21:06', '2018-02-05 00:09:37', 7, 4),
 (1006, '', -9945157, '2017-11-27 22:22:05', '2018-02-05 00:24:53', 7, 3),
 (1007, '', -9945157, '2017-11-27 23:34:28', '2017-11-27 23:34:28', 9, 1),
@@ -185,7 +252,7 @@ INSERT INTO `problem_information_3` (`pro_id`, `hint`, `pro_user_id`, `begin_tim
 (1012, '', -9945157, '2018-01-16 15:43:35', '2018-01-16 15:43:35', 0, 1),
 (1013, 'å¯å¯å¯ä»¥å†³å®šcww cww w cww\r\nç„¶åŽæœ€ç»ˆå¹³å‡é€Ÿåº¦ä¸º50 + 550 + 550 + 100 + 550 = 1800 ', -9945157, '2018-01-25 10:52:10', '2018-01-25 10:52:10', 0, 1),
 (1014, 'é­”çŽ‹æ¯å›žåˆå¯¹å‹‡è€…ï¼Œé­”æ—ä¹‹çŽ‹ï¼Œç¥žå®˜é€ æˆ180ç‚¹ä¼¤å®³ï¼Œå¥¶å¦ˆé€ æˆ45ç‚¹ä¼¤å®³ï¼Œ\r\nå¥¶å¦ˆæ¯å›žåˆå¯ä»¥å›žè¡€200\r\nä¸‰æ”»å‡»ä¸€å›žè¡€è¾“å‡ºä¸º200*1.3+200+130*1.75 = 687.5 => ä¼¤å®³ä¸º687ç‚¹\r\næ‰€ä»¥æœ€å°‘å›žåˆæ˜¯ä¸º10000/687 = 14.545454..... \r\næ‰€ä»¥ç­”æ¡ˆä¸º15ä¸ªå›žåˆ', -9945157, '2018-02-07 19:30:08', '2018-02-07 19:39:08', 7, 0),
-(1015, 'å¯å¯æœ¬åœºå¹³åˆ†ç¬¬å…­é¢˜çš„ 20ä¸‡ / 1ä¸‡= 20 å…ƒ ä¸Ž 5ä¸‡/ 1000 = 50å…ƒ ï¼Œåˆ†çº¢ä¸º50/3 = 16.666666...å…ƒ ï¼Œ ç„¶åŽç¬¬åäºŒé¢˜ç­”å¯¹çš„æ¦‚çŽ‡ä¸º2/3 ï¼Œ æ‰€ä»¥æœŸæœ›ä¸º2/3 * 25ä¸‡ / 5000 = 33.333333...å…ƒ\r\næ‰€ä»¥å¯å¯æœ¬åŽ‚æœŸæœ›å¥–é‡‘ä¸º 20 + 16.66 + 33.33 = 69.9999999... å…ƒ\r\næ‰€ä»¥ç­”æ¡ˆåº”ä¸º70å…ƒ\r\nè¾“å‡º70 æˆ–è€… 70.0 ï¼Œ 70.00 ï¼Œ 69.99999999 ï¼Œ 70.00000001éƒ½å¯¹ï¼Œåªè¦è¯¯å·®å°äºŽ10^-6å³å¯', -9945157, '2018-02-07 22:50:13', '2018-02-07 22:56:01', 7, 0);
+(1015, 'å¯å¯æœ¬åœºå¹³åˆ†ç¬¬å…­é¢˜çš„ 20ä¸‡ / 1ä¸‡= 20 å…ƒ ä¸Ž 5ä¸‡/ 1000 = 50å…ƒ ï¼Œåˆ†çº¢ä¸º50/3 = 16.666666...å…ƒ ï¼Œ ç„¶åŽç¬¬åäºŒé¢˜ç­”å¯¹çš„æ¦‚çŽ‡ä¸º2/3 ï¼Œ æ‰€ä»¥æœŸæœ›ä¸º2/3 * 25ä¸‡ / 5000 = 33.333333...å…ƒ\r\næ‰€ä»¥å¯å¯æœ¬åœºæœŸæœ›å¥–é‡‘ä¸º 20 + 16.66 + 33.33 = 69.9999999... å…ƒ\r\næ‰€ä»¥ç­”æ¡ˆåº”ä¸º70å…ƒ\r\nè¾“å‡º70 æˆ–è€… 70.0 ï¼Œ 70.00 ï¼Œ 69.99999999 ï¼Œ 70.00000001éƒ½å¯¹ï¼Œåªè¦è¯¯å·®å°äºŽ10^-6å³å¯', -9945157, '2018-02-07 22:50:13', '2018-02-08 10:52:09', 7, 0);
 
 -- --------------------------------------------------------
 
@@ -244,7 +311,11 @@ CREATE TABLE IF NOT EXISTS `pro_submit` (
   `huck` int(11) NOT NULL,
   `code` varchar(20000) NOT NULL,
   `compile` varchar(900) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `pro_id` (`pro_id`),
+  KEY `result` (`result`),
+  KEY `user_id` (`user_id`),
+  KEY `language` (`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -289,7 +360,8 @@ INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `u_time`, `u_mem
 (36, 1006, 2, 6003, 3000, 3628, -9945157, '2018-02-05 00:28:53', 0, '#include <algorithm>\r\n#include <cctype>\r\n#include <cmath>\r\n#include <cstdio>\r\n#include <cstdlib>\r\n#include <cstring>\r\n#include <ctime>\r\n#include <iomanip>\r\n#include <iostream>\r\n#include <map>\r\n#include <queue>\r\n#include <string>\r\n#include <set>\r\n#include <vector>\r\n#include <cassert>\r\nusing namespace std;\r\ntypedef long long LL;\r\nconst int N = 50007 , INF = 0x3f3f3f3f , M = 100005;\r\nconst double PI = acos(0.0) * 2;\r\ntemplate<typename T1>\r\nT1 gcd(T1 a , T1 b){ return b ? gcd(b,a%b) : a;}\r\n\r\nstruct BigNum{\r\n    int a[N];\r\n    enum{MOD = 10000};\r\n    void sets(char *s){\r\n        int t,k,ind,l,i;\r\n        memset(a,0,sizeof(a));\r\n        l = strlen(s);\r\n        a[0] = l / 4;\r\n        a[0] += l % 4 != 0 ? 1 : 0;\r\n        ind = 1;\r\n        for(int i = l-1 ; i >= 0 ; i -= 4){\r\n            t = 0;\r\n            k = max(0,i-3);\r\n            for(int j = k ; j <= i ; j++)   t = t * 10 + s[j] - \'0\';\r\n            a[ind++] = t;\r\n        }\r\n    }\r\n    void print(){\r\n        printf(\"%d\",a[a[0]]);\r\n        for(int i = a[0] - 1 ; i > 0 ; i--){\r\n            if(a[i] == 0){\r\n                printf(\"0000\");\r\n                continue;\r\n            }\r\n            for(int k = 10 ; k * a[i] < MOD ; k *= 10) putchar(\'0\');\r\n            printf(\"%d\",a[i]);\r\n        }\r\n        puts(\"\");\r\n    }\r\n    int& operator[](int p){return a[p];}\r\n    const int& operator[](int p)const{return a[p];}\r\n    BigNum operator * (const BigNum& b){\r\n        BigNum c;\r\n        c.sets(\"0\");\r\n        c[0] = a[0] + b[0];\r\n        for(int i = 1 ; i <= a[0] ; i++){\r\n            for(int j = 1 ; j <= b[0] ; j++){\r\n                c[i+j-1] += a[i] * b[j];\r\n                c[i+j] += c[i+j-1] / MOD;\r\n                c[i+j-1] %= MOD;\r\n            }\r\n        }\r\n        if( c[c[0]] == 0 )  c[0]--;\r\n        return c;\r\n    }\r\n}a,b;\r\n\r\nchar s1[M],s2[M];\r\n\r\nint main(){\r\n#ifdef LOCAL\r\n    freopen(\"E:\\\\c++\\\\in.txt\", \"r\", stdin);\r\n    freopen(\"E:\\\\c++\\\\out.txt\",\"w\",stdout);\r\n#endif\r\n    while(~scanf(\"%s%s\",s1,s2)){\r\n        a.sets(s1);\r\n        b.sets(s2);\r\n        (a*b).print();\r\n    }\r\n    return 0;\r\n}\r\n', ''),
 (38, 1013, 1, 8, 0, 0, 1, '2018-02-07 00:45:32', 0, '#include <iostream>\r\nusing namespace std;\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}', 'main.c:1:20: fatal error: iostream: No such file or directory\r\r\n #include <iostream>\r\r\r\n                    ^\r\r\ncompilation terminated.'),
 (39, 1013, 1, 8, 0, 0, 1, '2018-02-07 00:48:19', 0, '#include <stdio.h>\r\nusing namespace std;\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}	', 'main.c:3:1: error: unknown type name \'using\'\r\r\n \r\r\r\n ^\r\r\nmain.c:3:17: error: expected \'=\', \',\', \';\', \'asm\' or \'__attribute__\' before \'std\'\r\r\n \r\r\r\n                 ^'),
-(40, 1013, 1, 1, 220, 3432, 1, '2018-02-07 00:48:55', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}	', '');
+(40, 1013, 1, 1, 220, 3432, 1, '2018-02-07 00:48:55', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}	', ''),
+(41, 1000, 1, 1, 52, 3488, 4, '2018-02-09 22:42:21', 0, '#include<stdio.h>\r\nint main()\r\n{\r\n   int a,b;\r\n   scanf(\"%d%d\",&a,&b);\r\n   printf(\"%d\",a+b);\r\n   return 0;\r\n } ', '');
 
 -- --------------------------------------------------------
 
@@ -306,18 +378,23 @@ CREATE TABLE IF NOT EXISTS `user_information` (
   `authority` int(11) NOT NULL,
   `register_time` datetime NOT NULL,
   `last_loading_time` datetime NOT NULL,
+  `cid_allow` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_name` (`user_name`)
+  UNIQUE KEY `user_name` (`user_name`),
+  KEY `cid_allow` (`cid_allow`),
+  KEY `nike_name` (`nike_name`),
+  KEY `user_name_2` (`user_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `user_information`
 --
 
-INSERT INTO `user_information` (`id`, `user_name`, `nike_name`, `password`, `authority`, `register_time`, `last_loading_time`) VALUES
-(-9945157, 'admin', 'admin', '6540729b0ff418c25500d7372c3905cd', 9, '2017-11-22 22:44:15', '2017-11-22 22:44:15'),
-(1, '2015210004', 'wdjs', '6540729b0ff418c25500d7372c3905cd', 7, '2017-11-22 21:47:07', '2017-11-22 21:47:07'),
-(3, 'keke', 'kkkkk', '7a9e4b5025a8adc7d3208fd66806d685', 1, '2018-02-07 18:51:19', '2018-02-07 18:51:19');
+INSERT INTO `user_information` (`id`, `user_name`, `nike_name`, `password`, `authority`, `register_time`, `last_loading_time`, `cid_allow`) VALUES
+(-9945157, 'admin', 'admin', '6540729b0ff418c25500d7372c3905cd', 9, '2017-11-22 22:44:15', '2017-11-22 22:44:15', 0),
+(1, '2015210004', 'wdjs', '6540729b0ff418c25500d7372c3905cd', 7, '2017-11-22 21:47:07', '2017-11-22 21:47:07', 0),
+(3, 'keke', 'kkkkk', '7a9e4b5025a8adc7d3208fd66806d685', 1, '2018-02-07 18:51:19', '2018-02-07 18:51:19', 0),
+(4, 'kekekeke', 'keke', 'f4abeda033b9ba1b495861eedfc94679', 6, '2018-02-09 22:35:27', '2018-02-09 22:35:27', 0);
 
 -- --------------------------------------------------------
 
@@ -348,7 +425,8 @@ CREATE TABLE IF NOT EXISTS `user_information_1` (
 INSERT INTO `user_information_1` (`id`, `submit_number`, `ac`, `wa`, `pe`, `tl`, `ml`, `re`, `ce`, `pass_number`, `pass_problem`) VALUES
 (-9945157, 27, 14, 6, 0, 4, 0, 0, 3, 8, '1000,1001,1002,1003,1004,1005,1006,1011'),
 (1, 11, 6, 0, 0, 0, 0, 0, 5, 2, '1000,1013'),
-(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(4, 2, 1, 0, 0, 0, 0, 0, 1, 0, '1000');
 
 -- --------------------------------------------------------
 
@@ -369,12 +447,14 @@ CREATE TABLE IF NOT EXISTS `web_number_information` (
 --
 
 INSERT INTO `web_number_information` (`id`, `description`, `next_numbers`) VALUES
-(1, 'user_numbers', 4),
-(2, 'loading_falg_nums', 57),
+(1, 'user_numbers', 5),
+(2, 'loading_falg_nums', 75),
 (3, 'new_problem_id', 1016),
 (4, 'test_id', 6),
-(5, 'submit_number', 41),
-(6, 'huck_number', 1);
+(5, 'submit_number', 43),
+(6, 'huck_number', 1),
+(7, 'contest_1_id', 2),
+(8, 'contest_2_id', 7);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

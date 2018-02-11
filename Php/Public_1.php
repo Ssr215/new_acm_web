@@ -139,6 +139,16 @@
 		}
 		return $next_number_return;
 	}
+	// 获取服务器中web_number_information的某一个id的参数
+	function get_of_web_number_information($conn,$uid){
+		$next_number_return = -9456487;
+		$sql = "SELECT * FROM web_number_information WHERE id = '$uid'";
+		$result = mysqli_query($conn,$sql);
+		while ($row = mysqli_fetch_array($result)) {
+			$next_number_return = $row['next_numbers'];
+		}
+		return $next_number_return;
+	}
 
 	// 获取当前用户的登录权限
 	function get_uesr_authority($conn,$u_name){

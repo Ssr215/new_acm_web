@@ -22,3 +22,14 @@ pro_language --- select
 2 --- g++
 3 --- g++11
 4 --- java
+
+contest level --- select
+0 --- div3(Rating on (-inf,1200) )
+1 --- div2(Rating on [1200,1900) )
+2 --- div1'2(Rating on (-inf,inf) )
+3 --- div1(Rating on [1900,inf) )
+4 --- education (using CCPC/ICPC)
+
+Types of contest --- select
+1 --- CF rating div
+2 --- ICPC/CCPC

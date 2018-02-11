@@ -1,7 +1,8 @@
 <?php
 	// 获取当前题库题目数目
 	function get_problem_number($conn){
-		$sql = "SELECT COUNT(1) FROM problem_information_3";
+		$user_authority = get_uesr_authority($conn,$GLOBALS['loading_username']);
+		$sql = "SELECT COUNT(1) FROM problem_information_3 WHERE authority<='$user_authority'";
 		$result = mysqli_query($conn,$sql);
 		// echo $result;
 		list($ans) = $result->fetch_row();

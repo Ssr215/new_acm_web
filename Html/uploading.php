@@ -20,6 +20,7 @@
 			</script>
 			<meta http-equiv="refresh" content="0;index.php">
 		<?php
+		exit();
 	}
 	$file_path = $_GET['fpath'];
 	$file_name = $_GET['fname'];

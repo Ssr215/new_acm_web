@@ -1,0 +1,22 @@
+body{
+	background:url(../photo/rank.png);
+	background-position: center top;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	text-align: center;
+}
+#menu_backgound_3{
+	background: url(../photo/menu_3.jpg) repeat scroll;
+	background-size: 40px 40px;
+	font-weight: bold;
+	height: 40px;
+	text-align: left;
+	width: 100%;
+	z-index: 2;
+}
+#contest_main_backgound{
+	background-color: rgba(255,255,255,0.5);
+	width: 1200px;
+	margin: 50px auto;
+}

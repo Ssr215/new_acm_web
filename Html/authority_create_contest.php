@@ -1,6 +1,7 @@
 <?php
 	include "../Php/Public_1.php";
-	//get_begin_time();
+	include "../Php/authority.php";
+	// get_begin_time(0);
 	function get_begin_time($flag){
 		date_default_timezone_set('Asia/Shanghai');
 		$ans = '20'.date('y-m-d',time()).'T';
@@ -16,9 +17,9 @@
 				}
 			}
 		}
-		if( $m < 10 ){
-			$m = '0'.$m;
-		}
+		// if( $m < 10 ){
+		// 	$m = '0'.$m;
+		// }
 		if ( $flag == 1 ) {
 			 $h = ($h + 2) % 24;
 			 if ( $h < 10 ) {
@@ -37,10 +38,51 @@
 	if ( isset($_POST['c_number']) ) {
 		$number = $_POST['c_number'];
 		$have_value = 1;
-		if ( isset($_POST['pro_'.$c_number]) && !isset($_POST['pro_'.$c_number+1]) ) {
+		if ( isset($_POST['pro_'.$number]) && !isset($_POST['pro_'.($number+1)]) ) {
+			echo "try to insret but now need ck";
 			$create_success_flag = 2;
-			$c_id = $_POST['c_id'];
-			//$sql = "INSERT INTO "
+			if ( $_POST['c_name'] == "" ) {
+				echo "contest name must have!";
+			}else{
+				$ck_flag = 0;
+				$up = get_of_web_number_information($conn,3);
+				for ($i=1; $i <= $number; $i++) { 
+					if ( $_POST['pro_'.$i] < 1000 || $_POST['pro_'.$i] >= $up || $_POST['pro_'.$i.'_score'] < 500 || $_POST['pro_'.$i.'_score'] > 3500 ) {
+						$ck_flag = 1;
+						break;
+					}
+				}
+				if ( $ck_flag == 0 ) {
+					echo "pass ck , now will insert content now!";
+					$c_id = $_POST['c_id'];
+					$begin_time = $_POST['c_begin_time'];
+					$duration = $_POST['c_duration'];
+					$name = $_POST['c_name'];
+					$id = get_user_id($conn,$GLOBALS['loading_username']);
+					$sql = "INSERT INTO contest_information_1 (contest_id,level,type,begin_time,duration,limit_par,name,creator_id,problem_number) VALUES ('$c_id','0','1','$begin_time','$duration','0','$name','$id','$number')";
+					if ( !mysqli_query($conn,$sql) ) {
+						echo "Error: " . $sql . "<br>" . $conn->error;
+						$create_success_flag = 3;
+					}else{
+						get_and_update_of_web_number_information($conn,7);
+						for ($i=1; $i <= $number ; $i++) { 
+							$id = get_and_update_of_web_number_information($conn,8);
+							$pro_id = $_POST['pro_'.$i];
+							$change_name = $_POST['pro_'.$i."_name"];
+							$c_score = $_POST['pro_'.$i."_score"];
+							$sql = "INSERT INTO contest_information_2 (id,contest_id,problem_id,order_number,change_problem_name,score,pass_number) VALUES ('$id','$c_id','$pro_id','$i','$change_name','$c_score','0')";
+							if ( !mysqli_query($conn,$sql) ) {
+								echo "Error: " . $sql . "<br>" . $conn->error;
+								$create_success_flag = 4*100 + $i;
+								break;
+							}
+						}
+						if ( $create_success_flag == 2 ) {
+							$create_success_flag = 1;
+						}
+					}
+				}
+			}
 		}
 	}
 ?>
@@ -57,29 +99,22 @@
 				<script type="text/javascript">
 					alert("No Access!");
 				</script>
-				<meta http-equiv="refresh" content="0;index.php">
+				<meta http-equiv="refresh" content="0;url=index.php">
 			<?php
 			exit();
 		}
-		include "../Php/authority.php";
+		if ( $create_success_flag == 1 ) {
+			?>
+				<script type="text/javascript">
+					alert("Create is success!");
+				</script>
+				<meta http-equiv="refresh" content="0;url=index.php">
+			<?php
+			exit();
+		}
 	?>
 	<link rel="stylesheet" type="text/css" href="../Css/authority.css">
 	<script type="text/javascript" src="../Js/authority.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			$('.add_row').click(function(e){
-				var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-				var x = document.getElementById('c_number');
-				x.value = x.value + 1;
-				x = x.value;
-				var $html = $("<tr><td>"+str.substr(x-1,1)+"</td><td><input type=\'text\' name=\'pro_"+x+"\'></td><td><input type=\'text\' name=\'pro_"+x+"_name\'></td><td><a id=\'de_row\' onclick=\'sc()\'></a></td>");
-				$('.mytable table ').append($html);
-			});
-		})
-		function sc(){
-			$('.mytable table tr').eq($(this).index()).remove();
-		}
-	</script>
 </head>
 <body>
 	<div id="package">
@@ -207,7 +242,7 @@
 					<tbody>
 						<tr>
 							<td width="200px">contest id</td>
-							<td><input type="text" name="c_id" value="1" readonly="readonly"></td>
+							<td><input type="text" name="c_id" value="<?php echo(get_of_web_number_information($conn,7)) ?>" readonly="readonly"></td>
 							<td width="200px">contest name</td>
 							<td><input type="text" name="c_name"></td>
 						</tr>
@@ -215,13 +250,13 @@
 							<td>problem number</td>
 							<td><input type="text" name="c_number" value="<?php if(isset($_POST['c_number'])){echo($number);}else{echo(3);} ?>" id="c_number"></td>
 							<td>duration(minute)</td>
-							<td><input type="text" name="c_duration" onchange="change_end_time()" value="120" id="c_duration"></td>
+							<td><input type="text" name="c_duration" onchange="change_end_time()" value="<?php if(isset($_POST['c_duration'])){echo($_POST['c_duration']);}else{echo(120);} ?>" id="c_duration"></td>
 						</tr>
 						<tr>
 							<td>begin time</td>
-							<td><input type="datetime-local" name="c_begin_time" value="<?php get_begin_time(0) ?>" id="c_begin_time" onchange="change_end_time()"></td>
+							<td><input type="datetime-local" name="c_begin_time" value="<?php if(isset($_POST['c_begin_time'])){echo($_POST['c_begin_time']);}else{get_begin_time(0);} ?>" id="c_begin_time" onchange="change_end_time()"></td>
 							<td>end time</td>
-							<td><input type="datetime-local" name="c_end_time" value="<?php get_begin_time(1) ?>" readonly="readonly" id="c_end_time"></td>
+							<td><input type="datetime-local" name="c_end_time" value="<?php if(isset($_POST['c_end_time'])){echo($_POST['c_end_time']);}else{get_begin_time(1);} ?>" readonly="readonly" id="c_end_time"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -232,19 +267,19 @@
 								<td>order flag</td>
 								<td>problem id</td>
 								<td>change problem title</td>
-								<!-- <td>operation</td> -->
+								<td>Score</td>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
 								$temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-								for ($i = 1; $i <= 3; $i++) { 
+								for ($i = 1; $i <= $number; $i++) {
 									?>
 										<tr id="<?php echo('num_'.$i) ?>">
 											<td><?php echo substr($temp, $i-1,1); ?></td>
-											<td><input type="text" name="pro_<?php echo($i) ?>"></td>
-											<td><input type="text" name="pro_<?php echo($i) ?>_name"></td>
-											<!-- <td></td> -->
+											<td><input type="text" name="pro_<?php echo($i) ?>" value="<?php if(isset($_POST['pro_'.$i])){echo($_POST['pro_'.$i]);}else{echo('');} ?>"></td>
+											<td><input type="text" name="pro_<?php echo($i) ?>_name" value="<?php if(isset($_POST['pro_'.$i.'_name'])){echo($_POST['pro_'.$i.'_name']);}else{echo('');} ?>"></td>
+											<td><input type="text" name="pro_<?php echo($i) ?>_score" value="<?php if(isset($_POST['pro_'.$i.'_score'])){echo($_POST['pro_'.$i.'_score']);}else{echo(500);} ?>"></td>
 										</tr>
 									<?php
 								}

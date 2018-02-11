@@ -108,7 +108,8 @@
 	<div id="problem_main_backgound">
 		<?php 
 			$page_number = get_status_number($conn);
-			$page_number_have = (int)(($page_number+99)/100);
+			$each_page_number = 100;
+			$page_number_have = (int)(($page_number+$each_page_number-1)/$each_page_number);
 			for ($i=1; $i <=$page_number_have ; $i++) { 
 				?>
 					<a href="Status.php?page=<?php echo($i) ?>" class="page_a">
@@ -159,11 +160,11 @@
 					if( $page_now < 1 || $page_now > $page_number_have ){
 						$page_now = 1;
 					}
-					$begin_id = $page_number - 100 * ($page_now - 1);
+					$begin_id = $page_number - $each_page_number * ($page_now - 1) - 1;
 					if ($begin_id <= 0) {
-						$begin_id = $begin_id + 100;
+						$begin_id = $begin_id + $each_page_number;
 					}
-					$end_id = $begin_id - 101;
+					$end_id = $begin_id - $each_page_number;
 					if( $end_id < 0 ){
 						$end_id = 0;
 					}

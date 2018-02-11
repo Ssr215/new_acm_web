@@ -1,6 +1,18 @@
 <?php
 	include "../Php/Public_1.php";
-	include "../Php/problem.php";
+	function display_level($num){
+		if ( $num == 0 ) {
+			echo "div 3";
+		}else if ( $num == 1 ) {
+			echo "div 2";
+		}else if ( $num == 2 ) {
+			echo "div 1'2";
+		}else if ( $num == 3 ) {
+			echo "div 1";
+		}else {
+			echo "education";
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -10,6 +22,13 @@
 	<link rel="stylesheet" type="text/css" href="../Css/Home.css">
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
+	<?php
+		if( $refresh_flag ){
+			?>
+				<meta http-equiv="refresh" content="0;url=index.php">
+			<?php
+		}
+	?>
 </head>
 <body>
 	<div id="package">
@@ -25,7 +44,7 @@
 				Home
 			</a>
 
-			<a href="problem.php" class="menu_label_1 menu_a new_color_imp">
+			<a href="problem.php" class="menu_label_1 menu_a">
 				Problem
 			</a>
 
@@ -33,7 +52,7 @@
 				Status
 			</a>
 
-			<a href="Contest.php" class="menu_label_1 menu_a">
+			<a href="Contest.php" class="menu_label_1 menu_a new_color_imp">
 				contest
 			</a>
 
@@ -90,23 +109,25 @@
 
 	<div id="problem_main_backgound">
 		<?php
-			$have_page = get_problem_number($conn);
+			$have_page = get_of_web_number_information($conn,7);
+			$have_page--;
 			$each_page_number = 100;
 			$page_numbers_have = (int)(($have_page + $each_page_number - 1) / $each_page_number);
 			for ($i=1; $i <= $page_numbers_have; $i++) {
 				?>
-					<a href="problem.php?page=<?php echo($i); ?>" class = "page_a">
+					<a href="contest.php?page=<?php echo($i); ?>" class = "page_a">
 						<?php echo $i; ?>
 					</a>
 				<?php
 			}
 		?>
+
 		<table width="1200px" align="center">
 			<tbody>
 				<tr>
 					<td width="10%"> </td>
 					<form>
-						<td width="10%">problem id</td>
+						<td width="10%">contest id</td>
 						<td colspan="2" width="15%"><input type="text" name="ser_pro_id"></td>
 						<td width="10%" align="left"><input type="submit" name="submit" value="Go"></td>
 					</form>
@@ -118,17 +139,18 @@
 				</tr>
 			</tbody>
 		</table>
-		<!-- <br> -->
+
 		<table width="1200px" align="center">
-			<tbody>
+			<thead>
 				<tr class="first_table">
-					<td width="4%"></td>
-					<td width="12%">problem id</td>
+					<td width="10%">contest id</td>
 					<td>title</td>
-					<!-- <td width="8%">exp</td> -->
-					<td width="8%">AC</td>
-					<td width="8%">submit</td>
+					<td width="8%">level</td>
+					<td width="16%">begin time</td>
+					<td width="8%">duration</td>
 				</tr>
+			</thead>
+			<tbody>
 				<?php
 					$page_begin_add = 0;
 					if ( isset($_GET['page']) ) {
@@ -145,39 +167,31 @@
 					if( $end_id > $have_page ){
 						$end_id = $have_page;
 					}
-					// echo $begin_id . " and " . $end_id;
-					// $end_id--;
+					
 					$here_row = 0;
-					$user_authority = get_uesr_authority($conn,$GLOBALS['loading_username']);
-					$sql = "SELECT pro_id FROM problem_information_3 WHERE authority <= '$user_authority' LIMIT $begin_id,$end_id";
+					$sql = "SELECT contest_id,level,begin_time,duration,name FROM contest_information_1 LIMIT $begin_id,$end_id";
 					$result = mysqli_query($conn,$sql);
 					if( !$result ){
 						echo "Error: " . $sql . "<br>" . $conn->error;
 					}else{
 						while ($row = mysqli_fetch_array($result)) {
-							if( get_problem_authority($conn,$row['pro_id']) > get_uesr_authority($conn,$GLOBALS['loading_username']) ){
-								continue;
-							}
 							$here_row++;
-							$pro_id = $row['pro_id'];
-							$sql1 = "SELECT pro_id,title,AC,submit FROM problem_information_1 WHERE pro_id='$pro_id'";
-							$result1 = mysqli_query($conn,$sql1);
-							while ( $rows = mysqli_fetch_array($result1) ) {
-								?>
-									<tr class="<?php if($here_row%2==0){echo('odd_table');}else{echo('even_table');} ?>">
-										<td> </td>
-										<td> <?php echo $rows['pro_id']; ?> </td>
-										<td> <a href="problemdisplay.php?pid=<?php echo($rows['pro_id']); ?>" class="table_font menu_a"><?php echo $rows['title']; ?></a></td>
-										<td> <?php echo $rows['AC']; ?></td>
-										<td> <?php echo $rows['submit']; ?></td>
-									</tr>
-								<?php
-							}
+							$cid = $row['contest_id'];
+							?>
+								<tr class="<?php if($here_row%2==0){echo('odd_table');}else{echo('even_table');} ?>">
+									<td><?php echo $cid; ?></td>
+									<td><a href="contestdisplay.php?cid=<?php echo($cid) ?>"><?php echo $row['name']; ?></a></td>
+									<td><?php display_level($row['level']); ?></td>
+									<td><?php echo $row['begin_time']; ?></td>
+									<td><?php echo $row['duration']." min"; ?></td>
+								</tr>
+							<?php
 						}
 					}
 				?>
 			</tbody>
 		</table>
 	</div>
+
 </body>
 </html>
