@@ -121,10 +121,6 @@
 				Create contest
 			</a>
 
-			<a href="authority_update_contest.php" class="menu_label_5 menu_a">
-				Update contest
-			</a>
-
 			<a href="authority_delete_anything.php" class="menu_label_5 menu_a">
 				Delete
 			</a>

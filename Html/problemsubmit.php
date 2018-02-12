@@ -52,8 +52,12 @@
 			return 1;
 		}else if ( $lan == "C++" ) {
 			return 2;
-		}else if ( $lan == "JAVA" ) {
+		}else if ( $lan == "C++11" ) {
 			return 3;
+		}else if ( $lan == "C++14" ) {
+			return 4;
+		}else if ( $lan == "JAVA" ) {
+			return 5;
 		}
 		return 0;
 	}

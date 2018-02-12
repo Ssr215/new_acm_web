@@ -19,4 +19,55 @@ body{
 	background-color: rgba(255,255,255,0.5);
 	width: 1200px;
 	margin: 50px auto;
+	height: auto;
+}
+#contest_left_page{
+	width: 900px;
+	background-color: rgba(255,255,255,0.5);
+}
+#contest_right_page{
+	width: 300px;
+	float: right;
+	display: inline;
+	background-color: rgba(255,255,255,0.5);
+	/*margin: 1em 1em 1em -2em*/
+}
+.right_table{
+	width: 270px;
+	float: right;
+	display: inline;
+	margin-top: 24px;
+}
+.right_table_first{
+	width: 270px;
+	float: right;
+	display: inline;
+}
+.right_td{
+	width: 98.5%;
+	float: left;
+	text-align: left;
+	display: inline;
+}
+.red_color{
+	color: red;
+}
+.green_color{
+	color: green;
+}
+.yellow_color{
+	color: yellow;
+}
+#cpro_display_description{
+	font-size: 1.75rem;
+	color: blue;
+	font-weight: bold;
+	text-align: left;
+}
+#cpro_display_detile{
+	width: 750px;
+	margin: 3px auto;
+	font-size: 1.05rem;
+	text-align: left;
+	background-color: rgba(0,255,43,0.5);
 }

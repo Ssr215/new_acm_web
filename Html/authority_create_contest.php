@@ -1,5 +1,14 @@
 <?php
 	include "../Php/Public_1.php";
+	if( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ){
+		?>
+			<script type="text/javascript">
+				alert("No Access!");
+			</script>
+			<meta http-equiv="refresh" content="0;url=index.php">
+		<?php
+		exit();
+	}
 	include "../Php/authority.php";
 	// get_begin_time(0);
 	function get_begin_time($flag){
@@ -59,7 +68,10 @@
 					$duration = $_POST['c_duration'];
 					$name = $_POST['c_name'];
 					$id = get_user_id($conn,$GLOBALS['loading_username']);
-					$sql = "INSERT INTO contest_information_1 (contest_id,level,type,begin_time,duration,limit_par,name,creator_id,problem_number) VALUES ('$c_id','0','1','$begin_time','$duration','0','$name','$id','$number')";
+					$level = $_POST['c_level'];
+					$type = $_POST['c_type'];
+					$limit_par = $_POST['c_limit_par'];
+					$sql = "INSERT INTO contest_information_1 (contest_id,level,type,begin_time,duration,limit_par,name,creator_id,problem_number,submit_number) VALUES ('$c_id','$level','$type','$begin_time','$duration','$limit_par','$name','$id','$number','0')";
 					if ( !mysqli_query($conn,$sql) ) {
 						echo "Error: " . $sql . "<br>" . $conn->error;
 						$create_success_flag = 3;
@@ -70,7 +82,7 @@
 							$pro_id = $_POST['pro_'.$i];
 							$change_name = $_POST['pro_'.$i."_name"];
 							$c_score = $_POST['pro_'.$i."_score"];
-							$sql = "INSERT INTO contest_information_2 (id,contest_id,problem_id,order_number,change_problem_name,score,pass_number) VALUES ('$id','$c_id','$pro_id','$i','$change_name','$c_score','0')";
+							$sql = "INSERT INTO contest_information_2 (id,contest_id,problem_id,order_number,change_problem_name,score,pass_number,test_number) VALUES ('$id','$c_id','$pro_id','$i','$change_name','$c_score','0','0')";
 							if ( !mysqli_query($conn,$sql) ) {
 								echo "Error: " . $sql . "<br>" . $conn->error;
 								$create_success_flag = 4*100 + $i;
@@ -94,15 +106,6 @@
 	<link rel="stylesheet" type="text/css" href="../Css/Home.css">
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
 	<?php
-		if( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ){
-			?>
-				<script type="text/javascript">
-					alert("No Access!");
-				</script>
-				<meta http-equiv="refresh" content="0;url=index.php">
-			<?php
-			exit();
-		}
 		if ( $create_success_flag == 1 ) {
 			?>
 				<script type="text/javascript">
@@ -215,10 +218,6 @@
 				Create contest
 			</a>
 
-			<a href="authority_update_contest.php" class="menu_label_5 menu_a">
-				Update contest
-			</a>
-
 			<a href="authority_delete_anything.php" class="menu_label_5 menu_a">
 				Delete
 			</a>
@@ -257,6 +256,34 @@
 							<td><input type="datetime-local" name="c_begin_time" value="<?php if(isset($_POST['c_begin_time'])){echo($_POST['c_begin_time']);}else{get_begin_time(0);} ?>" id="c_begin_time" onchange="change_end_time()"></td>
 							<td>end time</td>
 							<td><input type="datetime-local" name="c_end_time" value="<?php if(isset($_POST['c_end_time'])){echo($_POST['c_end_time']);}else{get_begin_time(1);} ?>" readonly="readonly" id="c_end_time"></td>
+						</tr>
+						<tr>
+							<td>level</td>
+							<td>
+								<select name="c_level">
+									<option value="0">div 3(Rating on (-inf,1200) )</option>
+									<option value="1">div 2(Rating on [1200,1900) )</option>
+									<option value="2">div 1'2(Rating on (-inf,inf) )</option>
+									<option value="3">div 1(Rating on [1900,inf) )</option>
+									<option value="4">education (using CCPC/ICPC)</option>
+								</select>
+							</td>
+							<td>type</td>
+							<td>
+								<select name="c_type">
+									<option value="1">CF rating div</option>
+									<option value="2">ICPC/CCPC</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Specific account</td>
+							<td>
+								<select name="c_limit_par">
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								</select>
+							</td>
 						</tr>
 					</tbody>
 				</table>

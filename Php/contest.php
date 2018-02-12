@@ -66,4 +66,86 @@
 		}
 		return true;
 	}
+
+	function display_level($num){
+		if ( $num == 0 ) {
+			return "div 3";
+		}else if ( $num == 1 ) {
+			return "div 2";
+		}else if ( $num == 2 ) {
+			return "div 1'2";
+		}else if ( $num == 3 ) {
+			return "div 1";
+		}else {
+			return "education";
+		}
+	}
+
+	function display_2d_number($num){
+		if ( $num < 10 ) {
+			echo "0".$num;
+		}else{
+			echo $num;
+		}
+	}
+
+	function get_pass_problem_now_score($conn,$id,$cid,$pass_min){
+		// echo "500";
+		$ans = 0;
+		$sql = "SELECT score FROM contest_information_2 WHERE contest_id = '$cid' AND order_number = '$id'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			$ans = $row['score'];
+		}
+		if ( $pass_min == -1 ) {
+			echo (int)($ans*0.3);
+			return;
+		}
+		$y = $ans / 250;
+		echo $ans-$y*$pass_min;
+	}
+
+	function pass_time_now($h,$m,$d){
+		$m = $m + $h * 60;
+		$h = $d - $m;
+		$m = $h % 60;
+		$h = (int)($h / 60);
+		// echo $h.":".$m;
+		if ( $h < 10 ) {
+			echo '0'.$h;
+		}else{
+			echo $h;
+		}
+		echo ":";
+		if ( $m < 10 ) {
+			echo "0".$m;
+		}else{
+			echo $m;
+		}
+	}
+
+	function get_contest_id_order_id_pro_id($conn,$oid,$cid){
+		$sql = "SELECT problem_id FROM contest_information_2 WHERE contest_id='$cid' AND order_number='$oid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			return $row['problem_id'];
+		}
+		return '1000';
+	}
+
+	// 获取语言返回值
+	function get_language_number($lan){
+		if( $lan == "C" ){
+			return 1;
+		}else if ( $lan == "C++" ) {
+			return 2;
+		}else if ( $lan == "C++11" ) {
+			return 3;
+		}else if ( $lan == "C++14" ) {
+			return 4;
+		}else if ( $lan == "JAVA" ) {
+			return 5;
+		}
+		return 0;
+	}
 ?>

@@ -1,5 +1,15 @@
 <?php
 	include "../Php/Public_1.php";
+	if( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ){
+		?>
+			<script type="text/javascript">
+				alert("No Access!");
+			</script>
+			<meta http-equiv="refresh" content="0;url=index.php">
+		<?php
+		exit();
+	}
+	include "../Php/authority.php";
 ?>
 
 <!DOCTYPE html>
@@ -8,18 +18,6 @@
 	<title>new online judge in cqupt private</title>
 	<link rel="stylesheet" type="text/css" href="../Css/Home.css">
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
-	<?php
-		if( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ){
-			?>
-				<script type="text/javascript">
-					alert("No Access!");
-				</script>
-				<meta http-equiv="refresh" content="0;index.php">
-			<?php
-			exit();
-		}
-		include "../Php/authority.php";
-	?>
 	<link rel="stylesheet" type="text/css" href="../Css/authority.css">
 </head>
 <body>
@@ -119,10 +117,6 @@
 
 			<a href="authority_create_contest.php" class="menu_label_5 menu_a">
 				Create contest
-			</a>
-
-			<a href="authority_update_contest.php" class="menu_label_5 menu_a">
-				Update contest
 			</a>
 
 			<a href="authority_delete_anything.php" class="menu_label_5 menu_a">

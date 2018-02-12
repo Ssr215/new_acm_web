@@ -1,6 +1,77 @@
 <?php
 	include "../Php/Public_1.php";
+
+	if ( $GLOBALS['loading_user_flag'] == false ) {
+		?>
+			<script type="text/javascript">
+				alert("please log in first");
+			</script>
+			<meta http-equiv="refresh" content="0;url=loading.php">
+		<?php
+		exit();
+	}
+
+	if ( !isset($_GET['cid']) ) {
+		?>
+			<script type="text/javascript">
+				alert("No Access!");
+			</script>
+			<meta http-equiv="refresh" content="0;url=loading.php">
+		<?php
+		exit();
+	}
+
 	include "../Php/contest.php";
+
+	if ( isset($_POST['c_language']) ) {
+		if ( strtotime($begin_time." +".$duration." minute") > time() ) {
+			if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
+				if ( strtotime($begin_time) > time() ) {
+					echo "The contest has not started yet";
+					exit();
+				}else if ( ck_is_allow_participate() ) {
+					echo "You can not participate in this competition";
+					exit();
+				}
+			}
+		}
+		if ( !isset($_GET['pid']) ) {
+			?>
+				<script type="text/javascript">
+					alert("No Access!");
+				</script>
+				<meta http-equiv="refresh" content="0;url=loading.php">
+			<?php
+			exit();
+		}
+		$c_language = get_language_number($_POST['c_language']);
+		$c_code = "";
+		if ( isset( $_POST['c_code'] ) && $_POST['c_code'] != "" ) {
+			$c_code = $_POST['c_code'];
+		}else{
+			if ($_FILES["contest_code_file"]["error"] > 0) {
+				echo $_FILES["contest_code_file"]["error"];
+			}else{
+				$contest_code = $_FILES["contest_code_file"]["tmp_name"];
+				$c_code = addslashes(fread(fopen($contest_code, "r"),filesize($contest_code)));
+			}
+		}
+		$u_id = get_user_id($conn,$GLOBALS['loading_username']);
+		$cid = $_GET['cid'];
+		$pid = $_GET['pid'];
+		$id = get_of_web_number_information($conn,9);
+		// 未完待续
+		$sql = "INSERT INTO contest_pro_submit";
+	}
+	function get_user_id($conn,$u_name){
+		$u_id = -1;
+		$sql = "SELECT * FROM user_information WHERE user_name = '$u_name'";
+		$result = mysqli_query($conn,$sql);
+		while ($row = mysqli_fetch_array($result)) {
+			$u_id = $row['id'];
+		}
+		return $u_id;
+	}
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 ?>
 
@@ -242,69 +313,7 @@
 					}
 				}
 			?>
-			<table width="900px" border="1">
-				<thead>
-					<th width="54px">#</th>
-					<th>Name</th>
-					<th width="90px"></th>
-					<th width="90px"></th>
-					<?php
-						if ($type == 1) {
-							?>
-								<th width="150px">Score</th>
-							<?php
-						}
-					?>
-				</thead>
-				<tbody>
-					<?php
-						$now_id = 0;
-						$sql = "SELECT problem_id,change_problem_name,score,pass_number FROM contest_information_2 WHERE contest_id = '$cid' ORDER BY order_number ASC";
-						$result = mysqli_query($conn,$sql);
-						while ( $row = mysqli_fetch_array($result) ) {
-							$pro_ids = $row['problem_id'];
-							?>
-								<tr>
-									<td><a href="contest_display.php?pid=<?php echo($now_id+1) ?>"><?php echo substr($str, $now_id , 1); ?></a></td>
-									<td><a href="contest_display.php?pid=<?php echo($now_id+1) ?>"><?php if ($row['change_problem_name'] == ""){echo get_problem_name($conn,$pro_ids);}else{echo $row['change_problem_name'];} ?></a></td>
-									<td><a href="contests_submit.php?cid=<?php echo($cid); ?>&order=<?php echo($pro_ids) ?>">Submit</a></td>
-									<td><?php if ($row['pass_number'] > 0) {
-										echo $row['pass_number'];
-									} ?></td>
-								<?php
-									if ( $type == 1 ) {
-										?>
-											<td><?php echo $row['score']; ?></td>
-										<?php
-									}
-								?>
-								</tr>
-							<?php
-							$now_id++;
-						}
-					?>
-				</tbody>
-			</table>
-		
-			<br>
-			<br>
-			<table border="1" width="900px">
-				<tbody>
-					<tr>
-						<th colspan="5">Questions</th>
-					</tr>
-					<tr>
-						<th width="30px">#</th>
-						<th width="90px">Party</th>
-						<th width="150px">When</th>
-						<th width="150px">Questions</th>
-						<th>Answer</th>
-					</tr>
-					<tr>
-						<td colspan="5">No items</td>
-					</tr>
-				</tbody>
-			</table>
+			
 		</div>
 	</div>
 </body>
