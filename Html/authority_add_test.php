@@ -152,7 +152,7 @@
 			<br>
 			<textarea class="textarea_size _put_h" name="add_test_output"></textarea>
 			<br>
-			<input type="file" name="add_output_file">
+			<input type="file" name="add_output_file" id="file">
 			<br>		
 			<input type="submit" name="submit" class="submit_size">
 		</form>

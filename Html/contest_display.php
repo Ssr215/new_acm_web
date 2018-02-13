@@ -177,9 +177,9 @@
 				</tbody>
 			</table>
 			<?php
-				if ( $begin_flag == 1 ) {		
+				if ( $begin_flag == 1 || strtotime($begin_time." +".$duration." minute") < time()   ) {		
 					?>
-					<form action="contests_submit.php?cid=<?php echo($cid) ?>&pid=<?php echo($po_id); ?>" method="post">
+					<form action="contests_submit.php?cid=<?php echo($cid) ?>&pid=<?php echo($po_id); ?>" method="post" enctype="multipart/form-data">
 						<table  class="right_table" border="1">
 							<tbody>
 								<tr>
@@ -207,9 +207,15 @@
 												<input type="file" name="contest_code_file" id="file">
 												</td>
 											</tr>
-											<tr>
-												<td colspan="2"><p>Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.</p></td>
-											</tr>
+											<?php
+												if ( $begin_flag == 1 ) {
+													?>
+													<tr>
+														<td colspan="2"><p>Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.</p></td>
+													</tr>
+													<?php
+												}
+											?>
 											<tr>
 												<td colspan="2" align="center">
 													<input style="width: 10em;height: 2em" type="submit" name="submit" value="Submit">

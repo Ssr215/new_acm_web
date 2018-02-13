@@ -35,12 +35,12 @@
 				}
 			}
 		}
-		if ( !isset($_GET['pid']) ) {
+		if ( !isset($_GET['pid']) || !is_numeric($_GET['pid']) ) {
 			?>
 				<script type="text/javascript">
-					alert("No Access!");
+					alert("No Access! on pid");
 				</script>
-				<meta http-equiv="refresh" content="0;url=loading.php">
+				<meta http-equiv="refresh" content="0;url=index.php">
 			<?php
 			exit();
 		}
@@ -49,6 +49,11 @@
 		if ( isset( $_POST['c_code'] ) && $_POST['c_code'] != "" ) {
 			$c_code = $_POST['c_code'];
 		}else{
+			if ( isset($_POST['contest_code_file'] )) {
+				echo "here";
+				echo $_POST['contest_code_file'];
+			}
+
 			if ($_FILES["contest_code_file"]["error"] > 0) {
 				echo $_FILES["contest_code_file"]["error"];
 			}else{
@@ -59,10 +64,30 @@
 		$u_id = get_user_id($conn,$GLOBALS['loading_username']);
 		$cid = $_GET['cid'];
 		$pid = $_GET['pid'];
-		$id = get_of_web_number_information($conn,9);
-		// 未完待续
-		$sql = "INSERT INTO contest_pro_submit";
+		$id = get_and_update_of_web_number_information($conn,9);
+		$now_time = date("Y-m-d H:i:s");
+		$c_flag = get_is_it_a_competitor($conn,$GLOBALS['loading_username'],$cid);
+		$sql = "INSERT INTO contest_pro_submit (id,contest_id,problem_id,user_id,competitor,language,submit_time,result,u_time,u_memory,code,compile) VALUES ('$id','$cid','$pid','$u_id','$c_flag','$c_language','$now_time','0','0','0',?,'')";
+		$sth = $conn->prepare($sql);
+		$sth->bind_param('s',$c_code);
+		if ($sth->execute()) {
+			// echo $sth->insert_id;
+			// $submit_success_flag = 1;
+			?>
+				<meta http-equiv="refresh" content="0;url=contest_submit_display_myself.php">
+			<?php
+			exit();
+		}else{
+			?>
+				<script type="text/javascript">
+					alert(<?php echo $sth->error; ?>);
+				</script>
+			<?php
+			// $submit_success_flag = 2;
+			exit();
+		}
 	}
+
 	function get_user_id($conn,$u_name){
 		$u_id = -1;
 		$sql = "SELECT * FROM user_information WHERE user_name = '$u_name'";
@@ -71,6 +96,25 @@
 			$u_id = $row['id'];
 		}
 		return $u_id;
+	}
+
+	// 此处获取用户是否是参赛选手的判定中，只要contest没有用户限定，任何人都可以参赛，不过后期应该会改成只有注册比赛的选手才能参加比赛
+	function get_is_it_a_competitor($conn,$u_name,$cid){
+		$sql = "SELECT limit_par FROM cntest_information_1 WHERE contest_id='$cid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if ( $row['limit_par'] == 0 ) {
+				return 1;
+			}
+		}
+		$sql = "SELECT cid_allow FROM user_information WHERE user_name = '$u_name'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if ( $row['cid_allow'] == $cid ) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 ?>
@@ -94,9 +138,9 @@
 		<div id="menu_backgound_3">
 			<a href="index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="contestdisplay.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
+			<a href="contestdisplay.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
 
-			<a href="contests_submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
+			<a href="contests_submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
 
 			<a href="contest_submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 

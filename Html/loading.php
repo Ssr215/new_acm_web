@@ -1,5 +1,14 @@
 <?php
 	include "../Php/Public_1.php";
+	if ( $GLOBALS['loading_user_flag'] == true ) {
+		?>
+			<script type="text/javascript">
+				alert("You do not need to log in twice!");
+			</script>
+			<meta http-equiv="refresh" content="0;url=index.php">
+		<?php
+		exit();
+	}
 	include "../Php/loading.php";
 ?>
 
