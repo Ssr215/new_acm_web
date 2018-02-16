@@ -43,7 +43,7 @@
 	<div id="package">
 		<div id="head">
 			<h2>
-				<img id = "position_photo"  class="width_45" src="../photo/head2.jpg">
+				<!-- <img id = "position_photo"  class="width_45" src="../photo/head2.jpg"> -->
 				<span class="_blue_1">Online Judge in private</span>
 			</h2>
 		</div>
@@ -140,6 +140,10 @@
 
 			<a href="authority_delete_anything.php" class="menu_label_5 menu_a">
 				Delete
+			</a>
+
+			<a href="authority_allow_huck.php" class="menu_label_5 menu_a">
+				Open huck
 			</a>
 
 			<?php

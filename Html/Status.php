@@ -32,7 +32,7 @@
 	<div id="package">
 		<div id="head">
 			<h2>
-				<img id = "position_photo"  class="width_45" src="../photo/head2.jpg">
+				<!-- <img id = "position_photo"  class="width_45" src="../photo/head2.jpg"> -->
 				<span class="_blue_1">Online Judge in private</span>
 			</h2>
 		</div>
@@ -194,7 +194,7 @@
 									<?php
 										if ( $row['result'] == 1 && query_huck_allow($conn,$row['pro_id']) ) {
 											?>
-												<a href="huck.php?sid=<?php echo($row['id']) ?>">huck it</a>
+												<a href="huck.php?sid=<?php echo($row['id']) ?>&pid=<?php echo $row['pro_id'] ?>">huck it</a>
 											<?php
 										}
 									?>

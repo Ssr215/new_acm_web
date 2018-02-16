@@ -37,7 +37,7 @@
 	<div id="package">
 		<div id="head">
 			<h2>
-				<img id = "position_photo"  class="width_45" src="../photo/head2.jpg">
+				<!-- <img id = "position_photo"  class="width_45" src="../photo/head2.jpg"> -->
 				<span class="_blue_1">Online Judge in private</span>
 			</h2>
 		</div>

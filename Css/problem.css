@@ -60,6 +60,11 @@
 	height: 600px;
 	white-space: nowrap;
 }
+.textarea_huck_size{
+	width: 95%;
+	height: 200px;
+	white-space: nowrap;
+}
 .submit_size{
 	width: 120px;
 	height: 30px;

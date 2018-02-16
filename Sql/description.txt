@@ -14,8 +14,17 @@ pro_submit --- result
 YXXX --- Y on test XXX
 (Y is 2-8)
 
-9 is sever have some error , please call admit
-admit maybe can't solve it, don't call think! 
+-1 is sever have some error , please call admit
+admit maybe can't solve it, don't call thank!
+
+
+huck_submit --- result
+
+0 -- in queue
+1 -- Successful hacking attempt
+2 -- Unsuccessful hacking attempt
+3 -- Illegal data
+
 
 pro_language --- select
 1 --- gcc

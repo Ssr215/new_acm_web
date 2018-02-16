@@ -1,5 +1,15 @@
 <?php
 	include "../Php/Public_1.php";
+	if ($GLOBALS['loading_user_flag'] == false) {
+		?>
+			<script type="text/javascript">
+				alert("please log in first");
+			</script>
+			<meta http-equiv="refresh" content="0;url=loading.php">
+		<?php
+		exit();
+	}
+	
 	$pro_id = 1000;
 	if( isset($_GET['pid']) ){
 		$pro_id = $_GET['pid'];
@@ -101,14 +111,6 @@
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
 	<?php
-		if ($GLOBALS['loading_user_flag'] == false) {
-			?>
-				<script type="text/javascript">
-					alert("please log in first");
-				</script>
-				<meta http-equiv="refresh" content="0;url=loading.php">
-			<?php
-		}
 		if( $refresh_flag ){
 			?>
 				<meta http-equiv="refresh" content="0">
@@ -131,7 +133,7 @@
 	<div id="package">
 		<div id="head">
 			<h2>
-				<img id = "position_photo"  class="width_45" src="../photo/head2.jpg">
+				<!-- <img id = "position_photo"  class="width_45" src="../photo/head2.jpg"> -->
 				<span class="_blue_1">Online Judge in private</span>
 			</h2>
 		</div>

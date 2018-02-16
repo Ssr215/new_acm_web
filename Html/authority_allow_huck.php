@@ -9,6 +9,58 @@
 		<?php
 		exit();
 	}
+	if ( isset($_POST['open_huck_pro_id']) ) {
+		$pid = $_POST['open_huck_pro_id']; 
+		$in_code = $_POST['submit_ck_code'];
+		if ( $in_code == "" ) {
+			if ( $_FILES['add_ck_file']['error'] > 0 ) {
+				echo $_FILES['add_ck_file']['error'];
+				exit();
+			}else{
+				$file_code = $_FILES["add_ck_file"]["tmp_name"];
+				$in_code = addslashes(fread(fopen($file_code, "r"),filesize($file_code)));
+			}
+		}
+		$sql = "UPDATE problem_information_4 SET data_monitoring=? WHERE pro_id = '$pid'";
+		$sth = $conn->prepare($sql);
+		$sth->bind_param('s',$in_code);
+		if ($sth->execute()) {
+			$in_code = $_POST['submit_ac_code'];
+			if ( $in_code == "" ) {
+				if ( $_FILES['add_ac_file']['error'] ) {
+					echo $_FILES['add_ac_file']['error'];
+					exit();
+				}else{
+					$file_code = $_FILES['add_ac_file']['tmp_name'];
+					$in_code = addslashes(fread(fopen($file_code, "r"),filesize($file_code)));
+				}
+			}
+			$sql = "UPDATE problem_information_4 SET true_code=?,allow_huck='1' WHERE pro_id='$pid'";
+			$sth = $conn->prepare($sql);
+			$sth->bind_param('s',$in_code);
+			if ( $sth->execute() ) {
+				?>
+					<meta http-equiv="refresh" content="0;url=authority_allow_huck.php">
+				<?php
+			}else{
+				?>
+					<script type="text/javascript">
+						alert(<?php echo $sth->error; ?>);
+					</script>
+				<?php
+			}
+			exit();
+			
+		}else{
+			?>
+				<script type="text/javascript">
+					alert(<?php echo $sth->error; ?>);
+				</script>
+			<?php
+			// $submit_success_flag = 2;
+			exit();
+		}
+	}
 	include "../Php/authority.php";
 ?>
 
@@ -123,7 +175,7 @@
 				Delete
 			</a>
 
-			<a href="authority_allow_huck.php" class="menu_label_5 menu_a">
+			<a href="authority_allow_huck.php" class="menu_label_5 menu_a new_color_img_authority">
 				Open huck
 			</a>
 
@@ -137,6 +189,29 @@
 				}
 			?>
 		</div>
+	</div>
+
+	<div id="main_add_problem_page">
+		<form action="authority_allow_huck.php" method="post" enctype="multipart/form-data">
+			<p>This page include add and update , each question will only keep the latest records</p>
+			Open Problem id: <input type="test" name="open_huck_pro_id">
+			<br>
+			check huck data code:(language using C++11)
+			<textarea class="textarea_size" name="submit_ck_code"></textarea>
+			<br>
+			<input type="file" name="add_ck_file">
+			<br>
+			Note: If it is the true data , just printf "yes" on the first line , don't add anything , otherwise all data will not be considered legal
+			<br>
+			<hr>
+			<br>
+			Accepted code:(language using C++11)
+			<textarea class="textarea_size" name="submit_ac_code"></textarea>
+			<br>
+			<input type="file" name="add_ac_file">
+			<br><br><br>
+			<input type="submit" name="submit" value="Submit" class="submit_size">
+		</form>
 	</div>
 </body>
 </html>
