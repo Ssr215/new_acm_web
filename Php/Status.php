@@ -42,6 +42,9 @@
 		if ($id == 8) {
 			return "Complie error";
 		}
+		if ($id == -1) {
+			return "hucked";
+		}
 		$t_id = 0;
 		$p2 = "";
 		if ($id >= 2000) {
@@ -76,12 +79,11 @@
 		return "connect error";
 	}
 	function get_status_number($conn){
-		$sql = "SELECT * FROM web_number_information WHERE id = '5'";
+		$sql = "SELECT COUNT(1) FROM pro_submit";
 		$result = mysqli_query($conn,$sql);
-		while ($row = mysqli_fetch_array($result)) {
-			return $row['next_numbers'];
-		}
-		return 1;
+		// echo $result;
+		list($ans) = $result->fetch_row();
+		return $ans;
 	}
 	function query_huck_allow($conn,$pid){
 		$sql = "SELECT allow_huck FROM problem_information_4 WHERE pro_id = '$pid'";

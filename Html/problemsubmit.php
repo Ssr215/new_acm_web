@@ -151,6 +151,10 @@
 				Status
 			</a>
 
+			<a href="huck_display.php" class="menu_label_1 menu_a">
+				Huck
+			</a>
+
 			<a href="Contest.php" class="menu_label_1 menu_a">
 				contest
 			</a>

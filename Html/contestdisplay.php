@@ -29,7 +29,7 @@
 
 			<a href="contest_submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
-			<a href="contest_hack.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hacks</a>
+			<a href="contest_huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
 			<a href="contest_ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
 

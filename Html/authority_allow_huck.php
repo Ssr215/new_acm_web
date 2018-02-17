@@ -94,6 +94,10 @@
 				Status
 			</a>
 
+			<a href="huck_display.php" class="menu_label_1 menu_a">
+				Huck
+			</a>
+
 			<a href="Contest.php" class="menu_label_1 menu_a">
 				contest
 			</a>
@@ -201,7 +205,7 @@
 			<br>
 			<input type="file" name="add_ck_file">
 			<br>
-			Note: If it is the true data , just printf "yes" on the first line , don't add anything , otherwise all data will not be considered legal
+			Note: If it is a true data , please printf "yes" on the first line , do not add anything , otherwise all the datas will  be considered illegally
 			<br>
 			<hr>
 			<br>

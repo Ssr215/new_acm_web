@@ -50,6 +50,10 @@
 				Status
 			</a>
 
+			<a href="huck_display.php" class="menu_label_1 menu_a">
+				Huck
+			</a>
+
 			<a href="Contest.php" class="menu_label_1 menu_a">
 				contest
 			</a>
@@ -160,7 +164,7 @@
 					if( $page_now < 1 || $page_now > $page_number_have ){
 						$page_now = 1;
 					}
-					$begin_id = $page_number - $each_page_number * ($page_now - 1) - 1;
+					$begin_id = $page_number - $each_page_number * ($page_now - 1);
 					if ($begin_id <= 0) {
 						$begin_id = $begin_id + $each_page_number;
 					}
@@ -168,7 +172,8 @@
 					if( $end_id < 0 ){
 						$end_id = 0;
 					}
-					$sql = "SELECT * FROM pro_submit WHERE id <= '$begin_id' AND id >= '$end_id' order by id desc";
+					// $sql = "SELECT * FROM pro_submit WHERE id <= '$begin_id' AND id >= '$end_id' order by id desc";
+					$sql = "SELECT * FROM pro_submit order by id desc LIMIT $end_id,$begin_id ";
 					$result = mysqli_query($conn,$sql);
 					$here_row = 0;
 					while ($row = mysqli_fetch_array($result)) {

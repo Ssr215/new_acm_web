@@ -10,11 +10,12 @@ pro_submit --- result
 7 -- Wrong Answer
 8 -- Compile error
 9 -- running
+-1 -- hucked
 
 YXXX --- Y on test XXX
 (Y is 2-8)
 
--1 is sever have some error , please call admit
+-2 is sever have some error , please call admit
 admit maybe can't solve it, don't call thank!
 
 

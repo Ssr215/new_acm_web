@@ -9,6 +9,7 @@
 		<?php
 		exit();
 	}
+	include '../Php/huck.php';
 	if ( !isset($_GET['sid']) || !isset($_GET['pid']) || !is_numeric($_GET['pid']) || !is_numeric($_GET['sid']) || !allow_huck_problem_id($conn,$_GET['pid']) || !allow_huck_status_id($conn,$_GET['sid'],$_GET['pid']) ) {
 		?>
 			<script type="text/javascript">
@@ -54,7 +55,7 @@
 			}
 		}
 		if ( $success_create_or_move_file_flag ) {
-			$sql = "INSERT INTO huck_submit (id,submit_user,huck_user,huck_time,result) VALUES ('$id','$submit_user','$huck_user','$time_now','0')";
+			$sql = "INSERT INTO huck_submit (id,status_id,submit_user,huck_user,huck_time,result) VALUES ('$id','$sid','$submit_user','$huck_user','$time_now','0')";
 			if ( !mysqli_query($conn,$sql) ) {
 				?>
 					<script type="text/javascript">
@@ -74,50 +75,6 @@
 				alert("submit fail!");
 			</script>
 		<?php
-	}
-	// 查询problem id 是否允许huck
-	function allow_huck_problem_id($conn,$pid){
-		$sql = "SELECT allow_huck FROM problem_information_4 WHERE pro_id='$pid'";
-		$result = mysqli_query($conn,$sql);
-		while ( $row = mysqli_fetch_array($result) ) {
-			if ( $row['allow_huck'] == 1 ) {
-				return true;
-			}
-		}
-		return false;
-	}
-	// 查询status id与problem id是否对应并且检查其提交结果是否为ac
-	function allow_huck_status_id($conn,$sid,$pid){
-		$sql = "SELECT result FROM pro_submit WHERE id='$sid' AND pro_id='$pid'";
-		$result = mysqli_query($conn,$sql);
-		while ( $row = mysqli_fetch_array($result) ) {
-			if ( $row['result'] == 1 ) {
-				// echo "find it";
-				return true;
-			}
-		}
-		echo $row;
-		echo $sid." and ". $pid;
-		return false;
-	}
-	// 获取当前用户的id
-	function get_user_id($conn,$u_name){
-		$u_id = -1;
-		$sql = "SELECT id FROM user_information WHERE user_name = '$u_name'";
-		$result = mysqli_query($conn,$sql);
-		while ($row = mysqli_fetch_array($result)) {
-			$u_id = $row['id'];
-		}
-		return $u_id;
-	}
-	// 获取huck用户的用户名
-	function get_hucker_id($conn,$sid){
-		$sql = "SELECT user_id FROM pro_submit WHERE id='$sid'";
-		$result = mysqli_query($conn,$sql);
-		while ( $row = mysqli_fetch_array($result) ) {
-			return $row['user_id'];
-		}
-		return -1;
 	}
 ?>
 
@@ -156,6 +113,10 @@
 
 			<a href="Status.php" class="menu_label_1 menu_a">
 				Status
+			</a>
+
+			<a href="huck_display.php" class="menu_label_1 menu_a">
+				Huck
 			</a>
 
 			<a href="Contest.php" class="menu_label_1 menu_a">
