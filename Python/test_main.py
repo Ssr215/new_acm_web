@@ -4,10 +4,11 @@ import clr_make
 import build_code
 import os
 import run_main
+import huck
 
 while True:
     connect = -1
-    print("你好！")
+    # print("你好！")
     try:
         connect = pymysql.Connect(
             host='localhost',
@@ -17,7 +18,7 @@ while True:
             db='acm_sever_1',
             # charset='usf8'
         )
-        print("connect database is success")
+        # print("connect database is success")
     except (IOError, ZeroDivisionError) as x:
         print(x)
 
@@ -76,9 +77,14 @@ while True:
             except Exception as e:
                 connect.rollback()
                 print('can\'t update now line 78', e)
+    sql = "SELECT * FROM huck_submit WHERE result=0 OR result=4"
+    cursor.execute(sql)
+    for row in cursor.fetchall():
+        print(row)
+        huck.new_huck(connect,row[0],row[1])
     try:
         connect.close()
-        print("connect close is success")
+        # print("connect close is success")
     except (IOError, ZeroDivisionError) as x:
         print(x)
     time.sleep(1)

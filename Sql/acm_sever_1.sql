@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 2018-02-16 23:58:37
+-- Generation Time: 2018-02-18 22:12:48
 -- 服务器版本： 5.7.19
 -- PHP Version: 5.6.31
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `acm_sever_1`
 --
-CREATE DATABASE IF NOT EXISTS `acm_sever_1` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `acm_sever_1`;
 
 -- --------------------------------------------------------
 
@@ -132,19 +130,23 @@ INSERT INTO `contest_pro_submit` (`id`, `contest_id`, `problem_id`, `user_id`, `
 DROP TABLE IF EXISTS `huck_submit`;
 CREATE TABLE IF NOT EXISTS `huck_submit` (
   `id` int(11) NOT NULL,
-  `submit_user` varchar(100) COLLATE utf8_bin NOT NULL,
-  `huck_user` varchar(100) COLLATE utf8_bin NOT NULL,
+  `status_id` int(11) NOT NULL,
+  `submit_user` int(11) NOT NULL,
+  `huck_user` int(11) NOT NULL,
   `huck_time` datetime NOT NULL,
   `result` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `submit_user` (`submit_user`),
+  KEY `huck_user` (`huck_user`),
+  KEY `result` (`result`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- 转存表中的数据 `huck_submit`
 --
 
-INSERT INTO `huck_submit` (`id`, `submit_user`, `huck_user`, `huck_time`, `result`) VALUES
-(5, '-9945157', '1', '2018-02-16 23:48:29', 0);
+INSERT INTO `huck_submit` (`id`, `status_id`, `submit_user`, `huck_user`, `huck_time`, `result`) VALUES
+(5, 40, -9945157, 1, '2018-02-16 23:48:29', 1);
 
 -- --------------------------------------------------------
 
@@ -168,7 +170,10 @@ CREATE TABLE IF NOT EXISTS `loading_flag` (
 --
 
 INSERT INTO `loading_flag` (`loading_id`, `flag1`, `flag2`, `id`, `last_updata_times`) VALUES
-(85, 7286761, 76187116, -9945157, '2018-02-16 23:52:21');
+(85, 7286761, 76187116, -9945157, '2018-02-16 23:52:21'),
+(88, 67972716, 57388052, -1, '2018-02-18 22:06:05'),
+(87, 90030893, 94291416, -9945157, '2018-02-17 23:51:14'),
+(86, 69882981, 37265863, -1, '2018-02-17 21:45:32');
 
 -- --------------------------------------------------------
 
@@ -209,7 +214,7 @@ INSERT INTO `problem_information_1` (`pro_id`, `title`, `time_limit`, `memory_li
 (1010, 'è½¦ä¸Šè¿˜å‰©å‡ äºº', 500, 64, 1000, 64, 'å¤šç»„æ ·ä¾‹\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªTï¼ˆT <= 20ï¼‰\r\nå¯¹äºŽæ¯ç»„æ ·ä¾‹ï¼š\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸¤ä¸ªæ•´æ•°n,mï¼Œåˆ†åˆ«è¡¨ç¤ºèµ·ç‚¹ç«™æœ‰å¤šå°‘äººå’Œæœ‰å¤šå°‘ä¸ªç«™ï¼ˆ1<=n<=10^9 , 0 <= m <= 10^6ï¼‰\r\næŽ¥ä¸‹æ¥mè¡Œæ¯è¡Œä¸¤ä¸ªæ•°ai , biè¡¨ç¤ºæ¯ä¸€ç«™ä¸Šä¸‹è½¦äººæ•° ( 1<=ai,bi<=10^9 )', 'è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºç­”æ¡ˆï¼Œå¦‚æžœä¸å¯èƒ½ï¼Œåˆ™è¾“å‡ºâ€˜-1â€™', 0, 0),
 (1011, 'å¯å¯å¯çš„æ–æ³¢æ‹‰å¥‘æ•°åˆ—', 1000, 128, 2000, 128, 'ç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªæ­£æ•´æ•°Tè¡¨ç¤ºTç»„æ ·ä¾‹ï¼ˆT<=100ï¼‰\r\næŽ¥ä¸‹æ¥æ¯ä¸ªæ ·ä¾‹è¾“å…¥ä¸€ä¸ªæ­£æ•´æ•°Nï¼ˆN<=10^5ï¼‰', 'æ¯ç»„æ ·ä¾‹è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºå¯å¯æ‰€æ±‚çš„æ–æ³¢æ‹‰å¥‘ç¬¬Né¡¹æ¨¡10^9+7', 1, 1),
 (1012, 'æœ€å°ç”Ÿæˆæ ‘', 1000, 128, 2000, 256, 'ç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªTè¡¨ç¤ºæœ‰Tç»„æ ·ä¾‹ï¼ˆT <= 10ï¼‰\r\næŽ¥ä¸‹æ¥æ¯ç»„æ ·ä¾‹\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªN Mè¡¨ç¤ºNä¸ªç‚¹ï¼ŒMæ¡è¾¹( 2 <= N <= 10^5 , 1 <= M <= min(N*(N-1)/2),10^5)\r\næŽ¥ä¸‹æ¥Mè¡Œè¾“å…¥ui , vi, wiè¡¨ç¤ºä»Žui åˆ° vi æœ‰ä¸€æ¡æ— å‘è¾¹ï¼Œé•¿åº¦ä¸ºwiï¼Œï¼ˆ1 <= ui , vi <= N , 1 <= wi <= 10^9 ï¼‰\r\n', 'æ¯ç»„æ ·ä¾‹è¾“å‡ºå°†å›¾å…¨è”é€šæœ€å°æƒé‡åœ¨ä¸€è¡Œ', 0, 0),
-(1013, 'cwwä¸Žwcw', 1000, 128, 1000, 128, 'å•ç»„æ ·ä¾‹\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªNè¡¨ç¤ºå¯å¯æœ‰Næ¬¡cæˆ–è€…wæ“ä½œï¼ˆ1<=N<=100ï¼‰\r\nç¬¬äºŒè¡Œè¾“å…¥ä¸€ä¸ªé•¿åº¦ä¸ºNçš„å­—ç¬¦ä¸²ï¼Œè¡¨ç¤ºå¯å¯çš„c,wæ“ä½œé¡ºåºï¼ˆä¿è¯å­—ç¬¦ä¸²ä¸­åªå‡ºçŽ°c,wï¼‰', 'è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºæœ€é«˜çš„å¹³å‡é€Ÿåº¦', 1, 3),
+(1013, 'cwwä¸Žwcw', 1000, 128, 1000, 128, 'å•ç»„æ ·ä¾‹\r\nç¬¬ä¸€è¡Œè¾“å…¥ä¸€ä¸ªNè¡¨ç¤ºå¯å¯æœ‰Næ¬¡cæˆ–è€…wæ“ä½œï¼ˆ1<=N<=100ï¼‰\r\nç¬¬äºŒè¡Œè¾“å…¥ä¸€ä¸ªé•¿åº¦ä¸ºNçš„å­—ç¬¦ä¸²ï¼Œè¡¨ç¤ºå¯å¯çš„c,wæ“ä½œé¡ºåºï¼ˆä¿è¯å­—ç¬¦ä¸²ä¸­åªå‡ºçŽ°c,wï¼‰', 'è¾“å‡ºä¸€ä¸ªæ•´æ•°è¡¨ç¤ºæœ€é«˜çš„å¹³å‡é€Ÿåº¦', 0, 4),
 (1014, 'DQ4', 1000, 128, 2000, 256, 'å•ç»„æ ·ä¾‹\r\nå…±å››è¡Œ\r\næ¯è¡Œè¾“å…¥xi,yi,hpi\r\nå…¶ä¸­(1<=i<=4 , 1<=xi<=1000, 1<=yi<500 , 1<=hpi<=1500)', 'å¦‚æžœèƒ½å¤Ÿæ‰“è´¥é»‘æš—ç¥­ç¥€å°±è¾“å‡ºä¸€ä¸ªæ•°å­—è¡¨ç¤ºæœ€å°‘éœ€è¦å¤šå°‘å›žåˆ\r\nå¦åˆ™è¾“å‡º\"Go to leveling\";', 0, 0),
 (1015, 'ç™¾ä¸‡è‹±é›„', 1000, 128, 1000, 128, 'å•ç»„æ ·ä¾‹\r\næ¯ç»„æ ·ä¾‹å…ˆè¾“å…¥åäºŒä¸ªæ•°è¡¨ç¤ºæŒ‰é¡ºåºå¯¹æ¯é“é¢˜çš„æŠŠæ¡ç¨‹åº¦ï¼ˆè¿™åäºŒä¸ªæ•°åªä¼šå‡ºçŽ°1,2,3ä¸­çš„ä¸€ä¸ªï¼‰\r\nç„¶åŽç»™å‡º3ä¸ªæ•°ï¼Œåˆ†åˆ«è¡¨ç¤ºä¸åŒ…æ‹¬å¯å¯åœ¨å†…çš„ç­”å¯¹ç¬¬å…­é¢˜ï¼Œç¬¬åäºŒé¢˜äººæ•°å’Œå›¢æˆ˜ç“œåˆ†çš„é˜Ÿæ•°(äººæ•°ä¿è¯å°‘äºŽ500ä¸‡ï¼Œä¸”ç¬¬åäºŒé¢˜ç­”å¯¹äººæ•°ä¸å¤šäºŽç¬¬å…­é¢˜ï¼Œé˜Ÿä¼æ•°å°‘äºŽå‘ä¸‹å–æ•´[äººæ•°/3])', 'è¾“å‡ºä¸€ä¸ªæ•°è¡¨ç¤ºå¯å¯èŽ·å¾—å¥–é‡‘çš„æ•°å­¦æœŸæœ›\r\nä¸Žæ ‡å‡†ç­”æ¡ˆè¯¯å·®å°äºŽ10^-6å³å¯', 0, 0);
 
@@ -286,7 +291,7 @@ INSERT INTO `problem_information_3` (`pro_id`, `hint`, `pro_user_id`, `begin_tim
 (1010, '', -9945157, '2017-11-28 15:59:09', '2017-11-28 21:26:37', 9, 1),
 (1011, '', -9945157, '2017-12-07 00:00:00', '2018-02-06 14:20:04', 1, 4),
 (1012, '', -9945157, '2018-01-16 15:43:35', '2018-01-16 15:43:35', 0, 1),
-(1013, 'å¯å¯å¯ä»¥å†³å®šcw wcw ww cww\r\næ­¤æ—¶å¹³å‡é€Ÿåº¦ä¸º50 + 400 + 535 + 140 + 550 = 1675\r\nè€Œå¦‚æžœå¯å¯å†³å®šcww cww w cww\r\nç„¶åŽæœ€ç»ˆå¹³å‡é€Ÿåº¦ä¸º50 + 550 + 550 + 100 + 550 = 1800 \r\næ˜¾ç„¶æ¯”ä¹‹å‰çš„æ–¹æ¡ˆè¦ä¼˜', -9945157, '2018-01-25 10:52:10', '2018-02-14 20:09:32', 0, 1),
+(1013, 'å¯å¯å¯ä»¥å†³å®šcw wcw ww cww\r\næ­¤æ—¶å¹³å‡é€Ÿåº¦ä¸º50 + 400 + 535 + 140 + 550 = 1675\r\nè€Œå¦‚æžœå¯å¯å†³å®šcww cww w cww\r\nç„¶åŽæœ€ç»ˆå¹³å‡é€Ÿåº¦ä¸º50 + 550 + 550 + 100 + 550 = 1800 \r\næ˜¾ç„¶æ¯”ä¹‹å‰çš„æ–¹æ¡ˆè¦ä¼˜', -9945157, '2018-01-25 10:52:10', '2018-02-14 20:09:32', 0, 2),
 (1014, 'é­”çŽ‹æ¯å›žåˆå¯¹å‹‡è€…ï¼Œé­”æ—ä¹‹çŽ‹ï¼Œç¥žå®˜é€ æˆ180ç‚¹ä¼¤å®³ï¼Œå¥¶å¦ˆé€ æˆ45ç‚¹ä¼¤å®³ï¼Œ\r\nå¥¶å¦ˆæ¯å›žåˆå¯ä»¥å›žè¡€200\r\nä¸‰æ”»å‡»ä¸€å›žè¡€è¾“å‡ºä¸º200*1.3+200+130*1.75 = 687.5 => ä¼¤å®³ä¸º687ç‚¹\r\næ‰€ä»¥æœ€å°‘å›žåˆæ˜¯ä¸º10000/687 = 14.545454..... \r\næ‰€ä»¥ç­”æ¡ˆä¸º15ä¸ªå›žåˆ', -9945157, '2018-02-07 19:30:08', '2018-02-07 19:39:08', 7, 0),
 (1015, 'å¯å¯æœ¬åœºå¹³åˆ†ç¬¬å…­é¢˜çš„ 20ä¸‡ / 1ä¸‡= 20 å…ƒ ä¸Ž 5ä¸‡/ 1000 = 50å…ƒ ï¼Œåˆ†çº¢ä¸º50/3 = 16.666666...å…ƒ ï¼Œ ç„¶åŽç¬¬åäºŒé¢˜ç­”å¯¹çš„æ¦‚çŽ‡ä¸º1/3 ï¼Œ æ‰€ä»¥æœŸæœ›ä¸º1/3 * 25ä¸‡ / 5000 =16.6666666...å…ƒ\r\næ‰€ä»¥å¯å¯æœ¬åœºæœŸæœ›å¥–é‡‘ä¸º 20 + 16.66666.. + 16.6666... = 53.3333333... å…ƒ\r\næ‰€ä»¥ç­”æ¡ˆåº”ä¸º53.3333333å…ƒ\r\nè¾“å‡º53.3333333 æˆ–è€… 53.333333 ï¼Œ 53.333332éƒ½å¯¹ï¼Œåªè¦è¯¯å·®å°äºŽ10^-6å³å¯', -9945157, '2018-02-07 22:50:13', '2018-02-12 22:41:17', 7, 0);
 
@@ -396,8 +401,9 @@ INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `u_time`, `u_mem
 (36, 1006, 2, 6003, 3000, 3628, -9945157, '2018-02-05 00:28:53', 0, '#include <algorithm>\r\n#include <cctype>\r\n#include <cmath>\r\n#include <cstdio>\r\n#include <cstdlib>\r\n#include <cstring>\r\n#include <ctime>\r\n#include <iomanip>\r\n#include <iostream>\r\n#include <map>\r\n#include <queue>\r\n#include <string>\r\n#include <set>\r\n#include <vector>\r\n#include <cassert>\r\nusing namespace std;\r\ntypedef long long LL;\r\nconst int N = 50007 , INF = 0x3f3f3f3f , M = 100005;\r\nconst double PI = acos(0.0) * 2;\r\ntemplate<typename T1>\r\nT1 gcd(T1 a , T1 b){ return b ? gcd(b,a%b) : a;}\r\n\r\nstruct BigNum{\r\n    int a[N];\r\n    enum{MOD = 10000};\r\n    void sets(char *s){\r\n        int t,k,ind,l,i;\r\n        memset(a,0,sizeof(a));\r\n        l = strlen(s);\r\n        a[0] = l / 4;\r\n        a[0] += l % 4 != 0 ? 1 : 0;\r\n        ind = 1;\r\n        for(int i = l-1 ; i >= 0 ; i -= 4){\r\n            t = 0;\r\n            k = max(0,i-3);\r\n            for(int j = k ; j <= i ; j++)   t = t * 10 + s[j] - \'0\';\r\n            a[ind++] = t;\r\n        }\r\n    }\r\n    void print(){\r\n        printf(\"%d\",a[a[0]]);\r\n        for(int i = a[0] - 1 ; i > 0 ; i--){\r\n            if(a[i] == 0){\r\n                printf(\"0000\");\r\n                continue;\r\n            }\r\n            for(int k = 10 ; k * a[i] < MOD ; k *= 10) putchar(\'0\');\r\n            printf(\"%d\",a[i]);\r\n        }\r\n        puts(\"\");\r\n    }\r\n    int& operator[](int p){return a[p];}\r\n    const int& operator[](int p)const{return a[p];}\r\n    BigNum operator * (const BigNum& b){\r\n        BigNum c;\r\n        c.sets(\"0\");\r\n        c[0] = a[0] + b[0];\r\n        for(int i = 1 ; i <= a[0] ; i++){\r\n            for(int j = 1 ; j <= b[0] ; j++){\r\n                c[i+j-1] += a[i] * b[j];\r\n                c[i+j] += c[i+j-1] / MOD;\r\n                c[i+j-1] %= MOD;\r\n            }\r\n        }\r\n        if( c[c[0]] == 0 )  c[0]--;\r\n        return c;\r\n    }\r\n}a,b;\r\n\r\nchar s1[M],s2[M];\r\n\r\nint main(){\r\n#ifdef LOCAL\r\n    freopen(\"E:\\\\c++\\\\in.txt\", \"r\", stdin);\r\n    freopen(\"E:\\\\c++\\\\out.txt\",\"w\",stdout);\r\n#endif\r\n    while(~scanf(\"%s%s\",s1,s2)){\r\n        a.sets(s1);\r\n        b.sets(s2);\r\n        (a*b).print();\r\n    }\r\n    return 0;\r\n}\r\n', ''),
 (38, 1013, 1, 8, 0, 0, 1, '2018-02-07 00:45:32', 0, '#include <iostream>\r\nusing namespace std;\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}', 'main.c:1:20: fatal error: iostream: No such file or directory\r\r\n #include <iostream>\r\r\r\n                    ^\r\r\ncompilation terminated.'),
 (39, 1013, 1, 8, 0, 0, 1, '2018-02-07 00:48:19', 0, '#include <stdio.h>\r\nusing namespace std;\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}	', 'main.c:3:1: error: unknown type name \'using\'\r\r\n \r\r\r\n ^\r\r\nmain.c:3:17: error: expected \'=\', \',\', \';\', \'asm\' or \'__attribute__\' before \'std\'\r\r\n \r\r\r\n                 ^'),
-(40, 1013, 1, 1, 220, 3432, 1, '2018-02-07 00:48:55', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}	', ''),
-(41, 1000, 1, 1, 52, 3488, 4, '2018-02-09 22:42:21', 0, '#include<stdio.h>\r\nint main()\r\n{\r\n   int a,b;\r\n   scanf(\"%d%d\",&a,&b);\r\n   printf(\"%d\",a+b);\r\n   return 0;\r\n } ', '');
+(40, 1013, 1, -1, 161, 3464, 1, '2018-02-07 00:48:55', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}	', ''),
+(41, 1000, 1, 1, 52, 3488, 4, '2018-02-09 22:42:21', 0, '#include<stdio.h>\r\nint main()\r\n{\r\n   int a,b;\r\n   scanf(\"%d%d\",&a,&b);\r\n   printf(\"%d\",a+b);\r\n   return 0;\r\n } ', ''),
+(43, 1013, 2, 7002, 65, 3620, -9945157, '2018-02-18 21:38:33', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    printf(\"1800\\n\");\r\n    return 0;\r\n}', '');
 
 -- --------------------------------------------------------
 
@@ -486,10 +492,10 @@ CREATE TABLE IF NOT EXISTS `web_number_information` (
 
 INSERT INTO `web_number_information` (`id`, `description`, `next_numbers`) VALUES
 (1, 'user_numbers', 6),
-(2, 'loading_falg_nums', 86),
+(2, 'loading_falg_nums', 89),
 (3, 'new_problem_id', 1016),
 (4, 'test_id', 6),
-(5, 'submit_number', 43),
+(5, 'submit_number', 44),
 (6, 'huck_number', 6),
 (7, 'contest_1_id', 2),
 (8, 'contest_2_id', 7),

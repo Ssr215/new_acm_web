@@ -14,7 +14,8 @@ def clr_make(code, language):
         1: "main.c",
         2: "main.cpp",
         3: "main.cpp",
-        4: "main.java"
+        4: "main.cpp",
+        5: "main.java"
     }
     try:
         real_path = os.path.join(word_path, file_name[language])

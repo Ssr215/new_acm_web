@@ -28,7 +28,7 @@ def compile_code(language):
     f.write(er)
     # f.write(err)
     f.close()
-    if p.returncode == 0 and er == "":
+    if p.returncode == 0:
         return True
     return False
 
