@@ -35,12 +35,12 @@
 
 			<a href="contest_status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
-			<a href="contest_forum.php?cid=?<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
+			<a href="contest_forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
 					?>
-						<a href="contest_authority.php" class="menu_label_1 menu_a">
+						<a href="contest_authority.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
 							Authority
 						</a>
 					<?php
@@ -265,8 +265,8 @@
 							$pro_ids = $row['problem_id'];
 							?>
 								<tr>
-									<td><a href="contest_display.php?pid=<?php echo($now_id+1) ?>"><?php echo substr($str, $now_id , 1); ?></a></td>
-									<td><a href="contest_display.php?pid=<?php echo($now_id+1) ?>"><?php if ($row['change_problem_name'] == ""){echo get_problem_name($conn,$pro_ids);}else{echo $row['change_problem_name'];} ?></a></td>
+									<td><a href="contest_display.php?pid=<?php echo($now_id+1) ?>&cid=<?php echo $cid ?>"><?php echo substr($str, $now_id , 1); ?></a></td>
+									<td><a href="contest_display.php?pid=<?php echo($now_id+1) ?>&cid=<?php echo $cid ?>"><?php if ($row['change_problem_name'] == ""){echo get_problem_name($conn,$pro_ids);}else{echo $row['change_problem_name'];} ?></a></td>
 									<td><a href="contests_submit.php?cid=<?php echo($cid); ?>&order=<?php echo($pro_ids) ?>">Submit</a></td>
 									<td><?php if ($row['pass_number'] > 0) {
 										echo $row['pass_number'];

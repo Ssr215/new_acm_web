@@ -36,7 +36,7 @@
 		$name = $row['name'];
 		$problem_number = $row['problem_number'];
 	}
-
+	// 获取pid的问题名字
 	function get_problem_name($conn,$pro_id){
 		$sql = "SELECT title FROM problem_information_1 WHERE pro_id = '$pro_id'";
 		$result = mysqli_query($conn,$sql);
@@ -88,7 +88,7 @@
 			echo $num;
 		}
 	}
-
+	// 获取当前实践AC题目的分值
 	function get_pass_problem_now_score($conn,$id,$cid,$pass_min){
 		// echo "500";
 		$ans = 0;
@@ -123,7 +123,7 @@
 			echo $m;
 		}
 	}
-
+	// 获取contest_id为sid下排序为oid的题目id
 	function get_contest_id_order_id_pro_id($conn,$oid,$cid){
 		$sql = "SELECT problem_id FROM contest_information_2 WHERE contest_id='$cid' AND order_number='$oid'";
 		$result = mysqli_query($conn,$sql);
@@ -147,5 +147,125 @@
 			return 5;
 		}
 		return 0;
+	}
+
+
+	function get_user_id($conn,$u_name){
+		$u_id = -1;
+		$sql = "SELECT * FROM user_information WHERE user_name = '$u_name'";
+		$result = mysqli_query($conn,$sql);
+		while ($row = mysqli_fetch_array($result)) {
+			$u_id = $row['id'];
+		}
+		return $u_id;
+	}
+
+	// 此处获取用户是否是参赛选手的判定中，只要contest没有用户限定，任何人都可以参赛，不过后期应该会改成只有注册比赛的选手才能参加比赛
+	function get_is_it_a_competitor($conn,$u_name,$cid){
+		$sql = "SELECT limit_par FROM cntest_information_1 WHERE contest_id='$cid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if ( $row['limit_par'] == 0 ) {
+				return 1;
+			}
+		}
+		$sql = "SELECT cid_allow FROM user_information WHERE user_name = '$u_name'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if ( $row['cid_allow'] == $cid ) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+	// 获取参赛选手($flag = 1)/管理员($flag = 0)的提交数目
+	function get_cstatus_number($conn,$flag,$cid){
+		if ( $flag == 0 ) {
+			$sql = "SELECT COUNT(1) FROM contest_pro_submit WHERE contest_id='$cid'";
+		}else{
+			$sql = "SELECT COUNT(1) FROM contest_pro_submit WHERE contest_id='$cid' AND competitor = 1";
+		}
+		$result = mysqli_query($conn,$sql);
+		// echo $result;
+		list($ans) = $result->fetch_row();
+		return $ans;
+	}
+	function get_verdict($id){
+		if ($id == 0) {
+			return "in queue";
+		}
+		if ($id == 1) {
+			return "Accepted";
+		}
+		if ($id == 2) {
+			return "Presentatior Error";
+		}
+		if ($id == 8) {
+			return "Complie error";
+		}
+		if ($id == -1) {
+			return "hucked";
+		}
+		if ($id == 11) {
+			return "Passed pretests";
+		}
+		$t_id = 0;
+		$p2 = "";
+		if ($id >= 2000) {
+			$t_id = $id % 1000;
+			$p2 = " on test " . $t_id;
+			$id = (int)($id / 1000);
+		}
+		$p1 = "";
+		if ($id == 2) {
+			$p1 = "Presentatior Error";
+		}elseif ($id == 3) {
+			$p1 = "Output Limit";
+		}elseif ($id == 4) {
+			$p1 = "Runtime Error";
+		}elseif ($id == 5) {
+			$p1 = "Memory Limit Exceeded";
+		}elseif ($id == 6) {
+			$p1 = "Time Limit Exceeded";
+		}elseif ($id == 7) {
+			$p1 = "Wrong Answer";
+		}elseif ($id == 9) {
+			$p1 = "runing";
+		}
+		return $p1. "" . $p2;
+	}
+	function get_languages($id){
+		if ( $id == 1 ){
+			return "C";
+		}	
+		if ( $id == 2 ) {
+			return "C++";
+		}
+		if ( $id == 3 ){
+			return "C++";
+		}
+		if ( $id == 4 ){
+			return "java";
+		}
+		return "C++";
+	}
+	function get_color_of_result($number){
+		if ($number == 1 OR $number == 11) {
+			echo "result_ACcolor";
+		}else if ( $number == 2 ) {
+			echo "result_PEcolor";
+		}else if ($number == 0 OR $number >= 9000) {
+			echo "result_RUNcolor";
+		}else{
+			echo "result_ERcolor";
+		}
+	}
+	function get_id_name($conn,$u_id){
+		$sql = "SELECT * FROM user_information WHERE id = '$u_id'";
+		$result = mysqli_query($conn,$sql);
+		while ($row = mysqli_fetch_array($result)) {
+			return $row['user_name'];
+		}
+		return "connect error";
 	}
 ?>

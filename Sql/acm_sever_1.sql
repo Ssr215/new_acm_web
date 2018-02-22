@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 2018-02-18 22:12:48
+-- Generation Time: 2018-02-22 23:19:26
 -- 服务器版本： 5.7.19
 -- PHP Version: 5.6.31
 
@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `contest_information_1` (
   `name` varchar(1000) COLLATE utf8_bin NOT NULL,
   `creator_id` int(11) NOT NULL,
   `problem_number` int(11) NOT NULL,
-  `submit_number` int(11) NOT NULL,
   PRIMARY KEY (`contest_id`),
   KEY `contest_id` (`contest_id`),
   KEY `level` (`level`),
@@ -50,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `contest_information_1` (
 -- 转存表中的数据 `contest_information_1`
 --
 
-INSERT INTO `contest_information_1` (`contest_id`, `level`, `type`, `begin_time`, `duration`, `limit_par`, `name`, `creator_id`, `problem_number`, `submit_number`) VALUES
-(1, 0, 1, '2018-02-13 00:00:00', 120, 1, 'First easy test', -9945157, 6, 0);
+INSERT INTO `contest_information_1` (`contest_id`, `level`, `type`, `begin_time`, `duration`, `limit_par`, `name`, `creator_id`, `problem_number`) VALUES
+(1, 0, 1, '2018-02-13 00:00:00', 120, 1, 'First easy test', -9945157, 6);
 
 -- --------------------------------------------------------
 
@@ -78,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `contest_information_2` (
 --
 
 INSERT INTO `contest_information_2` (`id`, `contest_id`, `problem_id`, `order_number`, `change_problem_name`, `score`, `pass_number`, `test_number`) VALUES
-(1, 1, 1011, 1, 'MOD', 500, 0, 0),
+(1, 1, 1011, 1, 'MOD', 500, 1, 1),
 (2, 1, 1010, 2, '', 1000, 0, 0),
 (3, 1, 1014, 3, '', 1500, 0, 0),
 (4, 1, 1015, 4, '', 2000, 0, 0),
@@ -119,7 +118,63 @@ CREATE TABLE IF NOT EXISTS `contest_pro_submit` (
 --
 
 INSERT INTO `contest_pro_submit` (`id`, `contest_id`, `problem_id`, `user_id`, `competitor`, `language`, `submit_time`, `result`, `u_time`, `u_memory`, `code`, `compile`) VALUES
-(10, 1, 1, -9945157, 0, 3, '2018-02-13 23:46:00', 0, 0, 0, '#include <bits/stdc++.h>\r\nusing namespace std;\r\nconst int N = 1e5+7 , mz = 1e9+7;\r\nint a[N];\r\n\r\nint main(){\r\n    a[1] = a[2] = 1;\r\n    for(int i = 3 ; i < N ; i++)    a[i] = (a[i-1]+a[i-2])%mz;\r\n    int T;\r\n    cin>>T;\r\n    while( T-- ){\r\n        int n;\r\n        cin>>n;\r\n        cout<<a[n]<<endl;\r\n    }\r\n    return 0;\r\n}\r\n', '');
+(10, 1, 1, -9945157, 0, 3, '2018-02-13 23:46:00', 11, 408, 3488, '#include <bits/stdc++.h>\r\nusing namespace std;\r\nconst int N = 1e5+7 , mz = 1e9+7;\r\nint a[N];\r\n\r\nint main(){\r\n    a[1] = a[2] = 1;\r\n    for(int i = 3 ; i < N ; i++)    a[i] = (a[i-1]+a[i-2])%mz;\r\n    int T;\r\n    cin>>T;\r\n    while( T-- ){\r\n        int n;\r\n        cin>>n;\r\n        cout<<a[n]<<endl;\r\n    }\r\n    return 0;\r\n}\r\n', 'gcc: error: main.c: No such file or directory');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `contest_ranks_information_1`
+--
+
+DROP TABLE IF EXISTS `contest_ranks_information_1`;
+CREATE TABLE IF NOT EXISTS `contest_ranks_information_1` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `contest_id` int(11) NOT NULL,
+  `pass_time` time NOT NULL,
+  `pass_problem_id` int(11) NOT NULL,
+  `add_score` int(11) NOT NULL,
+  `error_record` int(11) NOT NULL,
+  `lock_problem` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`contest_id`,`lock_problem`),
+  KEY `user_id_2` (`user_id`,`contest_id`,`add_score`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- 转存表中的数据 `contest_ranks_information_1`
+--
+
+INSERT INTO `contest_ranks_information_1` (`id`, `user_id`, `contest_id`, `pass_time`, `pass_problem_id`, `add_score`, `error_record`, `lock_problem`) VALUES
+(25, -9945157, 1, '23:46:00', 1, 150, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `contest_ranks_information_2`
+--
+
+DROP TABLE IF EXISTS `contest_ranks_information_2`;
+CREATE TABLE IF NOT EXISTS `contest_ranks_information_2` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `contest_id` int(11) NOT NULL,
+  `total_score` int(11) NOT NULL,
+  `end_ranks` int(11) NOT NULL,
+  `previous_ranting` int(11) NOT NULL,
+  `add_rating` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `contest_id` (`contest_id`),
+  KEY `user_id` (`user_id`,`contest_id`),
+  KEY `contest_id_2` (`contest_id`,`end_ranks`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- 转存表中的数据 `contest_ranks_information_2`
+--
+
+INSERT INTO `contest_ranks_information_2` (`id`, `user_id`, `contest_id`, `total_score`, `end_ranks`, `previous_ranting`, `add_rating`) VALUES
+(2, -9945157, 1, 150, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -170,10 +225,14 @@ CREATE TABLE IF NOT EXISTS `loading_flag` (
 --
 
 INSERT INTO `loading_flag` (`loading_id`, `flag1`, `flag2`, `id`, `last_updata_times`) VALUES
-(85, 7286761, 76187116, -9945157, '2018-02-16 23:52:21'),
-(88, 67972716, 57388052, -1, '2018-02-18 22:06:05'),
-(87, 90030893, 94291416, -9945157, '2018-02-17 23:51:14'),
-(86, 69882981, 37265863, -1, '2018-02-17 21:45:32');
+(93, 31201746, 91688081, -1, '2018-02-19 18:58:56'),
+(96, 74597586, 50037635, -9945157, '2018-02-22 23:15:09'),
+(95, 95887812, 84426091, -9945157, '2018-02-21 14:20:47'),
+(94, 32790874, 73368741, -1, '2018-02-19 18:59:53'),
+(89, 72701624, 36813831, -9945157, '2018-02-19 16:40:44'),
+(92, 61605190, 30234342, -1, '2018-02-19 18:55:47'),
+(91, 83228161, 98153857, -1, '2018-02-19 18:54:48'),
+(90, 66177231, 41205482, -1, '2018-02-19 18:54:40');
 
 -- --------------------------------------------------------
 
@@ -373,7 +432,7 @@ INSERT INTO `pro_submit` (`id`, `pro_id`, `language`, `result`, `u_time`, `u_mem
 (7, 1000, 1, 1, 62, 3632, 1, '2017-12-19 00:34:51', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    scanf(\"%d%d\",&a,&b);\r\n    printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}', ','),
 (8, 1000, 1, 1, 62, 3636, 1, '2017-12-19 13:34:01', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
 (9, 1000, 1, 1, 62, 3484, 1, '2017-12-19 13:34:46', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
-(10, 1000, 1, 1, 62, 3636, 1, '2017-12-19 13:35:38', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
+(10, 1000, 1, 0, 0, 0, 1, '2017-12-19 13:35:38', 0, '#include <stdio.h>\r\n\r\nint main(){\r\n    int a,b;\r\n    while(~scanf(\"%d%d\",&a,&b))\r\n        printf(\"%d\\n\",a+b);\r\n    return 0;\r\n}\r\n', ','),
 (24, 1003, 2, 1, 1875, 3480, -9945157, '2018-02-04 16:48:38', 0, '#include <bits/stdc++.h>\r\nusing namespace std;\r\nconst int N = 1e6+7 , mz = 1e9+7;\r\nint a[N];\r\nmap<int,int> mp;\r\n\r\nint main(){\r\n#ifdef LOCAL\r\n    //freopen(\"E:\\\\c++\\\\in.txt\", \"r\", stdin);\r\n    //freopen(\"E:\\\\c++\\\\out.txt\",\"w\",stdout);\r\n#endif\r\n    int T;\r\n    scanf(\"%d\",&T);\r\n    while( T-- ){\r\n        int n;\r\n        scanf(\"%d\",&n);\r\n        mp.clear();\r\n        int di = 0 , maxn = 0;\r\n        for(int i = 1 ; i <= n ; i++)   scanf(\"%d\",a+i);\r\n        for(int i = 1 ; i <= n ; i++){\r\n            if( mp.find(a[i]) == mp.end() ){\r\n                mp[a[i]] = i;\r\n                maxn = max(maxn,i-di);\r\n            }else{\r\n                di = max(mp[a[i]],di);\r\n                maxn = max(maxn,i-di);\r\n                mp[a[i]] = i;\r\n            }\r\n        }\r\n        printf(\"%d\\n\",maxn);\r\n    }\r\n    return 0;\r\n}\r\n', ''),
 (11, 1001, 2, 1, 62, 3632, -9945157, '2018-02-04 11:27:34', 0, '#include <bits/stdc++.h>\r\nusing namespace std;\r\nconst int N = 1e3+7;\r\nint gcd(int a,int b){return b?gcd(b,a%b):a;}\r\nint d[N];\r\n\r\nint main(){\r\n#ifdef LOCAL\r\n    //freopen(\"E:\\\\c++\\\\in.txt\", \"r\", stdin);\r\n    //freopen(\"E:\\\\c++\\\\out.txt\",\"w\",stdout);\r\n#endif\r\n    int n;\r\n    scanf(\"%d\",&n);\r\n    for(int i = 1 ; i <= n ; i++)   scanf(\"%d\",d+i);\r\n    int ans_i = 1 , ans_j = 2 , ans = gcd(d[1],d[2]);\r\n    for(int i = 1 ; i <= n ; i++)\r\n        for(int j = i+1 ; j <= n ; j++){\r\n            int t = gcd( d[i] , d[j] );\r\n            if( t > ans ){\r\n                ans_i = i;\r\n                ans_j = j;\r\n                ans = t;\r\n            }\r\n        }\r\n    printf(\"%d %d %d\\n\",ans_i,ans_j,ans);\r\n    return 0;\r\n}\r\n', ','),
 (12, 1001, 1, 8, 0, 0, -9945157, '2018-02-04 11:29:25', 0, '#include <bits/stdc++.h>\r\nusing namespace std;\r\nconst int N = 1e3+7;\r\nint gcd(int a,int b){return b?gcd(b,a%b):a;}\r\nint d[N];\r\n\r\nint main(){\r\n#ifdef LOCAL\r\n    //freopen(\"E:\\\\c++\\\\in.txt\", \"r\", stdin);\r\n    //freopen(\"E:\\\\c++\\\\out.txt\",\"w\",stdout);\r\n#endif\r\n    int n;\r\n    scanf(\"%d\",&n);\r\n    for(int i = 1 ; i <= n ; i++)   scanf(\"%d\",d+i);\r\n    int ans_i = 0 , ans_j = 0 , ans = 0;\r\n    for(int i = n ; i ; i--)\r\n        for(int j = i-1 ; j ; j--){\r\n            int t = gcd( d[i] , d[j] );\r\n            if( t > ans ){\r\n                ans_i = i;\r\n                ans_j = j;\r\n                ans = t;\r\n            }\r\n        }\r\n    printf(\"%d %d %d\\n\",ans_i,ans_j,ans);\r\n    return 0;\r\n}\r\n', 'main.c:1:25: fatal error: bits/stdc++.h: No such file or directory\r\r\n #include <bits/stdc++.h>\r\r\r\n                         ^\r\r\ncompilation terminated.'),
@@ -492,14 +551,16 @@ CREATE TABLE IF NOT EXISTS `web_number_information` (
 
 INSERT INTO `web_number_information` (`id`, `description`, `next_numbers`) VALUES
 (1, 'user_numbers', 6),
-(2, 'loading_falg_nums', 89),
+(2, 'loading_falg_nums', 97),
 (3, 'new_problem_id', 1016),
 (4, 'test_id', 6),
 (5, 'submit_number', 44),
 (6, 'huck_number', 6),
 (7, 'contest_1_id', 2),
 (8, 'contest_2_id', 7),
-(9, 'contest_pro_submit_id', 11);
+(9, 'contest_pro_submit_id', 11),
+(10, 'contest_rank_information_1_id', 26),
+(11, 'contest_ranks_information_2_id', 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

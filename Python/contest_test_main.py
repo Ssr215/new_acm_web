@@ -1,10 +1,9 @@
-import time
+import os
 import pymysql.cursors
 import clr_make
 import build_code
-import os
-import run_main
-import huck
+import contest_run_main
+import contest_pac_deal
 
 while True:
     connect = -1
@@ -23,27 +22,27 @@ while True:
         print(x)
 
     cursor = connect.cursor()
-    sql = "SELECT * FROM pro_submit WHERE result=0 or result > 9000"
+    sql = "SELECT id,contest_id,problem_id,competitor,language,code,submit_time,user_id FROM contest_pro_submit " \
+          "WHERE result=0 or result > 9000"
     cursor.execute(sql)
     for row in cursor.fetchall():
         # print(row)
-        ans = clr_make.clr_make(row[9], row[2])
-        # print(ans)
+        ans = clr_make.clr_make(row[5], row[4])
         if ans:
-            sql = "UPDATE pro_submit SET result = 9001 WHERE id = %d" % row[0]
+            sql = "UPDATE contest_pro_submit SET result = 9001 WHERE id = %d" % row[0]
             try:
                 cursor.execute(sql)
-                ans = build_code.compile_code(row[2])
+                ans = build_code.compile_code(row[4])
                 if ans:
                     print("compile is success!")
-                    j_result = run_main.run(row[1])
+                    j_result = contest_run_main.run(row[1], row[2])
                     print(j_result)
                     put_result = 0
-                    if j_result["result"] == 1:
-                        put_result = 1
+                    if j_result["result"] == 11:
+                        put_result = 11
                     else:
                         put_result = j_result["result"] * 1000 + j_result["end_id"] + 1
-                    sql = "UPDATE pro_submit SET result = %d" % put_result
+                    sql = "UPDATE contest_pro_submit SET result = %d" % put_result
                     sql += ",u_time = %d" % j_result["take_time"]
                     sql += ",u_memory = %d" % j_result["take_memory"]
                     sql += " WHERE id = %d" % row[0]
@@ -52,13 +51,21 @@ while True:
                     except Exception as e:
                         connect.rollback()
                         print('have result but can\'t update now', e)
-                    if j_result["result"] == 1:
-                        sql = "UPDATE problem_information_1 SET AC = AC+1 WHERE pro_id = %d" % row[1]
+                    if j_result["result"] == 11:
+                        sql = "UPDATE contest_information_2 SET pass_number = pass_number+1 WHERE " \
+                              "contest_id = %d" % row[1] + " AND order_number = %d" % row[2]
                         try:
                             cursor.execute(sql)
                         except Exception as e:
                             connect.rollback()
                             print('it is ac but can\'t update ac number now', e)
+                        contest_pac_deal.add_rank_score(cursor, row[7], row[1], row[2], j_result['score'], row[6])
+                        # sql = "UPDATE problem_information_1 SET AC = AC+1 WHERE pro_id = %d" % row[1]
+                        # try:
+                        #     cursor.execute(sql)
+                        # except Exception as e:
+                        #     connect.rollback()
+                        #     print('it is ac but can\'t update ac number now', e)
                     # if write_test_file.get_test_file(cursor, row[1]):
                     #     print("get test file is success!")
                     # else:
@@ -68,7 +75,7 @@ while True:
                     er = build_code.read_file(err_txt_path)
                     er = pymysql.escape_string(er)
                     print(er)
-                    sql = "UPDATE pro_submit SET compile='\%s',result=8 WHERE id = %d" % (er, row[0])
+                    sql = "UPDATE contest_pro_submit SET compile='\%s',result=8 WHERE id = %d" % (er, row[0])
                     try:
                         cursor.execute(sql)
                     except Exception as e:
@@ -76,16 +83,5 @@ while True:
                         print('compile error but can\'t update now', e)
             except Exception as e:
                 connect.rollback()
-                print('can\'t update now line 78', e)
-    sql = "SELECT * FROM huck_submit WHERE result=0 OR result=4"
-    cursor.execute(sql)
-    for row in cursor.fetchall():
-        print(row)
-        huck.new_huck(connect, row[0], row[1])
-    try:
-        connect.close()
-        # print("connect close is success")
-    except (IOError, ZeroDivisionError) as x:
-        print(x)
-    time.sleep(1)
-    # break
+                print('can\'t update now line XXY', e)
+    break

@@ -1,98 +1,15 @@
 <?php
 	include "../Php/Public_1.php";
-
-	if ( $GLOBALS['loading_user_flag'] == false ) {
+	if ( !$GLOBALS['loading_user_flag'] ) {
 		?>
 			<script type="text/javascript">
-				alert("please log in first");
+					alert("please log in first!");
 			</script>
-			<meta http-equiv="refresh" content="0;url=loading.php">
+			<meta http-equiv="refresh" content="0;loading.php">
 		<?php
 		exit();
 	}
-
-	if ( !isset($_GET['cid']) ) {
-		?>
-			<script type="text/javascript">
-				alert("No Access!");
-			</script>
-			<meta http-equiv="refresh" content="0;url=loading.php">
-		<?php
-		exit();
-	}
-
 	include "../Php/contest.php";
-
-	if ( isset($_POST['c_language']) ) {
-		if ( strtotime($begin_time." +".$duration." minute") > time() ) {
-			if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
-				if ( strtotime($begin_time) > time() ) {
-					echo "The contest has not started yet";
-					exit();
-				}else if ( ck_is_allow_participate() ) {
-					echo "You can not participate in this competition";
-					exit();
-				}
-			}
-		}
-		if ( !isset($_GET['pid']) || !is_numeric($_GET['pid']) ) {
-			if ( !isset($_POST['pid']) || !is_numeric($_POST['pid']) || $_POST['pid'] < 1000 ) {
-				?>
-					<script type="text/javascript">
-						alert("No Access!");
-					</script>
-					<meta http-equiv="refresh" content="0;url=index.php">
-				<?php
-				exit();
-			}else{
-				$pid = $_POST['pid'];
-			}
-		}else{
-			$pid = $_GET['pid'];
-		}
-		$c_language = get_language_number($_POST['c_language']);
-		$c_code = "";
-		if ( isset( $_POST['c_code'] ) && $_POST['c_code'] != "" ) {
-			$c_code = $_POST['c_code'];
-		}else{
-			if ( isset($_POST['contest_code_file'] )) {
-				echo "here";
-				echo $_POST['contest_code_file'];
-			}
-
-			if ($_FILES["contest_code_file"]["error"] > 0) {
-				echo $_FILES["contest_code_file"]["error"];
-			}else{
-				$contest_code = $_FILES["contest_code_file"]["tmp_name"];
-				$c_code = addslashes(fread(fopen($contest_code, "r"),filesize($contest_code)));
-			}
-		}
-		$u_id = get_user_id($conn,$GLOBALS['loading_username']);
-		$cid = $_GET['cid'];
-		// $pid = $_GET['pid'];
-		$id = get_and_update_of_web_number_information($conn,9);
-		$now_time = date("Y-m-d H:i:s");
-		$c_flag = get_is_it_a_competitor($conn,$GLOBALS['loading_username'],$cid);
-		$sql = "INSERT INTO contest_pro_submit (id,contest_id,problem_id,user_id,competitor,language,submit_time,result,u_time,u_memory,code,compile) VALUES ('$id','$cid','$pid','$u_id','$c_flag','$c_language','$now_time','0','0','0',?,'')";
-		$sth = $conn->prepare($sql);
-		$sth->bind_param('s',$c_code);
-		if ($sth->execute()) {
-			// echo $sth->insert_id;
-			// $submit_success_flag = 1;
-			?>
-				<meta http-equiv="refresh" content="0;url=contest_submit_display_myself.php">
-			<?php
-			exit();
-		}else{
-			?>
-				<script type="text/javascript">
-					alert(<?php echo $sth->error; ?>);
-				</script>
-			<?php
-			// $submit_success_flag = 2;
-			exit();
-		}
-	}
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 ?>
 
@@ -102,6 +19,7 @@
 	<title>contest display page</title>
 	<link rel="stylesheet" type="text/css" href="../Css/contestHome.css">
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
+	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
 	<script type="text/javascript" src="../Js/contest.js"></script>
 </head>
 <body>
@@ -117,9 +35,9 @@
 
 			<a href="contestdisplay.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
 
-			<a href="contests_submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
+			<a href="contests_submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="contest_submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="contest_submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">My Submit</a>
 
 			<a href="contest_huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -332,94 +250,41 @@
 							exit();
 						}
 					}
-				} else {
-					?>
-						<form action="contests_submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data">
-							<h2>Submit solution</h2>
-							<!-- <br> -->
-							<p><?php echo $name; ?></p>
-							<br>
-							<table width="900px">
-								<tbody>
-									<tr>
-										<td width="300px"><p>Problem: </p></td>
-										<td align="left">
-											<select class="select_1" name="pid">
-												<option value="-1">Choose problem</option>
-												<?php
-													$sql = "SELECT problem_id FROM contest_information_2 WHERE contest_id='$cid'";
-													$result = mysqli_query($conn,$sql);
-													$now_row = 0;
-													while ( $row = mysqli_fetch_array($result) ) {
-														?>
-															<option value="<?php echo($row['problem_id']) ?>">
-																<?php
-																	echo substr($str, $now_row , 1);
-																	echo " - " . get_problem_name($conn,$row["problem_id"]);
-																?>
-															</option>
-														<?php
-														$now_row++;
-													}
-												?>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td><p>Language:</p></td>
-										<td align="left">
-											<select class="select_1" name="c_language">
-												<option>C</option>
-												<option>C++</option>
-												<option>C++11</option>
-												<option>C++14</option>
-												<option>JAVA</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td><p>Source code:</p></td>
-										<td align="left">
-											<textarea class="c_submitc_texttarea" name="c_code"></textarea>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td>Or choose file</td>
-										<td align="left"><input type="file" name="contest_code_file"></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td align="left">	
-											Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td><input type="submit" name="submit" value="submit" class="contest_submit"></td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-						
-					<?php
 				}
 			?>
+			<table width="900px" border="1" style="font-size:0.9rem">
+				<thead>
+					<th width="54px">#</th>
+					<th width="150px">When</th>
+					<th width="120px">Who</th>
+					<th>Problem</th>
+					<th width="60px">Lang</th>
+					<th width="150px">Verdict</th>
+					<th width="60px">Time</th>
+					<th width="60px">Memory</th>
+				</thead>
+				<tbody>
+					<?php
+						$uid = get_user_id($conn,$GLOBALS['loading_username']);
+						$sql = "SELECT id,problem_id,language,submit_time,result,u_time,u_memory FROM contest_pro_submit WHERE contest_id = '$cid' AND user_id = '$uid'";
+						$result = mysqli_query($conn,$sql);
+						while ( $row = mysqli_fetch_array($result) ) {
+							?>
+								<tr>
+									<td><?php echo $row['id']; ?></td>
+									<td><?php echo $row['submit_time']; ?></td>
+									<td><?php echo $GLOBALS['loading_username']; ?></td>
+									<td><?php echo substr($str, $row['problem_id']-1,1).". ".get_problem_name($conn,get_contest_id_order_id_pro_id($conn,$row['problem_id'],$cid)); ?></td>
+									<td><?php echo get_languages($row['language']); ?></td>
+									<td class="<?php get_color_of_result($row['result']) ?>"><?php echo get_verdict($row['result']); ?></td>
+									<td><?php echo $row['u_time']." ms"; ?></td>
+									<td><?php echo $row['u_memory']." K"; ?></td>
+								</tr>
+							<?php
+						}
+					?>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>

@@ -8,7 +8,8 @@ def compile_code(language):
         1: "gcc main.c -o main -Wall -lm -O2 -std=c99 --static -DONLINE_JUDGE",
         2: "g++ main.cpp -O2 -Wall -lm --static -DONLINE_JUDGE -o main",
         3: "g++ main.cpp -O2 -Wall -lm --static -std=c++11 -DONLINE_JUDGE -o main",
-        4: "javac Main.java"
+        4: "g++ main.cpp -O2 -Wall -lm --static -std=c++14 -DONLINE_JUDGE -o main",
+        5: "javac Main.java"
     }
     if language not in build_cmd.keys():
         return False

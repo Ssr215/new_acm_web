@@ -71,7 +71,7 @@
 					$level = $_POST['c_level'];
 					$type = $_POST['c_type'];
 					$limit_par = $_POST['c_limit_par'];
-					$sql = "INSERT INTO contest_information_1 (contest_id,level,type,begin_time,duration,limit_par,name,creator_id,problem_number,submit_number) VALUES ('$c_id','$level','$type','$begin_time','$duration','$limit_par','$name','$id','$number','0')";
+					$sql = "INSERT INTO contest_information_1 (contest_id,level,type,begin_time,duration,limit_par,name,creator_id,problem_number) VALUES ('$c_id','$level','$type','$begin_time','$duration','$limit_par','$name','$id','$number')";
 					if ( !mysqli_query($conn,$sql) ) {
 						echo "Error: " . $sql . "<br>" . $conn->error;
 						$create_success_flag = 3;

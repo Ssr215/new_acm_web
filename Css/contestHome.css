@@ -71,3 +71,17 @@ body{
 	text-align: left;
 	background-color: rgba(0,255,43,0.5);
 }
+.select_1{
+	width: 300px;
+	text-align: left;
+}
+.c_submitc_texttarea{
+	width: 555px;
+	height: 588px;
+	text-align: left;
+}
+.contest_submit{
+	width: 188px;
+	height: 28px;
+	text-align: center;
+}

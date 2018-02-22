@@ -40,12 +40,12 @@
 
 			<a href="contest_status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
-			<a href="contest_forum.php?cid=?<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
+			<a href="contest_forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
 					?>
-						<a href="contest_authority.php" class="menu_label_1 menu_a">
+						<a href="contest_authority.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
 							Authority
 						</a>
 					<?php
@@ -257,7 +257,8 @@
 								<td>Output Limit</td>
 								<td>-50</td>
 							</tr>
-							<tr class="red_color">									<td>Compile Error</td>
+							<tr class="red_color">									
+								<td>Compile Error</td>
 								<td>-0</td>
 							</tr>
 							<tr class="green_color">
