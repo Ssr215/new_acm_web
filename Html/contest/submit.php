@@ -1,5 +1,5 @@
 <?php
-	include "../Php/Public_1.php";
+	include "../../Php/Public_1.php";
 
 	if ( $GLOBALS['loading_user_flag'] == false ) {
 		?>
@@ -21,7 +21,7 @@
 		exit();
 	}
 
-	include "../Php/contest.php";
+	include "../../Php/contest.php";
 
 	if ( isset($_POST['c_language']) ) {
 		if ( strtotime($begin_time." +".$duration." minute") > time() ) {
@@ -64,7 +64,7 @@
 				echo $_FILES["contest_code_file"]["error"];
 			}else{
 				$contest_code = $_FILES["contest_code_file"]["tmp_name"];
-				$c_code = addslashes(fread(fopen($contest_code, "r"),filesize($contest_code)));
+				$c_code = fread(fopen($contest_code, "r"),filesize($contest_code));
 			}
 		}
 		$u_id = get_user_id($conn,$GLOBALS['loading_username']);
@@ -80,7 +80,7 @@
 			// echo $sth->insert_id;
 			// $submit_success_flag = 1;
 			?>
-				<meta http-equiv="refresh" content="0;url=contest_submit_display_myself.php">
+				<meta http-equiv="refresh" content="0;url=submit_display_myself.php">
 			<?php
 			exit();
 		}else{
@@ -100,9 +100,9 @@
 <html>
 <head>
 	<title>contest display page</title>
-	<link rel="stylesheet" type="text/css" href="../Css/contestHome.css">
-	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
-	<script type="text/javascript" src="../Js/contest.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../Css/contestHome.css">
+	<link rel="stylesheet" type="text/css" href="../../Css/public_1.css">
+	<script type="text/javascript" src="../../Js/contest.js"></script>
 </head>
 <body>
 	<div id="package">
@@ -113,26 +113,26 @@
 		</div>
 
 		<div id="menu_backgound_3">
-			<a href="index.php" class="menu_label_1 menu_a">Home</a>
+			<a href="../index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="contestdisplay.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
+			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
 
-			<a href="contests_submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
+			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="contest_submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
-			<a href="contest_huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
+			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
-			<a href="contest_ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
+			<a href="ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
 
-			<a href="contest_status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
+			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
-			<a href="contest_forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
+			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
 					?>
-						<a href="contest_authority.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
+						<a href="authority/index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
 							Authority
 						</a>
 					<?php
@@ -141,22 +141,22 @@
 				if( $GLOBALS['loading_user_flag'] ){
 					// echo "10096";
 					?>
-						<a href="index.php?out=1" class="menu_label_1 menu_a float_imp_right">
+						<a href="../index.php?out=1" class="menu_label_1 menu_a float_imp_right">
 							Sign out
 						</a>
 
-						<a href="mypage.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../mypage.php" class="menu_label_1 menu_a float_imp_right">
 							<?php echo $GLOBALS['loading_username']; ?>
 						</a>
 					<?php
 				}else{
 					// echo "10086";
 					?>
-						<a href="register.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../register.php" class="menu_label_1 menu_a float_imp_right">
 							Register
 						</a>
 
-						<a href="loading.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../loading.php" class="menu_label_1 menu_a float_imp_right">
 							Login
 						</a>
 					<?php
@@ -170,7 +170,7 @@
 			<table class="right_table_first" border="1">
 				<tbody>
 					<tr>
-						<th width="270px"><a href="contestdisplay.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
+						<th width="270px"><a href="index.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
 					</tr>
 					<tr>
 						<td>
@@ -309,9 +309,9 @@
 
 					<tr>
 						<td class="right_td">
-							<a href="article.php?cidx=<?php echo($cid); ?>">Announcement</a>
+							<a href="../article.php?cidx=<?php echo($cid); ?>">Announcement</a>
 							<br>
-							<a href="article.php?cida=<?php echo($cid); ?>">Tutorial</a>
+							<a href="../article.php?cida=<?php echo($cid); ?>">Tutorial</a>
 						</td>
 					</tr>
 				</tbody>
@@ -334,7 +334,7 @@
 					}
 				} else {
 					?>
-						<form action="contests_submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data">
+						<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data">
 							<h2>Submit solution</h2>
 							<!-- <br> -->
 							<p><?php echo $name; ?></p>
@@ -347,7 +347,7 @@
 											<select class="select_1" name="pid">
 												<option value="-1">Choose problem</option>
 												<?php
-													$sql = "SELECT problem_id FROM contest_information_2 WHERE contest_id='$cid'";
+													$sql = "SELECT problem_id,change_problem_name FROM contest_information_2 WHERE contest_id='$cid'";
 													$result = mysqli_query($conn,$sql);
 													$now_row = 0;
 													while ( $row = mysqli_fetch_array($result) ) {
@@ -355,7 +355,12 @@
 															<option value="<?php echo($row['problem_id']) ?>">
 																<?php
 																	echo substr($str, $now_row , 1);
-																	echo " - " . get_problem_name($conn,$row["problem_id"]);
+																	echo " - ";
+																	if ( $row['change_problem_name'] == "" ) {
+																		echo get_problem_name($conn,$row["problem_id"]);
+																	}else{
+																		echo $row['change_problem_name'];
+																	}
 																?>
 															</option>
 														<?php

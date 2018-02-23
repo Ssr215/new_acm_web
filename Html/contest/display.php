@@ -1,6 +1,6 @@
 <?php
-	include "../Php/Public_1.php";
-	include "../Php/contest.php";
+	include "../../Php/Public_1.php";
+	include "../../Php/contest.php";
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	$po_id = 1;
 	if ( isset($_GET['pid']) ) {
@@ -12,10 +12,10 @@
 <html>
 <head>
 	<title>contest display page</title>
-	<link rel="stylesheet" type="text/css" href="../Css/contestHome.css">
-	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
-	<link rel="stylesheet" type="text/css" href="../Css/problem.css">
-	<script type="text/javascript" src="../Js/contest.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../Css/contestHome.css">
+	<link rel="stylesheet" type="text/css" href="../../Css/public_1.css">
+	<link rel="stylesheet" type="text/css" href="../../Css/problem.css">
+	<script type="text/javascript" src="../../Js/contest.js"></script>
 </head>
 <body>
 	<div id="package">
@@ -26,26 +26,26 @@
 		</div>
 
 		<div id="menu_backgound_3">
-			<a href="index.php" class="menu_label_1 menu_a">Home</a>
+			<a href="../index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="contestdisplay.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
+			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
 
-			<a href="contests_submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
+			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="contest_submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
-			<a href="contest_huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
+			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
-			<a href="contest_ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
+			<a href="ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
 
-			<a href="contest_status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
+			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
-			<a href="contest_forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
+			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
 					?>
-						<a href="contest_authority.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
+						<a href="authority/index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
 							Authority
 						</a>
 					<?php
@@ -54,22 +54,22 @@
 				if( $GLOBALS['loading_user_flag'] ){
 					// echo "10096";
 					?>
-						<a href="index.php?out=1" class="menu_label_1 menu_a float_imp_right">
+						<a href="../index.php?out=1" class="menu_label_1 menu_a float_imp_right">
 							Sign out
 						</a>
 
-						<a href="mypage.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../mypage.php" class="menu_label_1 menu_a float_imp_right">
 							<?php echo $GLOBALS['loading_username']; ?>
 						</a>
 					<?php
 				}else{
 					// echo "10086";
 					?>
-						<a href="register.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../register.php" class="menu_label_1 menu_a float_imp_right">
 							Register
 						</a>
 
-						<a href="loading.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../loading.php" class="menu_label_1 menu_a float_imp_right">
 							Login
 						</a>
 					<?php
@@ -83,7 +83,7 @@
 			<table class="right_table_first" border="1">
 				<tbody>
 					<tr>
-						<th width="270px"><a href="contestdisplay.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
+						<th width="270px"><a href="index.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
 					</tr>
 					<tr>
 						<td>
@@ -179,7 +179,7 @@
 			<?php
 				if ( $begin_flag == 1 || strtotime($begin_time." +".$duration." minute") < time()   ) {		
 					?>
-					<form action="contests_submit.php?cid=<?php echo($cid) ?>&pid=<?php echo($po_id); ?>" method="post" enctype="multipart/form-data">
+					<form action="submit.php?cid=<?php echo($cid) ?>&pid=<?php echo($po_id); ?>" method="post" enctype="multipart/form-data">
 						<table  class="right_table" border="1">
 							<tbody>
 								<tr>
@@ -284,9 +284,9 @@
 
 					<tr>
 						<td class="right_td">
-							<a href="article.php?cidx=<?php echo($cid); ?>">Announcement</a>
+							<a href="../article.php?cidx=<?php echo($cid); ?>">Announcement</a>
 							<br>
-							<a href="article.php?cida=<?php echo($cid); ?>">Tutorial</a>
+							<a href="../article.php?cida=<?php echo($cid); ?>">Tutorial</a>
 						</td>
 					</tr>
 				</tbody>

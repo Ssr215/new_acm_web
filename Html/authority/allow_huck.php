@@ -1,11 +1,11 @@
 <?php
-	include "../Php/Public_1.php";
+	include "../../Php/Public_1.php";
 	if( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ){
 		?>
 			<script type="text/javascript">
 				alert("No Access!");
 			</script>
-			<meta http-equiv="refresh" content="0;url=index.php">
+			<meta http-equiv="refresh" content="0;../url=index.php">
 		<?php
 		exit();
 	}
@@ -40,7 +40,7 @@
 			$sth->bind_param('s',$in_code);
 			if ( $sth->execute() ) {
 				?>
-					<meta http-equiv="refresh" content="0;url=authority_allow_huck.php">
+					<meta http-equiv="refresh" content="0;url=allow_huck.php">
 				<?php
 			}else{
 				?>
@@ -61,16 +61,16 @@
 			exit();
 		}
 	}
-	include "../Php/authority.php";
+	include "../../Php/authority.php";
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>new online judge in cqupt private</title>
-	<link rel="stylesheet" type="text/css" href="../Css/Home.css">
-	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
-	<link rel="stylesheet" type="text/css" href="../Css/authority.css">
+	<link rel="stylesheet" type="text/css" href="../../Css/Home.css">
+	<link rel="stylesheet" type="text/css" href="../../Css/public_1.css">
+	<link rel="stylesheet" type="text/css" href="../../Css/authority.css">
 </head>
 <body>
 	<div id="package">
@@ -81,38 +81,38 @@
 			</h2>
 		</div>
 		<div id="menu_backgound">
-			<a href="index.php" class="menu_label_1 menu_a">
-				<img id = "position_photo" src="../photo/display1.png">
+			<a href="../index.php" class="menu_label_1 menu_a">
+				<img id = "position_photo" src="../../photo/display1.png">
 				Home
 			</a>
 
-			<a href="problem.php" class="menu_label_1 menu_a">
+			<a href="../problem.php" class="menu_label_1 menu_a">
 				Problem
 			</a>
 
-			<a href="Status.php" class="menu_label_1 menu_a">
+			<a href="../Status.php" class="menu_label_1 menu_a">
 				Status
 			</a>
 
-			<a href="huck_display.php" class="menu_label_1 menu_a">
+			<a href="../huck_display.php" class="menu_label_1 menu_a">
 				Huck
 			</a>
 
-			<a href="Contest.php" class="menu_label_1 menu_a">
+			<a href="../Contest.php" class="menu_label_1 menu_a">
 				contest
 			</a>
 
-			<a href="user.php" class="menu_label_1 menu_a">
+			<a href="../user.php" class="menu_label_1 menu_a">
 				User
 				<!-- 排名记录 -->
 			</a>
 
-			<a href="forum.php" class="menu_label_1 menu_a">
+			<a href="../forum.php" class="menu_label_1 menu_a">
 				Forum
 				<!-- 交流区，主要讨论题目错误或者疑问的地方 -->
 			</a>
 
-			<a href="article.php" class="menu_label_1 menu_a">
+			<a href="../article.php" class="menu_label_1 menu_a">
 				Article
 				<!-- 发表文章、竞赛题解、话题的地方 -->
 			</a>
@@ -120,7 +120,7 @@
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
 					?>
-						<a href="authority.php" class="menu_label_1 menu_a  new_color_imp">
+						<a href="index.php" class="menu_label_1 menu_a  new_color_imp">
 							Authority
 						</a>
 					<?php
@@ -129,22 +129,22 @@
 				if( $GLOBALS['loading_user_flag'] ){
 					// echo "10096";
 					?>
-						<a href="index.php?out=1" class="menu_label_1 menu_a float_imp_right">
+						<a href="../index.php?out=1" class="menu_label_1 menu_a float_imp_right">
 							Sign out
 						</a>
 
-						<a href="mypage.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../mypage.php" class="menu_label_1 menu_a float_imp_right">
 							<?php echo $GLOBALS['loading_username']; ?>
 						</a>
 					<?php
 				}else{
 					// echo "10086";
 					?>
-						<a href="register.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../register.php" class="menu_label_1 menu_a float_imp_right">
 							Register
 						</a>
 
-						<a href="loading.php" class="menu_label_1 menu_a float_imp_right">
+						<a href="../loading.php" class="menu_label_1 menu_a float_imp_right">
 							Login
 						</a>
 					<?php
@@ -155,38 +155,38 @@
 
 	<div id="main_page">
 		<div id="main_menu_background">
-			<a href="authority_add_problem.php" class="menu_label_5 menu_a">
+			<a href="add_problem.php" class="menu_label_5 menu_a">
 				Add problem
 			</a>
 
-			<a href="authority_update_problem.php" class="menu_label_5 menu_a">
+			<a href="update_problem.php" class="menu_label_5 menu_a">
 				Update problem
 			</a>
 
-			<a href="authority_add_test.php" class="menu_label_5 menu_a">
+			<a href="add_test.php" class="menu_label_5 menu_a">
 				Add test
 			</a>
 
-			<a href="authority_update_test.php" class="menu_label_5 menu_a">
+			<a href="update_test.php" class="menu_label_5 menu_a">
 				Update test
 			</a>
 
-			<a href="authority_create_contest.php" class="menu_label_5 menu_a">
+			<a href="create_contest.php" class="menu_label_5 menu_a">
 				Create contest
 			</a>
 
-			<a href="authority_delete_anything.php" class="menu_label_5 menu_a">
+			<a href="delete_anything.php" class="menu_label_5 menu_a">
 				Delete
 			</a>
 
-			<a href="authority_allow_huck.php" class="menu_label_5 menu_a new_color_img_authority">
+			<a href="allow_huck.php" class="menu_label_5 menu_a new_color_img_authority">
 				Open huck
 			</a>
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) == 9 ){
 					?>
-						<a href="authority_increase_permissions.php" class="menu_label_5 menu_a">
+						<a href="increase_permissions.php" class="menu_label_5 menu_a">
 							Increase permissions
 						</a>
 					<?php
@@ -196,11 +196,11 @@
 	</div>
 
 	<div id="main_add_problem_page">
-		<form action="authority_allow_huck.php" method="post" enctype="multipart/form-data">
+		<form action="allow_huck.php" method="post" enctype="multipart/form-data">
 			<p>This page include add and update , each question will only keep the latest records</p>
 			Open Problem id: <input type="test" name="open_huck_pro_id">
 			<br>
-			check huck data code:(language using C++11)
+			check huck data code:(language using C++11, Time Limit Exceeded is 10s , Memory Limit Exceeded is 512M)
 			<textarea class="textarea_size" name="submit_ck_code"></textarea>
 			<br>
 			<input type="file" name="add_ck_file">
@@ -209,7 +209,7 @@
 			<br>
 			<hr>
 			<br>
-			Accepted code:(language using C++11)
+			Accepted code:(language using C++11, Time Limit Exceeded is 10s , Memory Limit Exceeded is 512M)
 			<textarea class="textarea_size" name="submit_ac_code"></textarea>
 			<br>
 			<input type="file" name="add_ac_file">

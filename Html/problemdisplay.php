@@ -69,7 +69,7 @@
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
 					?>
-						<a href="authority.php" class="menu_label_1 menu_a">
+						<a href="authority/index.php" class="menu_label_1 menu_a">
 							Authority
 						</a>
 					<?php

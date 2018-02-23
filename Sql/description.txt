@@ -72,3 +72,6 @@ hack失败将-50分
 3.评测机返回评测结果，更新，如果获得AC将这条数据插入到contest_ranks_information_1中，记录AC的题目和对应时间，分数，其中保证每个用户每一道题只有一条记录
 4.评测机更新个人得分记录在contest_ranks_information_2中
 5.html从contest_ranks_information_2中拉取排名信息，并且从contest_ranks_information_1中拉取数据展示整个rank页面
+
+关于测试权限页的备注：
+1.huck功能不应该有contest/authouty下提供，而应该在主页面直接加入huck功能，因此在contest/authority中不在添加任何与huck有关的元素

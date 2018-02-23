@@ -132,6 +132,17 @@
 		}
 		return '1000';
 	}
+	function get_contest_id_order_id_pro_id_name($conn,$oid,$cid){
+		$sql = "SELECT problem_id,change_problem_name FROM contest_information_2 WHERE contest_id='$cid' AND order_number='$oid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if ( $row['change_problem_name'] == "" ) {
+				return get_problem_name($conn,$row['problem_id']);
+			}
+			return $row['change_problem_name'];
+		}
+		return '1000';
+	}
 
 	// 获取语言返回值
 	function get_language_number($lan){
@@ -162,7 +173,7 @@
 
 	// 此处获取用户是否是参赛选手的判定中，只要contest没有用户限定，任何人都可以参赛，不过后期应该会改成只有注册比赛的选手才能参加比赛
 	function get_is_it_a_competitor($conn,$u_name,$cid){
-		$sql = "SELECT limit_par FROM cntest_information_1 WHERE contest_id='$cid'";
+		$sql = "SELECT limit_par FROM contest_information_1 WHERE contest_id='$cid'";
 		$result = mysqli_query($conn,$sql);
 		while ( $row = mysqli_fetch_array($result) ) {
 			if ( $row['limit_par'] == 0 ) {
@@ -178,7 +189,19 @@
 		}
 		return 0;
 	}
-	// 获取参赛选手($flag = 1)/管理员($flag = 0)的提交数目
+	// 此处获取登录的管理员是否是本次的参赛者，如果是参赛者，则无权限管理 (授予8级与9级超级管理员特权，可以参赛并管理)
+	// 此处返回的是是否可以管理本场竞赛，如果可以返回false，否则返回true
+	function get_administrator_is_it_a_competitor($conn,$u_name,$cid){
+		$au =  get_uesr_authority($conn,$u_name);
+		if ( $au >= 8 ) {
+			return false;
+		}
+		if ( $au == 7 ) {
+			return 1 == get_is_it_a_competitor($conn,$u_name,$cid);
+		}
+		return true;
+	}
+	// 获取参赛选手可见($flag = 1)/管理员可见($flag = 0)的提交数目
 	function get_cstatus_number($conn,$flag,$cid){
 		if ( $flag == 0 ) {
 			$sql = "SELECT COUNT(1) FROM contest_pro_submit WHERE contest_id='$cid'";
