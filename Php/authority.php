@@ -81,9 +81,19 @@
 							mkdir($file_path);
 							echo "create folder success";
 							$pro_id = $pro_id-1;
-							$sql = "INSERT INTO problem_information_4 (pro_id,allow_huck,data_monitoring,true_code,huck_number) VALUES ('$pro_id','0','','','0')";
-							if (!mysqli_query($conn,$sql)) {
-								echo "Error: " . $sql . "<br>" . $conn->error;
+							$S_judgment = $_POST['S_judgment'];
+							$S_judgment_code = $_POST['S_judgment_code'];
+							$sql = "INSERT INTO problem_information_4 (pro_id,s_judgment,s_judgment_code,allow_huck,data_monitoring,true_code,huck_number) VALUES ('$pro_id','$S_judgment',?,'0','','','0')";
+							$sth = $conn->prepare($sql);
+							$sth->bind_param('s',$s_judgment_code);
+							if ($sth->execute()) {
+								$problem_insert_flag = 1;
+							}else{
+								?>
+									<script type="text/javascript">
+										alert(<?php echo $sth->error; ?>);
+									</script>
+								<?php
 								$problem_insert_flag = 6;
 							}
 						}
@@ -150,7 +160,22 @@
 					echo "Error: " . $sql . "<br>" . $conn->error;
 					$updata_success_flag = 4;
 				}else{
-					$updata_success_flag = 1;
+					$s_judgment = $_POST['S_judgment'];
+					$s_judgment_code = $_POST['S_judgment_code'];
+					$sql = "UPDATE problem_information_4 SET s_judgment='$s_judgment',s_judgment_code=? WHERE pro_id='$pro_id'";
+					$sth = $conn->prepare($sql);
+					$sth->bind_param('s',$s_judgment_code);
+					if ($sth->execute()) {
+						$updata_success_flag = 1;
+					}else{
+						?>
+							<script type="text/javascript">
+								alert(<?php echo $sth->error; ?>);
+							</script>
+								<?php
+						$updata_success_flag = 5;
+					}
+					
 				}
 			}
 		}

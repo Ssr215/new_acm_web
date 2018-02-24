@@ -177,9 +177,18 @@
 						<tr>
 							<td>Authority</td>
 							<td><input type="text" name="authority" value="0"></td>
+							<td>Special judgment</td>
+							<td>
+								<select name="S_judgment">
+									<option value="0">No</option>
+									<option value="1">Yes</option>
+								</select>
+							</td>
 						</tr>
 					</tbody>
 				</table>
+				<br>
+				Node:If the answer is not unique , please using Special judgment , and the codes printf "yes" on the first line if result is Accepted
 				<br>
 				Description(len<=9000)<br>
 				<textarea class="textarea_size" name="description"></textarea>
@@ -198,6 +207,9 @@
 				<br>
 				Hint(len<=6000)<br>
 				<textarea class="textarea_size" name="hint"></textarea>
+				<br>
+				Special judgment code<br>
+				<textarea class="textarea_size" name="S_judgment_code"></textarea>
 				<br><br>
 				<input type="submit" name="submit" class="submit_size">
 			</center>

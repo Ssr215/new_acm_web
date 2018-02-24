@@ -123,7 +123,7 @@
 			echo $m;
 		}
 	}
-	// 获取contest_id为sid下排序为oid的题目id
+	// 获取contest_id为cid下排序为oid的题目真实id
 	function get_contest_id_order_id_pro_id($conn,$oid,$cid){
 		$sql = "SELECT problem_id FROM contest_information_2 WHERE contest_id='$cid' AND order_number='$oid'";
 		$result = mysqli_query($conn,$sql);
@@ -212,6 +212,27 @@
 		// echo $result;
 		list($ans) = $result->fetch_row();
 		return $ans;
+	}
+	// 获取用户是否锁题 , 是返回true , 否则返回false
+	function get_user_locking_problem($conn,$cid,$uid,$pid){
+		$sql = "SELECT lock_problem FROM contest_ranks_information_1 WHERE user_id = '$uid' AND contest_id = '$cid' AND pass_problem_id = '$pid'";
+		$flag = false;
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			$flag = ($row['lock_problem'] == 1);
+		}
+		return $flag;
+	}
+	// 获取提交是否可huck , 如果可以返回true , 否则返回false
+	function get_huck_allow_in_sid($conn,$cid,$pid){
+		$pro_id = get_contest_id_order_id_pro_id($conn,$pid,$cid);
+		$sql = "SELECT allow_huck FROM problem_information_4 WHERE pro_id='$pro_id'";
+		$result = mysqli_query($conn,$sql);
+		$flag = false;
+		while ( $row = mysqli_fetch_array($result) ) {
+			$flag = ($row['allow_huck'] == 1);
+		}
+		return $flag;
 	}
 	function get_verdict($id){
 		if ($id == 0) {

@@ -14,6 +14,8 @@ pro_submit --- result
 
 in contest add
 11 -- Passed pretests
+?? on huck ?? is 2-7 to 12-17
+17001 -- Wrong Answer on huck 1
 
 YXXX --- Y on test XXX
 (Y is 2-8)
@@ -75,3 +77,11 @@ hack失败将-50分
 
 关于测试权限页的备注：
 1.huck功能不应该有contest/authouty下提供，而应该在主页面直接加入huck功能，因此在contest/authority中不在添加任何与huck有关的元素
+
+关于特殊判断的评测设想：
+特殊判断中的输入是给三个字符串（每个字符串占一行），第一个字符串表示正在评测的样例数据的路径，第二个字符串表示正确输出样例的路径，第三个字符串表示用户代码在本样例跑出答案的路径
+请基于这三个文件，给出答案是否正确（所给路径均为绝对路径），如果正确请在一行输出"yes"，不要添加任何其他多余的字段，否则会导致误判
+
+关于contest_huck的检测
+评测机先正常判断，然后开始run所有huck本发样例的数据，huck一旦成功，结果不会改变！请管理员不要rejudge被Huck的代码~后期前台应该加以判断，禁止管理员rejudge(包括admin也不应该rejudge)
+对于新提交的代码，应该先判断基础数据，然后在数据库中查找所有成功huck的数据进行评测，全部通过才能获得Passed pretests,而对于所有成功huck的数据，其正确的答案应已添加到对应目录下，因此直接评测即可，而不需要重新huck

@@ -324,6 +324,11 @@
 													<a href="rejudge.php?cid=<?php echo($cid) ?>&sid=<?php echo($row['id']) ?>&result=<?php echo($row['result']) ?>&pid=<?php echo($row['problem_id']) ?>">rejudge</a>
 												<?php
 											}
+											if ( !$participate_flag ||  ($row['result'] == 11 && get_user_locking_problem($conn,$cid,$uid,$row['problem_id']) && get_huck_allow_in_sid($conn,$cid,$row['problem_id'])) ) {
+												?>
+													<a href="huck_submit.php?cid=<?php echo $cid ?>&sid=<?php echo $row['id'] ?>">huck it</a>
+												<?php
+											}
 										?>
 									</td>
 									<?php

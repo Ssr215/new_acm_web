@@ -181,6 +181,31 @@
 									<tr>
 										<td>Authority</td>
 										<td><input type="text" name="u_authority" value="<?php echo get_problem_authority($conn,$pro_id); ?>"></td>
+										<td>Special judgment</td>
+										<td>
+											<select name="S_judgment">
+												<?php
+													$sql = "SELECT s_judgment,s_judgment_code FROM problem_information_4 WHERE pro_id = '$pro_id'";
+													$result = mysqli_query($conn,$sql);
+													while ( $row = mysqli_fetch_array($result) ) {
+														$s_judgment = $row['s_judgment'];
+														$s_judgment_code = $row['s_judgment_code'];
+													}
+													if ( $s_judgment == 0 ) {
+														?>
+															<option value="0">No</option>
+															<option value="1">Yes</option>
+														<?php
+													}else{
+														?>
+															<option value="1">Yes</option>
+															<option value="0">No</option>
+														<?php
+													}
+												?>
+												
+											</select>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -202,6 +227,9 @@
 							<br>
 							Hint(len<=6000)<br>
 							<textarea class="textarea_size" name="u_hint"><?php echo($hint); ?></textarea>
+							<br>
+							Special judgment code<br>
+							<textarea class="textarea_size" name="S_judgment_code"><?php echo $s_judgment_code; ?></textarea>
 							<br><br>
 							<input type="submit" name="submit" class="submit_size">
 						</center>
