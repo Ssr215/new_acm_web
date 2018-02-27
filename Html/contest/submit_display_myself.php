@@ -5,7 +5,7 @@
 			<script type="text/javascript">
 					alert("please log in first!");
 			</script>
-			<meta http-equiv="refresh" content="0;loading.php">
+			<meta http-equiv="refresh" content="0;../loading.php">
 		<?php
 		exit();
 	}
@@ -280,6 +280,40 @@
 									<td><?php echo $row['u_time']." ms"; ?></td>
 									<td><?php echo $row['u_memory']." K"; ?></td>
 								</tr>
+							<?php
+						}
+					?>
+				</tbody>
+			</table>
+			<br>
+			<table width="900px" border="1" style="font-size:0.9rem">
+				<thead>
+					<th width="54px">#</th>
+					<th width="150px">When</th>
+					<th>Problem</th>
+					<th width="120px">Who</th>
+					<th width="120px">Huck</th>
+					<th width="220px">Verdict</th>
+				</thead>
+				<tbody>
+					<?php
+						$sql = "SELECT id,problem_id,submit_user,huck_user,huck_time,result FROM contest_huck_submit WHERE submit_user = '$uid' AND contest_id = '$cid'";
+						$flag = true;
+						$result = mysqli_query($conn,$sql);
+						while ( $row = mysqli_fetch_array($result) ) {
+							$flag = false;
+							?>
+								<td><?php echo $row['id']; ?></td>
+								<td><?php echo $row['huck_time']; ?></td>
+								<td><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></td>
+								<td><?php echo get_id_name($conn,$row['submit_user']); ?></td>
+								<td><?php echo get_id_name($conn,$row['huck_user']); ?></td>
+								<td class="<?php echo get_color_of_result_huck($row['result']) ?>"><?php echo get_result($row['result']); ?></td>
+							<?php
+						}
+						if ( $flag ) {
+							?>
+								<td colspan="6">no data</td>
 							<?php
 						}
 					?>

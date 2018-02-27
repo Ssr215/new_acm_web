@@ -39,11 +39,11 @@
 
 			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
-			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
+			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Hucks</a>
 
 			<a href="ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
 
-			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Status</a>
+			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
 			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
 
@@ -88,7 +88,7 @@
 			<table class="right_table_first" border="1">
 				<tbody>
 					<tr>
-						<th width="270px"><a href="contestdisplay.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
+						<th width="270px"><a href="index.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
 					</tr>
 					<tr>
 						<td>
@@ -227,9 +227,9 @@
 
 					<tr>
 						<td class="right_td">
-							<a href="article.php?cidx=<?php echo($cid); ?>">Announcement</a>
+							<a href="../article.php?cidx=<?php echo($cid); ?>">Announcement</a>
 							<br>
-							<a href="article.php?cida=<?php echo($cid); ?>">Tutorial</a>
+							<a href="../article.php?cida=<?php echo($cid); ?>">Tutorial</a>
 						</td>
 					</tr>
 				</tbody>
@@ -240,126 +240,46 @@
 		<div id="contest_left_page">
 			<?php
 				// echo strtotime($begin_time." +".$duration." minute")." vs ".time();
-				$participate_flag = false;
 				if ( strtotime($begin_time." +".$duration." minute") > time() ) {
 					if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
 						if ( strtotime($begin_time) > time() ) {
 							echo "The contest has not started yet";
 							exit();
-						}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
+						}else if ( ck_is_allow_participate() ) {
 							echo "You can not participate in this competition";
 							exit();
 						}
-						$participate_flag = true;
 					}
-				}
-				$uid = get_user_id($conn,$GLOBALS['loading_username']);
-				$new_flag = 1;
-				if ( !ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
-					// $sql = "SELECT id,problem_id,language,submit_time,result,u_time,u_memory FROM contest_pro_submit WHERE contest_id = '$cid' AND 	competitor = 1";
-					$page_number = get_cstatus_number($conn,1,$cid);
-				}else{
-					// $sql = "SELECT id,problem_id,language,submit_time,result,u_time,u_memory FROM contest_pro_submit WHERE contest_id = '$cid'";
-					$page_number = get_cstatus_number($conn,0,$cid);
-					$new_flag = 0;
-					// echo "here you are";
-				}
-				$each_page_number = 100;
-				$page_number_have = (int)(($page_number+$each_page_number-1)/$each_page_number);
-				for ($i=1; $i <=$page_number_have ; $i++) { 
-					?>
-						<a href="contest_status.php?cid=<?php echo($cid) ?>&page=<?php echo($i) ?>" class="page_a">
-							<?php echo $i; ?>
-						</a>
-					<?php
 				}
 			?>
 			<table width="900px" border="1" style="font-size:0.9rem">
 				<thead>
 					<th width="54px">#</th>
 					<th width="150px">When</th>
-					<th width="120px">Who</th>
 					<th>Problem</th>
-					<th width="60px">Lang</th>
-					<th width="150px">Verdict</th>
-					<th width="60px">Time</th>
-					<th width="60px">Memory</th>
+					<th width="120px">Who</th>
+					<th width="120px">Huck</th>
+					<th width="220px">Verdict</th>
 				</thead>
 				<tbody>
 					<?php
-						$page_now = 1;
-						if (isset($_GET['page'])) {
-							$page_now = $_GET['page'];
-						}
-						if( $page_now < 1 || $page_now > $page_number_have ){
-							$page_now = 1;
-						}
-						$begin_id = $page_number - $each_page_number * ($page_now - 1);
-						if ($begin_id <= 0) {
-							$begin_id = $begin_id + $each_page_number;
-						}
-						$end_id = $begin_id - $each_page_number;
-						if( $end_id < 0 ){
-							$end_id = 0;
-						}
-						if ( $new_flag == 0 ) {
-							$sql = "SELECT id,problem_id,user_id,language,submit_time,result,u_time,u_memory FROM contest_pro_submit WHERE contest_id = '$cid' order by id desc LIMIT $end_id,$begin_id";
-						}else{
-							$sql = "SELECT id,problem_id,user_id,language,submit_time,result,u_time,u_memory FROM contest_pro_submit WHERE contest_id = '$cid' AND 	competitor = 1 order by id desc LIMIT $end_id,$begin_id";
-						}
+						$sql = "SELECT id,problem_id,submit_user,huck_user,huck_time,result FROM contest_huck_submit WHERE contest_id = '$cid'";
+						$flag = true;
 						$result = mysqli_query($conn,$sql);
 						while ( $row = mysqli_fetch_array($result) ) {
+							$flag = false;
 							?>
-								<tr>
-									<td><?php echo $row['id']; ?></td>
-									<td><?php echo $row['submit_time']; ?></td>
-									<td><?php echo get_id_name($conn,$row['user_id']); ?></td>
-									<td>
-										<a href="display.php?pid=<?php echo $row['problem_id'] ?>&cid=<?php echo $cid ?>"><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></a>
-											
-									</td>
-									<td>
-										<?php
-											if ( !$participate_flag || ck_lock_problem($conn,$cid,$row['problem_id'],$uid) ) {
-												?>
-													<a href="display_code.php?cid=<?php echo $cid ?>&pid=<?php echo $row['problem_id'] ?>&sid=<?php echo $row['id'] ?>"><?php echo get_languages($row['language']);  ?></a>
-												<?php
-											}else{
-												echo get_languages($row['language']); 
-											}
-										?>
-											
-									</td>
-									<td class="<?php get_color_of_result($row['result']) ?>">
-										<?php 
-											echo get_verdict($row['result']); 
-											if ( !$participate_flag ) {
-												?>
-													<a href="rejudge.php?cid=<?php echo($cid) ?>&sid=<?php echo($row['id']) ?>&result=<?php echo($row['result']) ?>&pid=<?php echo($row['problem_id']) ?>">rejudge</a>
-												<?php
-											}
-											if ( !$participate_flag ||  ($row['result'] == 11 && get_user_locking_problem($conn,$cid,$uid,$row['problem_id']) && get_huck_allow_in_sid($conn,$cid,$row['problem_id'])) ) {
-												?>
-													<a href="huck_submit.php?cid=<?php echo $cid ?>&sid=<?php echo $row['id'] ?>">huck it</a>
-												<?php
-											}
-										?>
-									</td>
-									<?php
-										if ( $participate_flag && $row['user_id'] != $uid ) {
-											?>
-												<td>0 ms</td>
-												<td>0 K</td>
-											<?php
-										}else{
-											?>
-												<td><?php echo $row['u_time']." ms"; ?></td>
-												<td><?php echo $row['u_memory']." K"; ?></td>
-											<?php
-										}
-									?>
-									
-								</tr>
+								<td><?php echo $row['id']; ?></td>
+								<td><?php echo $row['huck_time']; ?></td>
+								<td><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></td>
+								<td><?php echo get_id_name($conn,$row['submit_user']); ?></td>
+								<td><?php echo get_id_name($conn,$row['huck_user']); ?></td>
+								<td class="<?php echo get_color_of_result_huck($row['result']) ?>"><?php echo get_result($row['result']); ?></td>
+							<?php
+						}
+						if ( $flag ) {
+							?>
+								<td colspan="6">no data</td>
 							<?php
 						}
 					?>

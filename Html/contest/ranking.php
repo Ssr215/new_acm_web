@@ -24,7 +24,7 @@
 		<div id="menu_backgound_3">
 			<a href="../index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
+			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
 
 			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
@@ -32,7 +32,7 @@
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
-			<a href="ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Rank</a>
+			<a href="ranking.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Rank</a>
 
 			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 

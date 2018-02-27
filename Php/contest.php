@@ -159,8 +159,35 @@
 		}
 		return 0;
 	}
-
-
+	// 检查用户是否锁题 , 已经所以返回true , 否则返回false
+	function ck_lock_problem($conn,$cid,$pid,$uid){
+		$sql = "SELECT lock_problem FROM contest_ranks_information_1 WHERE user_id='$uid' AND contest_id = '$cid' AND pass_problem_id = '$pid'";
+		$result = mysqli_query($conn,$sql);
+		$ans = 0;
+		while ( $row = mysqli_fetch_array($result) ) {
+			$ans = $row['lock_problem'];
+		}
+		return $ans == 1;
+	}
+	// 检查用户登录id与要查看代码的提交id下的用户id是否一致（即sid的提交是不是uid提交的），是返回true ， 否则返回false
+	function ck_contest_status_id_and_user_id($conn,$uid,$sid){
+		$sql = "SELECT user_id FROM contest_pro_submit WHERE id = '$sid'";
+		$result = mysqli_query($conn,$sql);
+		$yid = -10086;
+		while ( $row = mysqli_fetch_array($result) ) {
+			$yid = $row['user_id'];
+		}
+		return $yid == $uid;
+	}
+	// 获取sid的提交用户的id
+	function get_sid_user_id($conn,$sid){
+		$sql = "SELECT user_id FROM contest_pro_submit WHERE id = '$sid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			return $row['user_id'];
+		}
+		return -1;
+	}
 	function get_user_id($conn,$u_name){
 		$u_id = -1;
 		$sql = "SELECT * FROM user_information WHERE user_name = '$u_name'";
@@ -171,7 +198,7 @@
 		return $u_id;
 	}
 
-	// 此处获取用户是否是参赛选手的判定中，只要contest没有用户限定，任何人都可以参赛，不过后期应该会改成只有注册比赛的选手才能参加比赛
+	// 此处获取用户是否是参赛选手的判定中，只要contest没有用户限定，任何人都可以参赛，不过后期应该会改成只有注册比赛的选手才能参加比赛,是参赛选手返回1，否则返回0
 	function get_is_it_a_competitor($conn,$u_name,$cid){
 		$sql = "SELECT limit_par FROM contest_information_1 WHERE contest_id='$cid'";
 		$result = mysqli_query($conn,$sql);
@@ -311,5 +338,25 @@
 			return $row['user_name'];
 		}
 		return "connect error";
+	}
+	function get_result($r){
+		if ( $r == 1 ) {
+			echo "Successful hacking attempt";
+		}else if ( $r == 2 ) {
+			echo "Unsuccessful hacking attempt";
+		}else if ( $r == 3 ) {
+			echo "Illegal data";
+		}else{
+			echo "in queue";
+		}
+	}
+	function get_color_of_result_huck($r){
+		if ($r == 1) {
+			echo "result_ACcolor";
+		}else if ($r == 0) {
+			echo "result_RUNcolor";
+		}else{
+			echo "result_ERcolor";
+		}
 	}
 ?>

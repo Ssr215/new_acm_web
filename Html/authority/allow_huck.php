@@ -18,7 +18,7 @@
 				exit();
 			}else{
 				$file_code = $_FILES["add_ck_file"]["tmp_name"];
-				$in_code = addslashes(fread(fopen($file_code, "r"),filesize($file_code)));
+				$in_code = fread(fopen($file_code, "r"),filesize($file_code));
 			}
 		}
 		$sql = "UPDATE problem_information_4 SET data_monitoring=? WHERE pro_id = '$pid'";
@@ -32,7 +32,7 @@
 					exit();
 				}else{
 					$file_code = $_FILES['add_ac_file']['tmp_name'];
-					$in_code = addslashes(fread(fopen($file_code, "r"),filesize($file_code)));
+					$in_code = fread(fopen($file_code, "r"),filesize($file_code));
 				}
 			}
 			$sql = "UPDATE problem_information_4 SET true_code=?,allow_huck='1' WHERE pro_id='$pid'";

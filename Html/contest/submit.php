@@ -6,7 +6,7 @@
 			<script type="text/javascript">
 				alert("please log in first");
 			</script>
-			<meta http-equiv="refresh" content="0;url=loading.php">
+			<meta http-equiv="refresh" content="0;url=../loading.php">
 		<?php
 		exit();
 	}
@@ -16,7 +16,7 @@
 			<script type="text/javascript">
 				alert("No Access!");
 			</script>
-			<meta http-equiv="refresh" content="0;url=loading.php">
+			<meta http-equiv="refresh" content="0;url=../loading.php">
 		<?php
 		exit();
 	}
@@ -115,9 +115,9 @@
 		<div id="menu_backgound_3">
 			<a href="../index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
+			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
 
-			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
+			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
 
 			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 

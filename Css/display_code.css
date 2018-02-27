@@ -7,3 +7,8 @@
 	padding-left: 20px;
 	text-align: left;
 }
+#contest_display_main{
+	background-color: #98ffbd!important;
+	width: 900px;
+	margin: 50px auto;
+}

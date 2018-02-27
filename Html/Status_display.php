@@ -63,7 +63,7 @@
 	<title>new online judge in cqupt private</title>
 	<link rel="stylesheet" type="text/css" href="../Css/Home.css">
 	<link rel="stylesheet" type="text/css" href="../Css/public_1.css">
-	<link href="../Css/prism.css" rel="stylesheet" />
+	<link href="../Css/prism.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="../Css/display_code.css">
 	<?php
 		if( $refresh_flag ){
