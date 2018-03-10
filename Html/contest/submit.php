@@ -29,7 +29,7 @@
 				if ( strtotime($begin_time) > time() ) {
 					echo "The contest has not started yet";
 					exit();
-				}else if ( ck_is_allow_participate() ) {
+				}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
 					echo "You can not participate in this competition";
 					exit();
 				}
@@ -327,104 +327,100 @@
 						if ( strtotime($begin_time) > time() ) {
 							echo "The contest has not started yet";
 							exit();
-						}else if ( ck_is_allow_participate() ) {
+						}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
 							echo "You can not participate in this competition";
 							exit();
 						}
 					}
-				} else {
-					?>
-						<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data">
-							<h2>Submit solution</h2>
-							<!-- <br> -->
-							<p><?php echo $name; ?></p>
-							<br>
-							<table width="900px">
-								<tbody>
-									<tr>
-										<td width="300px"><p>Problem: </p></td>
-										<td align="left">
-											<select class="select_1" name="pid">
-												<option value="-1">Choose problem</option>
-												<?php
-													$sql = "SELECT problem_id,change_problem_name FROM contest_information_2 WHERE contest_id='$cid'";
-													$result = mysqli_query($conn,$sql);
-													$now_row = 0;
-													while ( $row = mysqli_fetch_array($result) ) {
-														?>
-															<option value="<?php echo($row['problem_id']) ?>">
-																<?php
-																	echo substr($str, $now_row , 1);
-																	echo " - ";
-																	if ( $row['change_problem_name'] == "" ) {
-																		echo get_problem_name($conn,$row["problem_id"]);
-																	}else{
-																		echo $row['change_problem_name'];
-																	}
-																?>
-															</option>
-														<?php
-														$now_row++;
-													}
-												?>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td><p>Language:</p></td>
-										<td align="left">
-											<select class="select_1" name="c_language">
-												<option>C</option>
-												<option>C++</option>
-												<option>C++11</option>
-												<option>C++14</option>
-												<option>JAVA</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td><p>Source code:</p></td>
-										<td align="left">
-											<textarea class="c_submitc_texttarea" name="c_code"></textarea>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td>Or choose file</td>
-										<td align="left"><input type="file" name="contest_code_file"></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td align="left">	
-											Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td><input type="submit" name="submit" value="submit" class="contest_submit"></td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-						
-					<?php
 				}
 			?>
+			<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data">
+				<h2>Submit solution</h2>
+				<!-- <br> -->
+				<p><?php echo $name; ?></p>
+				<br>
+				<table width="900px">
+					<tbody>
+						<tr>
+							<td width="300px"><p>Problem: </p></td>
+							<td align="left">
+								<select class="select_1" name="pid">
+									<option value="-1">Choose problem</option>
+									<?php
+										$sql = "SELECT problem_id,change_problem_name FROM contest_information_2 WHERE contest_id='$cid'";
+										$result = mysqli_query($conn,$sql);
+										$now_row = 0;
+										while ( $row = mysqli_fetch_array($result) ) {
+											?>
+												<option value="<?php echo($row['problem_id']) ?>">
+													<?php
+														echo substr($str, $now_row , 1);
+														echo " - ";
+														if ( $row['change_problem_name'] == "" ) {
+															echo get_problem_name($conn,$row["problem_id"]);
+														}else{
+															echo $row['change_problem_name'];
+														}
+													?>
+												</option>
+											<?php
+											$now_row++;
+										}
+									?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><p>Language:</p></td>
+							<td align="left">
+								<select class="select_1" name="c_language">
+									<option>C</option>
+									<option>C++</option>
+									<option>C++11</option>
+									<option>C++14</option>
+									<option>JAVA</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><p>Source code:</p></td>
+							<td align="left">
+								<textarea class="c_submitc_texttarea" name="c_code"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Or choose file</td>
+							<td align="left"><input type="file" name="contest_code_file"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td align="left">	
+								Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="submit" name="submit" value="submit" class="contest_submit"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 </body>

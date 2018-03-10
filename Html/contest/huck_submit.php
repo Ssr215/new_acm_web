@@ -27,9 +27,10 @@
 		$chid = get_and_update_of_web_number_information($conn,12);
 		$uid = get_user_id($conn,$GLOBALS['loading_username']);
 		$huid = get_sid_user_id($conn,$sid);
+		$p_oid = get_sid_oid($conn,$sid);
 		date_default_timezone_set("Asia/Shanghai");
 		$time_now = date("Y-m-d H:i:s");
-		$sql = "INSERT INTO contest_huck_submit (id,contest_id,status_id,submit_user,huck_user,huck_time,result) VALUES ('$chid','$cid','$sid','$uid','$huid','$time_now','0')";
+		$sql = "INSERT INTO contest_huck_submit (id,contest_id,problem_id,status_id,submit_user,huck_user,huck_time,result) VALUES ('$chid','$cid','$p_oid','$sid','$uid','$huid','$time_now','0')";
 		$file_path = "D:/contest_huck_data/".$chid;
 		$success_create_or_move_file_flag = false;
 		if (!file_exists($file_path)) {
@@ -64,7 +65,7 @@
 				<?php
 			}else{
 				?>
-					<meta http-equiv="refresh" content="0;url=huck_display.php">
+					<meta http-equiv="refresh" content="0;url=huck.php">
 				<?php
 			}
 			exit();

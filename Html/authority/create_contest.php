@@ -77,6 +77,9 @@
 						$create_success_flag = 3;
 					}else{
 						get_and_update_of_web_number_information($conn,7);
+						$f_path = "D:/contest_data/".$c_id;
+						install_file_on_path($f_path);
+						$f_path .= "/";
 						for ($i=1; $i <= $number ; $i++) { 
 							$id = get_and_update_of_web_number_information($conn,8);
 							$pro_id = $_POST['pro_'.$i];
@@ -88,6 +91,7 @@
 								$create_success_flag = 4*100 + $i;
 								break;
 							}
+							install_file_on_path($f_path.$i."/");
 						}
 						if ( $create_success_flag == 2 ) {
 							$create_success_flag = 1;

@@ -259,4 +259,14 @@
 		// 	echo "Error: " . $sql . "<br>" . $conn->error;
 		// }
 	}
+
+	// 创建绝对路径目录
+	function install_file_on_path($path){
+		if (!file_exists($path)) {
+			mkdir($path);
+			echo "create folder success";
+		}else{
+			echo "have folder on ".$path;
+		}
+	}
 ?>

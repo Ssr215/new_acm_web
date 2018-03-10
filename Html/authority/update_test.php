@@ -12,6 +12,7 @@
 	include "../../Php/authority.php";
 	$update_test_id = -1;
 	$update_test_pro_id = -1;
+	// 未完待续
 	if( isset($_POST['update_test_pro_id']) ){
 		$update_test_id = $_POST['update_test_id'];
 		$update_test_pro_id = $_POST['update_test_pro_id'];
@@ -179,9 +180,9 @@
 						$file_name_2 = $now_id.".out";
 						?>
 							<br>
-							<a href="../uploading.php?fpath=<?php echo($file_path) ?>&fname=<?php echo($file_name_1); ?>&pro_id=<?php echo($update_test_pro_id) ?>" target="_blank"><?php echo $file_name_1; ?></a>
+							<a href="../uploading.php?fpath=<?php echo($file_path) ?>&fname=<?php echo($file_name_1); ?>&pro_id=<?php echo($update_test_pro_id) ?>&cid=<?php echo $cid ?>" target="_blank"><?php echo $file_name_1; ?></a>
 							<br>
-							<a href="../uploading.php?fpath=<?php echo($file_path) ?>&fname=<?php echo($file_name_2) ?>&pro_id=<?php echo($update_test_pro_id) ?>" target="_blank"><?php echo $file_name_2; ?></a>
+							<a href="../uploading.php?fpath=<?php echo($file_path) ?>&fname=<?php echo($file_name_2) ?>&pro_id=<?php echo($update_test_pro_id) ?>&cid=<?php echo $cid ?>" target="_blank"><?php echo $file_name_2; ?></a>
 						<?php
 						$now_id++;
 					}

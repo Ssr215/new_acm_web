@@ -235,7 +235,7 @@
 						if ( strtotime($begin_time) > time() ) {
 							echo "The contest has not started yet";
 							exit();
-						}else if ( ck_is_allow_participate() ) {
+						}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
 							echo "You can not participate in this competition";
 							exit();
 						}
@@ -246,6 +246,7 @@
 				<thead>
 					<th width="54px">#</th>
 					<th>Name</th>
+					<th width="90px"></th>
 					<th width="90px"></th>
 					<th width="90px"></th>
 					<?php
@@ -267,7 +268,28 @@
 								<tr>
 									<td><a href="display.php?pid=<?php echo($now_id+1) ?>&cid=<?php echo $cid ?>"><?php echo substr($str, $now_id , 1); ?></a></td>
 									<td><a href="display.php?pid=<?php echo($now_id+1) ?>&cid=<?php echo $cid ?>"><?php if ($row['change_problem_name'] == ""){echo get_problem_name($conn,$pro_ids);}else{echo $row['change_problem_name'];} ?></a></td>
-									<td><a href="submit.php?cid=<?php echo($cid); ?>&order=<?php echo($pro_ids) ?>">Submit</a></td>
+									<?php
+										$uid = get_user_id($conn,$GLOBALS['loading_username']);
+										if( ck_pass_problem_and_lock_problem($conn,$uid,$cid,$now_id+1) ){
+											?>
+												<td></td>
+												<td></td>
+											<?php
+										}else{
+											?>
+												<td><a href="submit.php?cid=<?php echo($cid); ?>&order=<?php echo($pro_ids) ?>">Submit</a></td>
+												<td>
+													<?php
+														if ( ck_pass_problem_and_can_lock_problem($conn,$uid,$cid,$now_id+1) ) {
+															?>
+																<a href="lock_problem.php?cid=<?php echo $cid ?>&pid=<?php echo $now_id+1 ?>">Lock</a>
+															<?php
+														}
+													?>
+												</td>
+											<?php
+										}
+									?>
 									<td><?php if ($row['pass_number'] > 0) {
 										echo $row['pass_number'];
 									} ?></td>

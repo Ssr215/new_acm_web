@@ -245,10 +245,11 @@
 						if ( strtotime($begin_time) > time() ) {
 							echo "The contest has not started yet";
 							exit();
-						}else if ( ck_is_allow_participate() ) {
+						}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
 							echo "You can not participate in this competition";
 							exit();
 						}
+						$participate_flag = true;
 					}
 				}
 			?>
@@ -263,23 +264,27 @@
 				</thead>
 				<tbody>
 					<?php
-						$sql = "SELECT id,problem_id,submit_user,huck_user,huck_time,result FROM contest_huck_submit WHERE contest_id = '$cid'";
+						$sql = "SELECT id,problem_id,submit_user,huck_user,huck_time,result FROM contest_huck_submit WHERE contest_id = '$cid' order by id desc";
 						$flag = true;
 						$result = mysqli_query($conn,$sql);
 						while ( $row = mysqli_fetch_array($result) ) {
 							$flag = false;
 							?>
-								<td><?php echo $row['id']; ?></td>
-								<td><?php echo $row['huck_time']; ?></td>
-								<td><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></td>
-								<td><?php echo get_id_name($conn,$row['submit_user']); ?></td>
-								<td><?php echo get_id_name($conn,$row['huck_user']); ?></td>
-								<td class="<?php echo get_color_of_result_huck($row['result']) ?>"><?php echo get_result($row['result']); ?></td>
+								<tr>
+									<td><?php echo $row['id']; ?></td>
+									<td><?php echo $row['huck_time']; ?></td>
+									<td><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></td>
+									<td><?php echo get_id_name($conn,$row['submit_user']); ?></td>
+									<td><?php echo get_id_name($conn,$row['huck_user']); ?></td>
+									<td class="<?php echo get_color_of_result_huck($row['result']) ?>"><?php echo get_result($row['result']); ?></td>
+								</tr>
 							<?php
 						}
 						if ( $flag ) {
 							?>
-								<td colspan="6">no data</td>
+								<tr>
+									<td colspan="6">no data</td>
+								</tr>
 							<?php
 						}
 					?>

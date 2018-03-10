@@ -245,7 +245,7 @@
 						if ( strtotime($begin_time) > time() ) {
 							echo "The contest has not started yet";
 							exit();
-						}else if ( ck_is_allow_participate() ) {
+						}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
 							echo "You can not participate in this competition";
 							exit();
 						}
@@ -268,7 +268,9 @@
 						$uid = get_user_id($conn,$GLOBALS['loading_username']);
 						$sql = "SELECT id,problem_id,language,submit_time,result,u_time,u_memory FROM contest_pro_submit WHERE contest_id = '$cid' AND user_id = '$uid' order by id desc";
 						$result = mysqli_query($conn,$sql);
+						$flag = true;
 						while ( $row = mysqli_fetch_array($result) ) {
+							$flag = false;
 							?>
 								<tr>
 									<td><?php echo $row['id']; ?></td>
@@ -279,6 +281,13 @@
 									<td class="<?php get_color_of_result($row['result']) ?>"><?php echo get_verdict($row['result']); ?></td>
 									<td><?php echo $row['u_time']." ms"; ?></td>
 									<td><?php echo $row['u_memory']." K"; ?></td>
+								</tr>
+							<?php
+						}
+						if( $flag ){
+							?>
+								<tr>
+									<td colspan="8">No data</td>
 								</tr>
 							<?php
 						}

@@ -162,20 +162,31 @@
 								<?php
 									$uid = $row['user_id'];
 									for ($i=1; $i <= $ik; $i++) { 
-										$sql = "SELECT pass_time,add_score FROM contest_ranks_information_1 WHERE user_id = '$uid' AND contest_id = '$cid' AND pass_problem_id = '$i'";
+										$sql = "SELECT pass_time,add_score,error_record FROM contest_ranks_information_1 WHERE user_id = '$uid' AND contest_id = '$cid' AND pass_problem_id = '$i'";
 										$result1 = mysqli_query($conn,$sql);
 										$f = true;
 										while ( $row1 = mysqli_fetch_array($result1) ) {
 											$f = false;
 											?>
 												<td>
-													<span class="result_ACcolor c_font">
-														<?php echo $row1['add_score']; ?>
-													</span>
-													<br>
 													<?php
-													$date=date_create_from_format("G:i:s",$row1['pass_time']);
-													echo date_format($date,"H:i"); ?>
+														if( $row1['add_score'] > 0 ){
+															?>
+															<span class="result_ACcolor c_font">
+																<?php echo $row1['add_score']; ?>
+															</span>
+															<br>
+															<?php
+															$date=date_create_from_format("G:i:s",$row1['pass_time']);
+															echo date_format($date,"H:i"); 
+														}else{
+															?>
+																<span class="result_ERcolor">
+																	<?php echo "-".$row1['error_record']; ?>
+																</span>
+															<?php
+														}
+													?>
 												</td>
 											<?php
 										}

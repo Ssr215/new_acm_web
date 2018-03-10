@@ -45,7 +45,15 @@
 		}
 		return "error in get problem name";
 	}
-
+	//获取sid下的oid(cid已经唯一)
+	function get_sid_oid($conn,$sid){
+		$sql = "SELECT problem_id FROM contest_pro_submit WHERE id = '$sid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			return $row['problem_id'];
+		}
+		return 1;
+	}
 	//检查是否可以参加contest_id的比赛，可以返回false，否则返回true
 	function ck_is_allow_participate($conn,$u_name,$cid){
 		$sql = "SELECT limit_par FROM contest_information_1 WHERE contest_id = '$cid'";
@@ -261,6 +269,39 @@
 		}
 		return $flag;
 	}
+	// 获取当前服务器时间与竞赛开始时间来判断当前是否属于竞赛时间 ， 正在竞赛返回true,否则返回false
+	function ck_now_start_contest($conn,$cid){
+		$sql = "SELECT begin_time,duration FROM contest_information_1 WHERE contest_id = '$cid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if ( strtotime($row['begin_time']." +".$row['duration']." minute") > time() && strtotime($row['begin_time']) <= time() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	// 获取当前用户是否可锁题 , 可以锁题返回true ， 否则返回false
+	function ck_pass_problem_and_can_lock_problem($conn,$uid,$cid,$pid){
+		if( !ck_now_start_contest($conn,$cid) )	return false;
+		$sql = "SELECT add_score FROM contest_ranks_information_1 WHERE user_id = '$uid' AND contest_id = '$cid' AND pass_problem_id = '$pid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			if( $row['add_score'] > 0 ){
+				return true;
+			}
+		}
+		return false;
+	}
+	// 获取当前用户是否锁题 ， 锁题返回true , 否则返回false
+	function ck_pass_problem_and_lock_problem($conn,$uid,$cid,$pid){
+		if( !ck_now_start_contest($conn,$cid) )	return false;
+		$sql = "SELECT lock_problem FROM contest_ranks_information_1 WHERE user_id = '$uid' AND contest_id = '$cid' AND pass_problem_id = '$pid'";
+		$result = mysqli_query($conn,$sql);
+		while ( $row = mysqli_fetch_array($result) ) {
+			return $row['lock_problem'] == 1;
+		}
+		return false;
+	}
 	function get_verdict($id){
 		if ($id == 0) {
 			return "in queue";
@@ -288,6 +329,10 @@
 			$id = (int)($id / 1000);
 		}
 		$p1 = "";
+		if( $id > 19 ){
+			$p2 = " on huck " . $t_id;
+			$id /= 10;
+		}
 		if ($id == 2) {
 			$p1 = "Presentatior Error";
 		}elseif ($id == 3) {
@@ -303,7 +348,7 @@
 		}elseif ($id == 9) {
 			$p1 = "runing";
 		}
-		return $p1. "" . $p2;
+		return $p1 . "" . $p2;
 	}
 	function get_languages($id){
 		if ( $id == 1 ){
@@ -325,7 +370,7 @@
 			echo "result_ACcolor";
 		}else if ( $number == 2 ) {
 			echo "result_PEcolor";
-		}else if ($number == 0 OR $number >= 9000) {
+		}else if ($number == 0 OR ($number >= 9000 AND $number < 10000) ) {
 			echo "result_RUNcolor";
 		}else{
 			echo "result_ERcolor";

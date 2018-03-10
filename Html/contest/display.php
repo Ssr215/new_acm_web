@@ -302,7 +302,7 @@
 						if ( strtotime($begin_time) > time() ) {
 							echo "The contest has not started yet";
 							exit();
-						}else if ( ck_is_allow_participate() ) {
+						}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
 							echo "You can not participate in this competition";
 							exit();
 						}
