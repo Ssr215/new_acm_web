@@ -16,7 +16,7 @@
 			<script type="text/javascript">
 				alert("No Access!");
 			</script>
-			<meta http-equiv="refresh" content="0;url=../loading.php">
+			<!-- <meta http-equiv="refresh" content="0;url=index.php?cid=<?php echo $cid ?>"> -->
 		<?php
 		exit();
 	}
@@ -36,12 +36,12 @@
 			}
 		}
 		if ( !isset($_GET['pid']) || !is_numeric($_GET['pid']) ) {
-			if ( !isset($_POST['pid']) || !is_numeric($_POST['pid']) || $_POST['pid'] < 1000 ) {
+			if ( !isset($_POST['pid']) || !is_numeric($_POST['pid']) || $_POST['pid'] > $problem_number || $_POST['pid'] < 1 ) {
 				?>
 					<script type="text/javascript">
-						alert("No Access!");
+						alert("Pleas select the true problem!");
 					</script>
-					<meta http-equiv="refresh" content="0;url=index.php">
+					<meta http-equiv="refresh" content="0;url=submit.php?cid=<?php echo $cid ?>">
 				<?php
 				exit();
 			}else{
@@ -80,7 +80,7 @@
 			// echo $sth->insert_id;
 			// $submit_success_flag = 1;
 			?>
-				<meta http-equiv="refresh" content="0;url=submit_display_myself.php">
+				<meta http-equiv="refresh" content="0;url=submit_display_myself.php?cid=<?php echo $cid ?>">
 			<?php
 			exit();
 		}else{
@@ -119,7 +119,7 @@
 
 			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
 
-			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -243,7 +243,7 @@
 									for ($i=1; $i <= $problem_number; $i++) { 
 										?>
 											<tr>
-												<td><?php echo substr($str, $i-1 , 1); ?></td>
+												<td><a href="display.php?cid=<?php echo $cid ?>&pid=<?php echo $i ?>"><?php echo substr($str, $i-1 , 1); ?></a></td>
 												<td><?php get_pass_problem_now_score($conn,$i,$cid,$duration-($minute+$hour*60)); ?></td>
 											</tr>
 										<?php
@@ -334,7 +334,7 @@
 					}
 				}
 			?>
-			<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data">
+			<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data"  method="post">
 				<h2>Submit solution</h2>
 				<!-- <br> -->
 				<p><?php echo $name; ?></p>
@@ -352,7 +352,7 @@
 										$now_row = 0;
 										while ( $row = mysqli_fetch_array($result) ) {
 											?>
-												<option value="<?php echo($row['problem_id']) ?>">
+												<option value="<?php echo($now_row) ?>">
 													<?php
 														echo substr($str, $now_row , 1);
 														echo " - ";

@@ -32,7 +32,7 @@
 
 			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -162,7 +162,7 @@
 						for ($i=1; $i <= $problem_number; $i++) { 
 							?>
 								<tr>
-									<td><?php echo substr($str, $i-1 , 1); ?></td>
+									<td><a href="display.php?cid=<?php echo $cid ?>&pid=<?php echo $i ?>"><?php echo substr($str, $i-1 , 1); ?></a></td>
 									<td><?php 
 										if ( $begin_flag == 1 ) {
 											get_pass_problem_now_score($conn,$i,$cid,$duration-($minute+$hour*60)); 
@@ -362,6 +362,9 @@
 				</div>
 				<div id="cpro_display_detile">
 					<?php 
+						$description = str_replace(" ", "&nbsp", $description);
+						$description = str_replace("<", "&lt", $description);
+						$description = str_replace(">", "&gt", $description);
 						$description = str_replace("\n", "<br>", $description);
 						echo $description; 
 					?>
@@ -371,6 +374,9 @@
 				</div>
 				<div id="cpro_display_detile">
 					<?php
+						$input = str_replace(" ", "&nbsp", $input);
+						$input = str_replace("<", "&lt", $input);
+						$input = str_replace(">", "&gt", $input);
 						$input = str_replace("\n", "<br>", $input);
 						echo $input;
 					?>
@@ -380,6 +386,9 @@
 				</div>
 				<div id="cpro_display_detile">
 					<?php
+						$output = str_replace(" ", "&nbsp", $output);
+						$output = str_replace("<", "&lt", $output);
+						$output = str_replace(">", "&gt", $output);
 						$output = str_replace("\n", "<br>", $output);
 						echo $output;
 					?>
@@ -389,6 +398,9 @@
 				</div>
 				<div id="cpro_display_detile">
 					<?php
+						$sample_input = str_replace(" ", "&nbsp", $sample_input);
+						$sample_input = str_replace("<", "&lt", $sample_input);
+						$sample_input = str_replace(">", "&gt", $sample_input);
 						$sample_input = str_replace("\n", "<br>", $sample_input);
 						echo $sample_input;
 					?>
@@ -398,6 +410,9 @@
 				</div>
 				<div id="cpro_display_detile">
 					<?php
+						$sample_output = str_replace(" ", "&nbsp", $sample_output);
+						$sample_output = str_replace("<", "&lt", $sample_output);
+						$sample_output = str_replace(">", "&gt", $sample_output);
 						$sample_output = str_replace("\n", "<br>", $sample_output);
 						echo $sample_output;
 					?>
@@ -407,6 +422,9 @@
 				</div>
 				<div id="cpro_display_detile">
 					<?php
+						$hint = str_replace(" ", "&nbsp", $hint);
+						$hint = str_replace("<", "&lt", $hint);
+						$hint = str_replace(">", "&gt", $hint);
 						$hint = str_replace("\n", "<br>", $hint);
 						echo $hint;
 					?>

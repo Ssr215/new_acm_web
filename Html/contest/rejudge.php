@@ -1,6 +1,6 @@
 <?php
 	include "../../Php/Public_1.php";
-
+	include '../../Php/contest.php';
 	$pid = $_GET['pid'];
 	$sid = $_GET['sid'];
 	$result_y = $_GET['result'];
@@ -10,11 +10,10 @@
 			<script type="text/javascript">
 				alert("No Access!");
 			</script>
-			<meta http-equiv="refresh" content="0;index.php">
+			<meta http-equiv="refresh" content="0;index.php?cid=<?php echo $cid ?>">
 		<?php
+		exit();
 	}
-
-	include '../../Php/contest.php';
 
 	if( $result_y == 1 OR $result_y == 11 ){
 		$sql = "UPDATE contest_information_2 SET pass_number = pass_number - 1 WHERE contest_id = '$cid' AND order_number = '$pid'";

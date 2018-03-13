@@ -125,6 +125,9 @@
 		</div>
 		<div id="pro_display_detile">
 			<?php
+				$description = str_replace(" ", "&nbsp", $description);
+				$description = str_replace("<", "&lt", $description);
+				$description = str_replace(">", "&gt", $description);
 				$description = str_replace("\n", "<br>", $description);
 				echo $description;
 			?>
@@ -135,6 +138,9 @@
 		</div>
 		<div id="pro_display_detile">
 			<?php
+				$input = str_replace(" ", "&nbsp", $input);
+				$input = str_replace("<", "&lt", $input);
+				$input = str_replace(">", "&gt", $input);
 				$input = str_replace("\n", "<br>", $input);
 				echo $input;
 			?>
@@ -145,6 +151,9 @@
 		</div>
 		<div id="pro_display_detile">
 			<?php
+				$output = str_replace(" ", "&nbsp", $output);
+				$output = str_replace("<", "&lt", $output);
+				$output = str_replace(">", "&gt", $output);
 				$output = str_replace("\n", "<br>", $output);
 				echo $output;
 			?>
@@ -155,6 +164,9 @@
 		</div>
 		<div id="pro_display_detile">
 			<?php
+				$sample_input = str_replace(" ", "&nbsp", $sample_input);
+				$sample_input = str_replace("<", "&lt", $sample_input);
+				$sample_input = str_replace(">", "&gt", $sample_input);
 				$sample_input = str_replace("\n", "<br>", $sample_input);
 				echo $sample_input;
 			?>
@@ -165,6 +177,9 @@
 		</div>
 		<div id="pro_display_detile">
 			<?php
+				$sample_output = str_replace(" ", "&nbsp", $sample_output);
+				$sample_output = str_replace("<", "&lt", $sample_output);
+				$sample_output = str_replace(">", "&gt", $sample_output);
 				$sample_output = str_replace("\n", "<br>", $sample_output);
 				echo $sample_output;
 			?>
@@ -175,6 +190,9 @@
 		</div>
 		<div id="pro_display_detile">
 			<?php
+				$hint = str_replace(" ", "&nbsp", $hint);
+				$hint = str_replace("<", "&lt", $hint);
+				$hint = str_replace(">", "&gt", $hint);
 				$hint = str_replace("\n", "<br>", $hint);
 				echo $hint;
 			?>

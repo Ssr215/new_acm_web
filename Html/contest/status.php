@@ -37,7 +37,7 @@
 
 			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -161,7 +161,7 @@
 									for ($i=1; $i <= $problem_number; $i++) { 
 										?>
 											<tr>
-												<td><?php echo substr($str, $i-1 , 1); ?></td>
+												<td><a href="display.php?cid=<?php echo $cid ?>&pid=<?php echo $i ?>"><?php echo substr($str, $i-1 , 1); ?></a></td>
 												<td><?php get_pass_problem_now_score($conn,$i,$cid,$duration-($minute+$hour*60)); ?></td>
 											</tr>
 										<?php
@@ -240,7 +240,7 @@
 		<div id="contest_left_page">
 			<?php
 				// echo strtotime($begin_time." +".$duration." minute")." vs ".time();
-				$participate_flag = false;
+				$participate_flag = true;
 				if ( strtotime($begin_time." +".$duration." minute") > time() ) {
 					if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
 						if ( strtotime($begin_time) > time() ) {
@@ -250,8 +250,10 @@
 							echo "You can not participate in this competition";
 							exit();
 						}
-						$participate_flag = true;
 					}
+				}
+				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
+					$participate = false;
 				}
 				$uid = get_user_id($conn,$GLOBALS['loading_username']);
 				$new_flag = 1;
@@ -338,7 +340,7 @@
 													<a href="rejudge.php?cid=<?php echo($cid) ?>&sid=<?php echo($row['id']) ?>&result=<?php echo($row['result']) ?>&pid=<?php echo($row['problem_id']) ?>">rejudge</a>
 												<?php
 											}
-											if ( !$participate_flag ||  ($row['result'] == 11 && get_user_locking_problem($conn,$cid,$uid,$row['problem_id']) && get_huck_allow_in_sid($conn,$cid,$row['problem_id'])) ) {
+											if ( !$participate_flag && ($row['result'] == 11 && get_user_locking_problem($conn,$cid,$uid,$row['problem_id']) && get_huck_allow_in_sid($conn,$cid,$row['problem_id'])) ) {
 												?>
 													<a href="huck_submit.php?cid=<?php echo $cid ?>&sid=<?php echo $row['id'] ?>">huck it</a>
 												<?php

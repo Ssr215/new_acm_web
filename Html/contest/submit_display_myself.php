@@ -37,7 +37,7 @@
 
 			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">My Submit</a>
+			<a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">My Submit</a>
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -276,8 +276,8 @@
 									<td><?php echo $row['id']; ?></td>
 									<td><?php echo $row['submit_time']; ?></td>
 									<td><?php echo $GLOBALS['loading_username']; ?></td>
-									<td><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></td>
-									<td><?php echo get_languages($row['language']); ?></td>
+									<td><a href="display.php?pid=<?php echo $row['problem_id'] ?>&cid=<?php echo $cid ?>"><?php echo substr($str, $row['problem_id']-1,1).". ".get_contest_id_order_id_pro_id_name($conn,$row['problem_id'],$cid); ?></a></td>
+									<td><a href="display_code.php?cid=<?php echo $cid ?>&pid=<?php echo $row['problem_id'] ?>&sid=<?php echo $row['id'] ?>"><?php echo get_languages($row['language']); ?></a></td>
 									<td class="<?php get_color_of_result($row['result']) ?>"><?php echo get_verdict($row['result']); ?></td>
 									<td><?php echo $row['u_time']." ms"; ?></td>
 									<td><?php echo $row['u_memory']." K"; ?></td>

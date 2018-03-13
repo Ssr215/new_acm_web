@@ -63,6 +63,7 @@ body{
 	color: blue;
 	font-weight: bold;
 	text-align: left;
+	word-wrap:break-word;
 }
 #cpro_display_detile{
 	width: 750px;
@@ -70,6 +71,7 @@ body{
 	font-size: 1.05rem;
 	text-align: left;
 	background-color: rgba(0,255,43,0.5);
+	word-wrap:break-word;
 }
 .select_1{
 	width: 300px;

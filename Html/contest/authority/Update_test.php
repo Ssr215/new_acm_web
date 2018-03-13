@@ -99,7 +99,7 @@
 
 			<a href="../submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="../submit_display_myself.php?<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<a href="../submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
 			<a href="../huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -241,7 +241,7 @@
 						</table>
 					</center>
 					<br><br>
-					<form action="Update_test.php" method="post" enctype="multipart/form-data">
+					<form action="Update_test.php?cid=<?php echo($cid) ?>" method="post" enctype="multipart/form-data">
 						problem id: 
 						<input type="text" name="updates_test_pro_id" value="<?php echo($_POST['select_pid']) ?>" readonly="readonly">
 						<br>
