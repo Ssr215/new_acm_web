@@ -153,15 +153,25 @@
 					$rk = 0;
 					while ( $row = mysqli_fetch_array($result) ) {
 						$rk++;
+						$use_names_now = get_id_name($conn,$row['user_id']);
 						?>
 							<tr>
-									<td><?php echo $rk; ?></td>
-									<td><?php echo get_id_name($conn,$row['user_id']); ?></td>
+									<td>
+										<?php
+											if ( !get_administrator_is_it_a_competitor($conn,$use_names_now,$cid) ) {
+												echo "*";
+												$rk--;
+											}else{
+												echo $rk;
+											}
+										?>
+									</td>
+									<td><?php echo $use_names_now; ?></td>
 									<td><?php echo $row['total_score']; ?></td>
 									<td></td>
 								<?php
 									$uid = $row['user_id'];
-									for ($i=1; $i <= $ik; $i++) { 
+									for ($i=1; $i <= $ik; $i++) {
 										$sql = "SELECT pass_time,add_score,error_record FROM contest_ranks_information_1 WHERE user_id = '$uid' AND contest_id = '$cid' AND pass_problem_id = '$i'";
 										$result1 = mysqli_query($conn,$sql);
 										$f = true;

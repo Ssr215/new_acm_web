@@ -1,4 +1,4 @@
-function set_time(){ 
+function set_time(){
 	var h = document.getElementById('t_h');
 	var hs = h.innerText;
 	var m = document.getElementById('t_m');
@@ -37,7 +37,7 @@ function set_time(){
 		s.innerText = ss;
 	}
 }
-function set_time_befor(){ 
+function set_time_befor(){
 	var h = document.getElementById('t_h');
 	var hs = h.innerText;
 	var m = document.getElementById('t_m');
@@ -75,4 +75,4 @@ function set_time_befor(){
 	}else{
 		s.innerText = ss;
 	}
-} 
+}

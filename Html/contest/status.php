@@ -11,6 +11,7 @@
 	}
 	include "../../Php/contest.php";
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$participate_flag = true;
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +50,7 @@
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
+					$participate_flag = false;
 					?>
 						<a href="authority/index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
 							Authority
@@ -240,7 +242,6 @@
 		<div id="contest_left_page">
 			<?php
 				// echo strtotime($begin_time." +".$duration." minute")." vs ".time();
-				$participate_flag = true;
 				if ( strtotime($begin_time." +".$duration." minute") > time() ) {
 					if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
 						if ( strtotime($begin_time) > time() ) {
@@ -251,9 +252,6 @@
 							exit();
 						}
 					}
-				}
-				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
-					$participate = false;
 				}
 				$uid = get_user_id($conn,$GLOBALS['loading_username']);
 				$new_flag = 1;
