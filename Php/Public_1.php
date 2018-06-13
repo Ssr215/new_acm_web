@@ -1,4 +1,5 @@
 <?php
+	//$severname = "172.18.92.146";
 	$severname = "localhost";
 	$username = "sever1";
 	$password = "hsxi134719";

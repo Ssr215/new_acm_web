@@ -177,7 +177,7 @@
 				</tbody>
 			</table>
 			<?php
-				if ( $begin_flag == 1 || strtotime($begin_time." +".$duration." minute") < time()   ) {		
+				if (  !get_administrator_is_it_a_competitor($conn,$GLOBALS['loading_username'],$cid) || ($begin_flag == 1 && !ck_pass_problem_and_lock_problem($conn,get_user_id($conn,$GLOBALS['loading_username']),$cid,$po_id)) || strtotime($begin_time." +".$duration." minute") < time()   ) {		
 					?>
 					<form action="submit.php?cid=<?php echo($cid) ?>&pid=<?php echo($po_id); ?>" method="post" enctype="multipart/form-data">
 						<table  class="right_table" border="1">

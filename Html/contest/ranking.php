@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="../../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../../Css/problem.css">
 	<script type="text/javascript" src="../../Js/contest.js"></script>
+	<meta http-equiv="refresh" content="3">
 </head>
 <body>
 	<div id="package">

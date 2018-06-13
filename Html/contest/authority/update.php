@@ -17,7 +17,7 @@
 		$have_update_flag = true;
 		$problem_number = $_POST['c_number'];
 		if ( !isset($_POST['u_pro_'.$problem_number]) || isset($_POST['u_pro_'.$problem_number+1]) ) {
-			
+
 		}else{
 			$begin_time = $_POST['c_begin_time'];
 			$duration = $_POST['c_duration'];
@@ -244,6 +244,7 @@
 									<option value="2" <?php if( $level == 2 ) { echo "selected"; } ?>>div 1'2(Rating on (-inf,inf) )</option>
 									<option value="3" <?php if( $level == 3 ) { echo "selected"; } ?>>div 1(Rating on [1900,inf) )</option>
 									<option value="4" <?php if( $level == 4 ) { echo "selected"; } ?>>education (using CCPC/ICPC)</option>
+									<option value="5" <?php if( $level == 5 ) { echo "selected"; } ?>>lanqiao(using lanqiao)</option>
 								</select>
 							</td>
 							<td>type</td>
@@ -251,6 +252,7 @@
 								<select name="c_type">
 									<option value="1" <?php if( $type == 1 ) { echo "selected"; } ?>>CF rating div</option>
 									<option value="2" <?php if( $type == 2 ) { echo "selected"; } ?>>ICPC/CCPC</option>
+									<option value="3" <?php if( $type == 3 ) { echo "selected"; } ?>>lanqiao</option>
 								</select>
 							</td>
 						</tr>

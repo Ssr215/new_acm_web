@@ -84,8 +84,10 @@
 			return "div 1'2";
 		}else if ( $num == 3 ) {
 			return "div 1";
-		}else {
+		}else if ( $num == 4 ){
 			return "education";
+		}else {
+			return "lanqiao";
 		}
 	}
 
@@ -353,7 +355,7 @@
 	function get_languages($id){
 		if ( $id == 1 ){
 			return "C";
-		}	
+		}
 		if ( $id == 2 ) {
 			return "C++";
 		}

@@ -9,8 +9,10 @@
 			echo "div 1'2";
 		}else if ( $num == 3 ) {
 			echo "div 1";
-		}else {
+		}else if ( $num == 4 ) {
 			echo "education";
+		}else {
+			echo "lanqiao";
 		}
 	}
 ?>
@@ -167,11 +169,11 @@
 						$begin_id = ($page_numbers_have-1)*$each_page_number;
 						$end_id = $page_numbers_have*$each_page_number;
 					}
-					
+
 					if( $end_id > $have_page ){
 						$end_id = $have_page;
 					}
-					
+
 					$here_row = 0;
 					$sql = "SELECT contest_id,level,begin_time,duration,name FROM contest_information_1 LIMIT $begin_id,$end_id";
 					$result = mysqli_query($conn,$sql);
@@ -184,7 +186,17 @@
 							?>
 								<tr class="<?php if($here_row%2==0){echo('odd_table');}else{echo('even_table');} ?>">
 									<td><?php echo $cid; ?></td>
-									<td><a href="contest/index.php?cid=<?php echo($cid) ?>"><?php echo $row['name']; ?></a></td>
+									<?php
+										if( $row['level'] == 5 ){
+											?>
+												<td><a href="contest/indexs.php?cid=<?php echo($cid) ?>"><?php echo $row['name']; ?></a></td>
+											<?php
+										}else{
+											?>
+												<td><a href="contest/index.php?cid=<?php echo $cid ?>"><?php echo $row['name']; ?></a></td>
+											<?php
+										}
+									?>
 									<td><?php display_level($row['level']); ?></td>
 									<td><?php echo $row['begin_time']; ?></td>
 									<td><?php echo $row['duration']." min"; ?></td>

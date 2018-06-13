@@ -1,98 +1,6 @@
 <?php
 	include "../../Php/Public_1.php";
-
-	if ( $GLOBALS['loading_user_flag'] == false ) {
-		?>
-			<script type="text/javascript">
-				alert("please log in first");
-			</script>
-			<meta http-equiv="refresh" content="0;url=../loading.php">
-		<?php
-		exit();
-	}
-
-	if ( !isset($_GET['cid']) ) {
-		?>
-			<script type="text/javascript">
-				alert("No Access!");
-			</script>
-			<!-- <meta http-equiv="refresh" content="0;url=index.php?cid=<?php echo $cid ?>"> -->
-		<?php
-		exit();
-	}
-
 	include "../../Php/contest.php";
-
-	if ( isset($_POST['c_language']) ) {
-		if ( strtotime($begin_time." +".$duration." minute") > time() ) {
-			if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
-				if ( strtotime($begin_time) > time() ) {
-					echo "The contest has not started yet";
-					exit();
-				}else if ( ck_is_allow_participate($conn,$GLOBALS['loading_username'],$cid) ) {
-					echo "You can not participate in this competition";
-					exit();
-				}
-			}
-		}
-		if ( !isset($_GET['pid']) || !is_numeric($_GET['pid']) ) {
-			if ( !isset($_POST['pid']) || !is_numeric($_POST['pid']) || $_POST['pid'] > $problem_number || $_POST['pid'] < 1 ) {
-				?>
-					<script type="text/javascript">
-						alert("Pleas select the true problem!");
-					</script>
-					<meta http-equiv="refresh" content="0;url=submit.php?cid=<?php echo $cid ?>">
-				<?php
-				exit();
-			}else{
-				$pid = $_POST['pid'];
-			}
-		}else{
-			$pid = $_GET['pid'];
-		}
-		$c_language = get_language_number($_POST['c_language']);
-		$c_code = "";
-		if ( isset( $_POST['c_code'] ) && $_POST['c_code'] != "" ) {
-			$c_code = $_POST['c_code'];
-		}else{
-			if ( isset($_POST['contest_code_file'] )) {
-				echo "here";
-				echo $_POST['contest_code_file'];
-			}
-
-			if ($_FILES["contest_code_file"]["error"] > 0) {
-				echo $_FILES["contest_code_file"]["error"];
-			}else{
-				$contest_code = $_FILES["contest_code_file"]["tmp_name"];
-				$c_code = fread(fopen($contest_code, "r"),filesize($contest_code));
-			}
-		}
-		$u_id = get_user_id($conn,$GLOBALS['loading_username']);
-		$cid = $_GET['cid'];
-		// $pid = $_GET['pid'];
-		$id = get_and_update_of_web_number_information($conn,9);
-		$now_time = date("Y-m-d H:i:s");
-		$c_flag = get_is_it_a_competitor($conn,$GLOBALS['loading_username'],$cid);
-		$sql = "INSERT INTO contest_pro_submit (id,contest_id,problem_id,user_id,competitor,language,submit_time,result,u_time,u_memory,code,compile) VALUES ('$id','$cid','$pid','$u_id','$c_flag','$c_language','$now_time','0','0','0',?,'')";
-		$sth = $conn->prepare($sql);
-		$sth->bind_param('s',$c_code);
-		if ($sth->execute()) {
-			// echo $sth->insert_id;
-			// $submit_success_flag = 1;
-			?>
-				<meta http-equiv="refresh" content="0;url=submit_display_myself.php?cid=<?php echo $cid ?>">
-			<?php
-			exit();
-		}else{
-			?>
-				<script type="text/javascript">
-					alert(<?php echo $sth->error; ?>);
-				</script>
-			<?php
-			// $submit_success_flag = 2;
-			exit();
-		}
-	}
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 ?>
 
@@ -115,11 +23,11 @@
 		<div id="menu_backgound_3">
 			<a href="../index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
+			<a href="indexs.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Problem</a>
 
-			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
+			<a href="submits.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Submit</a>
 
-			<a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<!-- <a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -127,7 +35,7 @@
 
 			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
-			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
+			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a> -->
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
@@ -170,7 +78,7 @@
 			<table class="right_table_first" border="1">
 				<tbody>
 					<tr>
-						<th width="270px"><a href="index.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
+						<th width="270px"><a href="indexs.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
 					</tr>
 					<tr>
 						<td>
@@ -226,7 +134,7 @@
 			</table>
 
 			<?php
-				if ( $begin_flag == 1 ) {		
+				if ( $begin_flag == 1 ) {
 					?>
 						<table class="right_table" border="1">
 							<tbody>
@@ -240,7 +148,7 @@
 									<th width="200px">score</th>
 								</tr>
 								<?php
-									for ($i=1; $i <= $problem_number; $i++) { 
+									for ($i=1; $i <= $problem_number; $i++) {
 										?>
 											<tr>
 												<td><a href="display.php?cid=<?php echo $cid ?>&pid=<?php echo $i ?>"><?php echo substr($str, $i-1 , 1); ?></a></td>
@@ -252,7 +160,7 @@
 							</tbody>
 						</table>
 
-						<table class="right_table" border="1">
+						<!-- <table class="right_table" border="1">
 							<tbody>
 								<tr>
 									<th width="250px">Vedits</th>
@@ -295,7 +203,7 @@
 									<td>-50</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> -->
 					<?php
 				}
 			?>
@@ -334,93 +242,56 @@
 					}
 				}
 			?>
-			<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data"  method="post">
-				<h2>Submit solution</h2>
-				<!-- <br> -->
-				<p><?php echo $name; ?></p>
-				<br>
-				<table width="900px">
-					<tbody>
-						<tr>
-							<td width="300px"><p>Problem: </p></td>
-							<td align="left">
-								<select class="select_1" name="pid">
-									<option value="-1">Choose problem</option>
-									<?php
-										$sql = "SELECT problem_id,change_problem_name FROM contest_information_2 WHERE contest_id='$cid'";
-										$result = mysqli_query($conn,$sql);
-										$now_row = 0;
-										while ( $row = mysqli_fetch_array($result) ) {
-											?>
-												<option value="<?php echo($now_row) ?>">
-													<?php
-														echo substr($str, $now_row , 1);
-														echo " - ";
-														if ( $row['change_problem_name'] == "" ) {
-															echo get_problem_name($conn,$row["problem_id"]);
-														}else{
-															echo $row['change_problem_name'];
-														}
-													?>
-												</option>
-											<?php
-											$now_row++;
-										}
-									?>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><p>Language:</p></td>
-							<td align="left">
-								<select class="select_1" name="c_language">
-									<option>C</option>
-									<option>C++</option>
-									<option>C++11</option>
-									<option>C++14</option>
-									<option>JAVA</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td><p>Source code:</p></td>
-							<td align="left">
-								<textarea class="c_submitc_texttarea" name="c_code"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Or choose file</td>
-							<td align="left"><input type="file" name="contest_code_file"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td align="left">
-								Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type="submit" name="submit" value="submit" class="contest_submit"></td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
+			<table width="900px" border="1">
+				<thead>
+					<th width="54px">#</th>
+					<th>Name</th>
+					<th width="90px"></th>
+					<th width="90px"></th>
+					<th width="90px">Score</th>
+				</thead>
+				<tbody>
+					<?php
+						$now_id = 0;
+						$sql = "SELECT change_problem_name,score,pass_number FROM contest_information_2 WHERE contest_id = '$cid' ORDER BY order_number ASC";
+						$result = mysqli_query($conn,$sql);
+						while ( $row = mysqli_fetch_array($result) ) {
+							?>
+								<tr>
+									<td><?php echo $now_id+1; ?></td>
+									<td><?php echo $row['change_problem_name']; ?></td>
+									<td><a href="detail.php?cid=<?php echo $cid ?>&pid=<?php echo $now_id+1 ?>">detail</a></td>
+									<td>
+										<a href="submits.php?cid=<?php echo($cid); ?>&pid=<?php echo($now_id+1) ?>">Submit</a>
+									</td>
+									<td><?php echo $row['score']; ?></td>
+								</tr>
+							<?php
+							$now_id++;
+						}
+					?>
+				</tbody>
+			</table>
+
+			<br>
+			<br>
+			<table border="1" width="900px">
+				<tbody>
+					<tr>
+						<th colspan="5">Questions</th>
+					</tr>
+					<tr>
+						<th width="30px">#</th>
+						<th width="90px">Party</th>
+						<th width="150px">When</th>
+						<th width="150px">Questions</th>
+						<th>Answer</th>
+					</tr>
+					<tr>
+						<td colspan="5">No items</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>

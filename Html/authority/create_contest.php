@@ -55,13 +55,13 @@
 			}else{
 				$ck_flag = 0;
 				$up = get_of_web_number_information($conn,3);
-				for ($i=1; $i <= $number; $i++) { 
+				for ($i=1; $i <= $number; $i++) {
 					if ( $_POST['pro_'.$i] < 1000 || $_POST['pro_'.$i] >= $up || $_POST['pro_'.$i.'_score'] < 500 || $_POST['pro_'.$i.'_score'] > 3500 ) {
 						$ck_flag = 1;
 						break;
 					}
 				}
-				if ( $ck_flag == 0 ) {
+				if ( $_POST['c_type'] == 3 || $ck_flag == 0 ) {
 					echo "pass ck , now will insert content now!";
 					$c_id = $_POST['c_id'];
 					$begin_time = $_POST['c_begin_time'];
@@ -80,7 +80,7 @@
 						$f_path = "D:/contest_data/".$c_id;
 						install_file_on_path($f_path);
 						$f_path .= "/";
-						for ($i=1; $i <= $number ; $i++) { 
+						for ($i=1; $i <= $number ; $i++) {
 							$id = get_and_update_of_web_number_information($conn,8);
 							$pro_id = $_POST['pro_'.$i];
 							$change_name = $_POST['pro_'.$i."_name"];
@@ -90,6 +90,9 @@
 								echo "Error: " . $sql . "<br>" . $conn->error;
 								$create_success_flag = 4*100 + $i;
 								break;
+							}
+							if ( $type == 3 ) {
+								continue;
 							}
 							install_file_on_path($f_path.$i."/");
 						}
@@ -278,6 +281,7 @@
 									<option value="2">div 1'2(Rating on (-inf,inf) )</option>
 									<option value="3">div 1(Rating on [1900,inf) )</option>
 									<option value="4">education (using CCPC/ICPC)</option>
+									<option value="5">lanqiao(using lanqiao)</option>
 								</select>
 							</td>
 							<td>type</td>
@@ -285,6 +289,7 @@
 								<select name="c_type">
 									<option value="1">CF rating div</option>
 									<option value="2">ICPC/CCPC</option>
+									<option value="3">lanqiao</option>
 								</select>
 							</td>
 						</tr>

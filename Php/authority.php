@@ -175,7 +175,6 @@
 								<?php
 						$updata_success_flag = 5;
 					}
-					
 				}
 			}
 		}
@@ -224,7 +223,6 @@
 					echo "can't add input file success!<br>";
 				}
 			}
-			
 		}else{
 			$myfile = fopen($file_path_1.$tesd_id.".in", "w") or die("Unable to open file!");
 			fwrite($myfile, $add_test_input);

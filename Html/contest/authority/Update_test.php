@@ -236,13 +236,13 @@
 											</tr>
 										<?php
 									}
-								?>		
+								?>
 							</tbody>
 						</table>
 					</center>
 					<br><br>
 					<form action="Update_test.php?cid=<?php echo($cid) ?>" method="post" enctype="multipart/form-data">
-						problem id: 
+						problem id:
 						<input type="text" name="updates_test_pro_id" value="<?php echo($_POST['select_pid']) ?>" readonly="readonly">
 						<br>
 						test numbers:
@@ -259,7 +259,7 @@
 						<textarea class="textarea_size _put_h" name="update_test_output"></textarea>
 						<br>
 						<input type="file" name="update_output_file">
-						<br>		
+						<br>
 						<input type="submit" name="submit" class="submit_size">
 					</form>
 				<?php

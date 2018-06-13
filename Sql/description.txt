@@ -46,10 +46,12 @@ contest level --- select
 2 --- div1'2(Rating on (-inf,inf) )
 3 --- div1(Rating on [1900,inf) )
 4 --- education (using CCPC/ICPC)
+5 --- lanqiao(using lanqiao rule)
 
 Types of contest --- select
 1 --- CF rating div
 2 --- ICPC/CCPC
+3 --- lanqiao
 
 contest rule
 div记分规则为：
@@ -85,3 +87,5 @@ hack失败将-50分
 关于contest_huck的检测
 评测机先正常判断，然后开始run所有huck本发样例的数据，huck一旦成功，结果不会改变！请管理员不要rejudge被Huck的代码~后期前台应该加以判断，禁止管理员rejudge(包括admin也不应该rejudge)
 对于新提交的代码，应该先判断基础数据，然后在数据库中查找所有成功huck的数据进行评测，全部通过才能获得Passed pretests,而对于所有成功huck的数据，其正确的答案应已添加到对应目录下，因此直接评测即可，而不需要重新huck
+
+添加蓝桥杯测试题，测试过程中以最后一发提交为准，最后获取最终得分，在测试期间不评测

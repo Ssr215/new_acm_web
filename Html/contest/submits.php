@@ -1,27 +1,7 @@
 <?php
 	include "../../Php/Public_1.php";
-
-	if ( $GLOBALS['loading_user_flag'] == false ) {
-		?>
-			<script type="text/javascript">
-				alert("please log in first");
-			</script>
-			<meta http-equiv="refresh" content="0;url=../loading.php">
-		<?php
-		exit();
-	}
-
-	if ( !isset($_GET['cid']) ) {
-		?>
-			<script type="text/javascript">
-				alert("No Access!");
-			</script>
-			<!-- <meta http-equiv="refresh" content="0;url=index.php?cid=<?php echo $cid ?>"> -->
-		<?php
-		exit();
-	}
-
 	include "../../Php/contest.php";
+	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	if ( isset($_POST['c_language']) ) {
 		if ( strtotime($begin_time." +".$duration." minute") > time() ) {
@@ -41,7 +21,7 @@
 					<script type="text/javascript">
 						alert("Pleas select the true problem!");
 					</script>
-					<meta http-equiv="refresh" content="0;url=submit.php?cid=<?php echo $cid ?>">
+					<meta http-equiv="refresh" content="0;url=submits.php?cid=<?php echo $cid ?>">
 				<?php
 				exit();
 			}else{
@@ -51,22 +31,7 @@
 			$pid = $_GET['pid'];
 		}
 		$c_language = get_language_number($_POST['c_language']);
-		$c_code = "";
-		if ( isset( $_POST['c_code'] ) && $_POST['c_code'] != "" ) {
-			$c_code = $_POST['c_code'];
-		}else{
-			if ( isset($_POST['contest_code_file'] )) {
-				echo "here";
-				echo $_POST['contest_code_file'];
-			}
-
-			if ($_FILES["contest_code_file"]["error"] > 0) {
-				echo $_FILES["contest_code_file"]["error"];
-			}else{
-				$contest_code = $_FILES["contest_code_file"]["tmp_name"];
-				$c_code = fread(fopen($contest_code, "r"),filesize($contest_code));
-			}
-		}
+		$c_code = $_POST['c_code'];
 		$u_id = get_user_id($conn,$GLOBALS['loading_username']);
 		$cid = $_GET['cid'];
 		// $pid = $_GET['pid'];
@@ -80,7 +45,7 @@
 			// echo $sth->insert_id;
 			// $submit_success_flag = 1;
 			?>
-				<meta http-equiv="refresh" content="0;url=submit_display_myself.php?cid=<?php echo $cid ?>">
+				<meta http-equiv="refresh" content="0;url=indexs.php?cid=<?php echo $cid ?>">
 			<?php
 			exit();
 		}else{
@@ -93,7 +58,12 @@
 			exit();
 		}
 	}
-	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$pid = 0;
+	if( !isset($_GET['pid']) || !is_numeric($_GET['pid']) ){
+		$pid = 0;
+	}else{
+		$pid = $_GET['pid'];
+	}
 ?>
 
 <!DOCTYPE html>
@@ -115,11 +85,11 @@
 		<div id="menu_backgound_3">
 			<a href="../index.php" class="menu_label_1 menu_a">Home</a>
 
-			<a href="index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
+			<a href="indexs.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Problem</a>
 
-			<a href="submit.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
+			<a href="submits.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a new_color_imp">Submit</a>
 
-			<a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
+			<!-- <a href="submit_display_myself.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">My Submit</a>
 
 			<a href="huck.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Hucks</a>
 
@@ -127,7 +97,7 @@
 
 			<a href="status.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Status</a>
 
-			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a>
+			<a href="forum.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">Forum</a> -->
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
@@ -170,7 +140,7 @@
 			<table class="right_table_first" border="1">
 				<tbody>
 					<tr>
-						<th width="270px"><a href="index.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
+						<th width="270px"><a href="indexs.php?cid=<?php echo($cid) ?>"><?php echo $name." (".display_level($level).")"; ?></a></th>
 					</tr>
 					<tr>
 						<td>
@@ -226,7 +196,7 @@
 			</table>
 
 			<?php
-				if ( $begin_flag == 1 ) {		
+				if ( $begin_flag == 1 ) {
 					?>
 						<table class="right_table" border="1">
 							<tbody>
@@ -240,7 +210,7 @@
 									<th width="200px">score</th>
 								</tr>
 								<?php
-									for ($i=1; $i <= $problem_number; $i++) { 
+									for ($i=1; $i <= $problem_number; $i++) {
 										?>
 											<tr>
 												<td><a href="display.php?cid=<?php echo $cid ?>&pid=<?php echo $i ?>"><?php echo substr($str, $i-1 , 1); ?></a></td>
@@ -252,7 +222,7 @@
 							</tbody>
 						</table>
 
-						<table class="right_table" border="1">
+						<!-- <table class="right_table" border="1">
 							<tbody>
 								<tr>
 									<th width="250px">Vedits</th>
@@ -295,7 +265,7 @@
 									<td>-50</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> -->
 					<?php
 				}
 			?>
@@ -333,8 +303,18 @@
 						}
 					}
 				}
+
+				$sql = "SELECT language,code FROM contest_pro_submit WHERE contest_id = '$cid' AND problem_id = '$pid'";
+				$result = mysqli_query($conn,$sql);
+				$language = 1;
+				$code = "";
+				while ( $row = mysqli_fetch_array($result) ) {
+					$language = $row['language'];
+					$code = $row['code'];
+				}
 			?>
-			<form action="submit.php?cid=<?php echo($cid) ?>"  enctype="multipart/form-data"  method="post">
+
+			<form action="submits.php?cid=<?php echo($cid) ?>"  method="post">
 				<h2>Submit solution</h2>
 				<!-- <br> -->
 				<p><?php echo $name; ?></p>
@@ -349,12 +329,12 @@
 									<?php
 										$sql = "SELECT problem_id,change_problem_name FROM contest_information_2 WHERE contest_id='$cid'";
 										$result = mysqli_query($conn,$sql);
-										$now_row = 0;
+										$now_row = 1;
 										while ( $row = mysqli_fetch_array($result) ) {
 											?>
-												<option value="<?php echo($now_row) ?>">
+												<option value="<?php echo($now_row) ?>" <?php if($pid==$now_row){echo "selected=\"selected\"";} ?>>
 													<?php
-														echo substr($str, $now_row , 1);
+														echo $now_row;
 														echo " - ";
 														if ( $row['change_problem_name'] == "" ) {
 															echo get_problem_name($conn,$row["problem_id"]);
@@ -372,47 +352,33 @@
 						</tr>
 						<tr>
 							<td></td>
-							<td></td>
+							<td>you must be choose a problem</td>
 						</tr>
 						<tr>
 							<td><p>Language:</p></td>
 							<td align="left">
 								<select class="select_1" name="c_language">
-									<option>C</option>
-									<option>C++</option>
-									<option>C++11</option>
-									<option>C++14</option>
-									<option>JAVA</option>
+									<option <?php if ($language == 1) { echo "selected=\"selected\""; } ?>>C</option>
+									<option <?php if ($language == 2) { echo "selected=\"selected\""; } ?>>C++</option>
+									<option <?php if ($language == 3) { echo "selected=\"selected\""; } ?>>C++11</option>
+									<option <?php if ($language == 4) { echo "selected=\"selected\""; } ?>>C++14</option>
+									<option <?php if ($language == 5) { echo "selected=\"selected\""; } ?>>JAVA</option>
 								</select>
 							</td>
 						</tr>
 						<tr>
+							<td></td>
+							<td>If it isn't need submit code, please ignore language.</td>
+						</tr>
+						<tr>
 							<td><p>Source code:</p></td>
 							<td align="left">
-								<textarea class="c_submitc_texttarea" name="c_code"></textarea>
+								<textarea class="c_submitc_texttarea" name="c_code"><?php echo $code; ?></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Or choose file</td>
-							<td align="left"><input type="file" name="contest_code_file"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td align="left">
-								Be careful: there is 50 points penalty for submission which fails the pretests or resubmission (except failure on the first test, denial of judgement or similar verdicts). "Passed pretests" submission verdict doesn't guarantee that the solution is absolutely correct and it will pass system tests.
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
+							<td>If it isn't code,just input text, don't need using code to printf, otherwise your answer will be no consider true!</td>
 						</tr>
 						<tr>
 							<td></td>

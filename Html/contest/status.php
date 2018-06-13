@@ -11,6 +11,7 @@
 	}
 	include "../../Php/contest.php";
 	$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$participate_flag = true;
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +22,7 @@
 	<link rel="stylesheet" type="text/css" href="../../Css/public_1.css">
 	<link rel="stylesheet" type="text/css" href="../../Css/problem.css">
 	<script type="text/javascript" src="../../Js/contest.js"></script>
+	<meta http-equiv="refresh" content="3">
 </head>
 <body>
 	<div id="package">
@@ -49,6 +51,7 @@
 
 			<?php
 				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
+					$participate_flag = false;
 					?>
 						<a href="authority/index.php?cid=<?php echo($cid) ?>" class="menu_label_1 menu_a">
 							Authority
@@ -240,7 +243,6 @@
 		<div id="contest_left_page">
 			<?php
 				// echo strtotime($begin_time." +".$duration." minute")." vs ".time();
-				$participate_flag = true;
 				if ( strtotime($begin_time." +".$duration." minute") > time() ) {
 					if ( get_uesr_authority($conn,$GLOBALS['loading_username']) < 7 ) {
 						if ( strtotime($begin_time) > time() ) {
@@ -251,9 +253,6 @@
 							exit();
 						}
 					}
-				}
-				if( get_uesr_authority($conn,$GLOBALS['loading_username']) >= 7 ){
-					$participate = false;
 				}
 				$uid = get_user_id($conn,$GLOBALS['loading_username']);
 				$new_flag = 1;
@@ -340,7 +339,7 @@
 													<a href="rejudge.php?cid=<?php echo($cid) ?>&sid=<?php echo($row['id']) ?>&result=<?php echo($row['result']) ?>&pid=<?php echo($row['problem_id']) ?>">rejudge</a>
 												<?php
 											}
-											if ( !$participate_flag && ($row['result'] == 11 && get_user_locking_problem($conn,$cid,$uid,$row['problem_id']) && get_huck_allow_in_sid($conn,$cid,$row['problem_id'])) ) {
+											if ( (!$participate_flag || ($row['result'] == 11 && get_user_locking_problem($conn,$cid,$uid,$row['problem_id'])) ) && get_huck_allow_in_sid($conn,$cid,$row['problem_id']) ) {
 												?>
 													<a href="huck_submit.php?cid=<?php echo $cid ?>&sid=<?php echo $row['id'] ?>">huck it</a>
 												<?php
