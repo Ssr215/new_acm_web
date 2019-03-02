@@ -134,7 +134,7 @@
 			</table>
 
 			<?php
-				if ( $begin_flag == 1 ) {		
+				if ( $begin_flag == 1 ) {
 					?>
 						<table class="right_table" border="1">
 							<tbody>
@@ -208,7 +208,7 @@
 				}
 			?>
 
-			
+
 			<table class="right_table" border="1">
 				<tbody>
 					<tr>
